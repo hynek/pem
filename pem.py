@@ -6,7 +6,7 @@ import codecs
 import re
 
 
-__version__ = '0.0.0'
+__version__ = '0.1.0'
 __author__ = 'Hynek Schlawack'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2013 Hynek Schlawack'
