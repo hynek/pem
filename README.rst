@@ -9,7 +9,7 @@ pem: Easy PEM file parsing
 It runs on Python 2.6, 2.7, 3.3, and PyPy 2.0+, has no dependencies and does not attempt to interpret the certificate data in any way.
 *pem* is intended to ease the handling of PEM files in combination with `PyOpenSSL`_ and – by extension – `Twisted`_.
 
-It’s born from my personal need because of the inconsistent handling of chain certificates by various servers: some servers (like `Apache`_) expect them to be a separate file while others (like `nginx`_) expect them concatenated to the server certificate
+It’s born from my personal need because of the inconsistent handling of chain certificates by various servers: some servers (like `Apache`_) expect them to be a separate file while others (like `nginx`_) expect them concatenated to the server certificate.
 Since I want my Python software to be universal and to be able to cope with both, *pem* was born.
 
 The core API call is the function ``parse()``: ::
@@ -73,8 +73,7 @@ Therefore it can be simplified to: ::
 The first certificate found will be used as the server certificate, the rest is passed as the chain.
 You can pass as many PEM files as you like.
 Therefore you can distribute your key, certificate, and chain certificates over a arbitrary number of files.
-A ``ValueError`` is raised if more than one or no key has been found, no
-certificate is found.
+A ``ValueError`` is raised if more than one key, no key, or no certificate are found.
 Any further keyword arguments will be passed to `CertificateOptions`_.
 
 
