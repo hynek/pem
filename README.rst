@@ -100,3 +100,9 @@ I’d be more than happy to merge support for additional frameworks though!
 .. _PyOpenSSL: https://launchpad.net/pyopenssl
 .. _Twisted: http://twistedmatrix.com/documents/current/api/twisted.internet.ssl.Certificate.html#loadPEM
 .. _CertificateOptions: http://twistedmatrix.com/documents/current/api/twisted.internet.ssl.CertificateOptions.html
+
+
+.. image:: https://d2weczhvl823v0.cloudfront.net/hynek/pem/trend.png
+   :alt: Bitdeli badge
+   :target: https://bitdeli.com/free
+
