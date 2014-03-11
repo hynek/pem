@@ -98,7 +98,6 @@ def certificateOptionsFromFiles(dhParameters=None, *pemFiles, **kw):
         return ctxFactory
 
 
-
 class _DHParamContextFactory(object):
     """
     A wrapping context factory that gets a context from a different
@@ -109,12 +108,10 @@ class _DHParamContextFactory(object):
         self.ctxFactory = ctxFactory
         self.dhParameters = dhParameters
 
-
     def getContext(self):
         ctx = self.ctxFactory.getContext()
         ctx.load_tmp_dh(self.dhParameters._dhFile.path)
         return ctx
-
 
 
 class OpenSSLDiffieHellmanParameters(object):
@@ -124,7 +121,6 @@ class OpenSSLDiffieHellmanParameters(object):
     """
     def __init__(self, parameters):
         self._dhFile = parameters
-
 
     @classmethod
     def fromFile(cls, filePath):
