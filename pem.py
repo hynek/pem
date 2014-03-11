@@ -100,10 +100,10 @@ def certificateOptionsFromFiles(dhParameters=None, *pemFiles, **kw):
 
 
 class _DHParamContextFactory(object):
-    """A wrapping context factory that gets a context from a different
+    """
+    A wrapping context factory that gets a context from a different
     context factory and then sets temporary DH params on it. This
     enables PFS ciphersuites using DHE.
-
     """
     def __init__(self, ctxFactory, dhParameters):
         self.ctxFactory = ctxFactory
