@@ -85,6 +85,34 @@ Therefore you can distribute your key, certificate, and chain certificates over 
 A ``ValueError`` is raised if more than one key, no key, or no certificate are found.
 Any further keyword arguments will be passed to CertificateOptions_.
 
+Ephemeral Diffie-Hellman support
+--------------------------------
+
+Starting with version 14.0.0, Twisted will support ephemeral
+Diffie-Hellman ciphersuites; you can pass an instance of
+``twisted.internet.ssl.OpenSSLDiffieHellmanParameters`` as the
+``dhParams`` keyword argument to ``CertificateOptions``. Since *pem*
+just passes keyword arguments to ``CertificateOptions`` verbatim, that
+will just work.
+
+However, *pem* is also forward compatible. Twisted 14.0.0 is not
+released yet, but *pem* lets you use the API described above anyway.
+It comes with an implementation of ``OpenSSLDiffieHellmanParameters``
+that can be used interchangeably with the class of the same name in
+Twisted. Once you depend on a version of Twisted that ships this
+class, you should use that instead. You just pass it as
+``dhParameters`` as normal, and *pem* will make it magically work:
+
+.. code-block:: python
+
+   import pem
+   from twisted.python.filepath import FilePath
+
+   path = FilePath("/path/to/the/dh/params")
+   ctxFactory = pem.certificateOptionsFromFiles(
+      'key.pem', 'cert_and_chain.pem',
+      dhParameters=OpenSSLDiffieHellmanParameters.fromFile(path)
+   )
 
 Future
 ------
@@ -105,4 +133,3 @@ I’d be more than happy to merge support for additional frameworks though!
 .. image:: https://d2weczhvl823v0.cloudfront.net/hynek/pem/trend.png
    :alt: Bitdeli badge
    :target: https://bitdeli.com/free
-
