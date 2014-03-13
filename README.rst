@@ -94,9 +94,9 @@ Starting with version 14.0.0, Twisted will support ephemeral Diffie-Hellman ciph
 Since *pem* just passes keyword arguments to ``CertificateOptions`` verbatim, that will just work.
 
 However, *pem* is also forward compatible. Twisted 14.0.0 is not released yet, but *pem* lets you use the API described above anyway.
-It comes with an implementation of ``OpenSSLDiffieHellmanParameters`` that can be used interchangeably with the class of the same name in Twisted.
-Once you depend on a version of Twisted that ships this class, you should use that instead.
-You just pass it as ``dhParameters`` as normal, and *pem* will make it magically work:
+You can just use ``pem.OpenSSLDiffieHellmanParameters``. If your version of Twisted comes with that class, you just get the Twisted version. If it doesn't, you get a version from *pem*.
+
+Just pass instances of that class as ``dhParameters`` to ``certificateOptionsFromFiles``, and *pem* will make it magically work:
 
 .. code-block:: python
 
