@@ -2,8 +2,9 @@
 
 from __future__ import (absolute_import, division, print_function)
 
-import pretend
 import pytest
+
+from pretend import call, call_recorder, stub
 
 import pem
 
@@ -142,7 +143,7 @@ class TestForwardCompatibleDHE(object):
         ssl = pytest.importorskip('twisted.internet.ssl')
 
         fakeCtxFactory = object()
-        recorder = pretend.call_recorder(lambda *a, **kw: fakeCtxFactory)
+        recorder = call_recorder(lambda *a, **kw: fakeCtxFactory)
         monkeypatch.setattr(ssl, "CertificateOptions", recorder)
         monkeypatch.setattr(pem, "_DH_PARAMETERS_SUPPORTED", False)
 
@@ -164,7 +165,7 @@ class TestForwardCompatibleDHE(object):
         ssl = pytest.importorskip('twisted.internet.ssl')
 
         fakeCtxFactory = object()
-        recorder = pretend.call_recorder(lambda *a, **kw: fakeCtxFactory)
+        recorder = call_recorder(lambda *a, **kw: fakeCtxFactory)
         monkeypatch.setattr(ssl, "CertificateOptions", recorder)
         monkeypatch.setattr(pem, "_DH_PARAMETERS_SUPPORTED", True)
 
@@ -176,6 +177,30 @@ class TestForwardCompatibleDHE(object):
 
         assert ctxFactory is fakeCtxFactory
         assert recorder.calls[0].kwargs["dhParameters"] == fakeParameters
+
+    def test_DiffieHellmanParameters(self):
+        """
+        Make sure lines are executed.
+        """
+        o = object()
+        dhp = pem._DiffieHellmanParameters.fromFile(o)
+        assert o is dhp._dhFile
+
+    def test_DHParamContextFactory(self):
+        """
+        ContextFactory is wrapped and DH params loaded.
+        """
+        fakeContext = stub(
+            load_tmp_dh=call_recorder(lambda dhParams: None)
+        )
+        fakeFactory = stub(getContext=lambda: fakeContext)
+        fakeDH = stub(path=b"foo")
+        ctxFactory = pem._DHParamContextFactory(
+            fakeFactory, pem._DiffieHellmanParameters(fakeDH)
+        )
+        ctx = ctxFactory.getContext()
+        assert fakeContext is ctx
+        assert [call(b"foo")] == fakeContext.load_tmp_dh.calls
 
 
 CERT_PEMS = [

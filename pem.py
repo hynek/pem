@@ -147,7 +147,7 @@ class _DiffieHellmanParameters(object):
         return cls(filePath)
 
 
-try:
+try:  # pragma: nocover
     from twisted.internet.ssl import DiffieHellmanParameters
     _DH_PARAMETERS_SUPPORTED = True
 except ImportError:
