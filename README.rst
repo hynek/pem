@@ -87,13 +87,15 @@ Therefore you can distribute your key, certificate, and chain certificates over 
 A ``ValueError`` is raised if more than one key, no key, or no certificate are found.
 Any further keyword arguments will be passed to CertificateOptions_.
 
+
 Ephemeral Diffie-Hellman support
 --------------------------------
 
 Starting with version 14.0.0, Twisted will support ephemeral Diffie-Hellman ciphersuites; you can pass an instance of ``twisted.internet.ssl.DiffieHellmanParameters`` as the ``dhParameters`` keyword argument to ``CertificateOptions``.
 Since *pem* just passes keyword arguments to ``CertificateOptions`` verbatim, that will just work.
 
-However, *pem* is also forward compatible. Twisted 14.0.0 is not released yet, but *pem* lets you use the API described above anyway.
+However, *pem* is also forward compatible.
+Twisted 14.0.0 is not released yet, but *pem* lets you use the API described above anyway.
 You can just use ``pem.DiffieHellmanParameters``: if your version of Twisted comes with that class, you just get the Twisted version; if it doesn't, you get a version from *pem*.
 
 Just pass instances of that class as ``dhParameters`` to ``certificateOptionsFromFiles``, and *pem* will make it magically work:
@@ -101,6 +103,7 @@ Just pass instances of that class as ``dhParameters`` to ``certificateOptionsFro
 .. code-block:: python
 
    import pem
+
    from twisted.python.filepath import FilePath
 
    path = FilePath("/path/to/the/dh/params")
@@ -108,6 +111,7 @@ Just pass instances of that class as ``dhParameters`` to ``certificateOptionsFro
       'key.pem', 'cert_and_chain.pem',
       dhParameters=pem.DiffieHellmanParameters.fromFile(path)
    )
+
 
 Future
 ------
@@ -120,6 +124,6 @@ I’d be more than happy to merge support for additional frameworks though!
 .. _`PEM files`: http://en.wikipedia.org/wiki/X.509#Certificate_filename_extensions
 .. _Apache: http://httpd.apache.org
 .. _nginx: http://nginx.org/en/
-.. _PyOpenSSL: https://launchpad.net/pyopenssl
+.. _PyOpenSSL: https://github.com/pyca/pyopenssl
 .. _Twisted: http://twistedmatrix.com/documents/current/api/twisted.internet.ssl.Certificate.html#loadPEM
 .. _CertificateOptions: http://twistedmatrix.com/documents/current/api/twisted.internet.ssl.CertificateOptions.html
