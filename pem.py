@@ -115,7 +115,7 @@ class _DHParamContextFactory(object):
         return ctx
 
 
-class _OpenSSLDiffieHellmanParameters(object):
+class _DiffieHellmanParameters(object):
     """
     A representation of key generation parameters that are required for
     Diffie-Hellman key exchange.
@@ -148,8 +148,8 @@ class _OpenSSLDiffieHellmanParameters(object):
 
 
 try:
-    from twisted.internet.ssl import OpenSSLDiffieHellmanParameters
+    from twisted.internet.ssl import DiffieHellmanParameters
     _DH_PARAMETERS_SUPPORTED = True
 except ImportError:
-    OpenSSLDiffieHellmanParameters = _OpenSSLDiffieHellmanParameters
+    DiffieHellmanParameters = _DiffieHellmanParameters
     _DH_PARAMETERS_SUPPORTED = False
