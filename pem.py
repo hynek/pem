@@ -1,15 +1,13 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import (absolute_import, division, print_function)
+from __future__ import absolute_import, division, print_function
 
 import codecs
 import re
 
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 __author__ = 'Hynek Schlawack'
 __license__ = 'MIT'
-__copyright__ = 'Copyright 2013 Hynek Schlawack'
+__copyright__ = 'Copyright 2014 Hynek Schlawack'
 
 
 class _Base(object):
