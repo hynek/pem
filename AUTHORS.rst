@@ -9,5 +9,6 @@ Contributors
 
 The following wonderful people contributed directly or indirectly to this project:
 
+lvh <_@lvh.io>
 
 Please add yourself here alphabetically when you submit your first pull request.

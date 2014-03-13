@@ -2,6 +2,7 @@
 
 from __future__ import (absolute_import, division, print_function)
 
+import pretend
 import pytest
 
 import pem
@@ -107,6 +108,51 @@ def test_certificateOptionsForwardsKWargs(allFile):
         method=ssl.SSLv2_METHOD,
     )
     assert ssl.SSLv2_METHOD == ctxFactory.method
+
+
+def test_fakeDHParameterSupport(monkeypatch, allFile):
+    """
+    Fake DH parameter support if Twisted doesn't support it.
+    """
+    ssl = pytest.importorskip('twisted.internet.ssl')
+
+    fakeCtxFactory = object()
+    recorder = pretend.call_recorder(lambda *a, **kw: fakeCtxFactory)
+    monkeypatch.setattr(ssl, "CertificateOptions", recorder)
+    monkeypatch.setattr(pem, "_DH_PARAMETERS_SUPPORTED", False)
+
+    fakeParameters = object()
+    ctxFactory = pem.certificateOptionsFromFiles(
+        str(allFile),
+        dhParameters=fakeParameters
+    )
+
+    assert isinstance(ctxFactory, pem._DHParamContextFactory)
+    assert ctxFactory.ctxFactory is fakeCtxFactory
+    assert "dhParameters" not in recorder.calls[0].kwargs
+
+
+def test_realDHParameterSupport(monkeypatch, allFile):
+    """
+    Pass DH parameters directly to CertificateOptions if the installed
+    version of Twisted supports it.
+
+    """
+    ssl = pytest.importorskip('twisted.internet.ssl')
+
+    fakeCtxFactory = object()
+    recorder = pretend.call_recorder(lambda *a, **kw: fakeCtxFactory)
+    monkeypatch.setattr(ssl, "CertificateOptions", recorder)
+    monkeypatch.setattr(pem, "_DH_PARAMETERS_SUPPORTED", True)
+
+    fakeParameters = object()
+    ctxFactory = pem.certificateOptionsFromFiles(
+        str(allFile),
+        dhParameters=fakeParameters
+    )
+
+    assert ctxFactory is fakeCtxFactory
+    assert recorder.calls[0].kwargs["dhParameters"] == fakeParameters
 
 
 def test_certificateOptionsFromFilesCatchesMissingKey(tmpdir):

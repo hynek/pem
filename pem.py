@@ -83,9 +83,73 @@ def certificateOptionsFromFiles(*pemFiles, **kw):
     chain = [ssl.Certificate.loadPEM(str(certPEM)).original
              for certPEM in certs[1:]]
 
-    return ssl.CertificateOptions(
+    fakeEDHSupport = "dhParameters" in kw and not _DH_PARAMETERS_SUPPORTED
+    if fakeEDHSupport:
+        dhParameters = kw.pop("dhParameters")
+
+    ctxFactory = ssl.CertificateOptions(
         privateKey=cert.privateKey.original,
         certificate=cert.original,
         extraCertChain=chain,
-        **kw
-    )
+        **kw)
+
+    if fakeEDHSupport:
+        return _DHParamContextFactory(ctxFactory, dhParameters)
+    else:
+        return ctxFactory
+
+
+class _DHParamContextFactory(object):
+    """
+    A wrapping context factory that gets a context from a different
+    context factory and then sets temporary DH params on it. This
+    enables PFS ciphersuites using DHE.
+    """
+    def __init__(self, ctxFactory, dhParameters):
+        self.ctxFactory = ctxFactory
+        self.dhParameters = dhParameters
+
+    def getContext(self):
+        ctx = self.ctxFactory.getContext()
+        ctx.load_tmp_dh(self.dhParameters._dhFile.path)
+        return ctx
+
+
+class _DiffieHellmanParameters(object):
+    """
+    A representation of key generation parameters that are required for
+    Diffie-Hellman key exchange.
+    """
+    def __init__(self, parameters):
+        self._dhFile = parameters
+
+    @classmethod
+    def fromFile(cls, filePath):
+        """
+        Load parameters from a file.
+
+        Such a file can be generated using the C{openssl} command line tool as
+        following:
+
+        C{openssl dhparam -out dh_param_1024.pem -2 1024}
+
+        Please refer to U{OpenSSL's C{dhparam} documentation
+        <http://www.openssl.org/docs/apps/dhparam.html>} for further details.
+
+        @param filePath: A file containing parameters for Diffie-Hellman key
+            exchange.
+        @type filePath: L{FilePath <twisted.python.filepath.FilePath>}
+
+        @return: A instance that loads its parameters from C{filePath}.
+        @rtype: L{DiffieHellmanParameters
+            <twisted.internet.ssl.DiffieHellmanParameters>}
+        """
+        return cls(filePath)
+
+
+try:
+    from twisted.internet.ssl import DiffieHellmanParameters
+    _DH_PARAMETERS_SUPPORTED = True
+except ImportError:
+    DiffieHellmanParameters = _DiffieHellmanParameters
+    _DH_PARAMETERS_SUPPORTED = False
