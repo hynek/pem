@@ -8,70 +8,33 @@ import pytest
 import pem
 
 
-def test_certificate_has_correct_repr():
-    cert = pem.Certificate('test')
-    assert "<Certificate(pem_str='test')>" == repr(cert)
+class TestPEMObjects(object):
+    def test_cert_has_correct_repr(self):
+        cert = pem.Certificate('test')
+        assert "<Certificate(pem_str='test')>" == repr(cert)
+
+    def test_rsa_key_has_correct_repr(self):
+        key = pem.RSAPrivateKey('test')
+        assert "<RSAPrivateKey(pem_str='test')>" == repr(key)
 
 
-def test_key_has_correct_repr():
-    key = pem.RSAPrivateKey('test')
-    assert "<RSAPrivateKey(pem_str='test')>" == repr(key)
+class TestParse(object):
+    def test_key(self):
+        keys = pem.parse(KEY_PEM)
+        assert 1 == len(keys)
+        key = keys[0]
+        assert isinstance(key, pem.RSAPrivateKey)
+        assert KEY_PEM == str(key)
 
+    def test_certificates(self):
+        certs = pem.parse(''.join(CERT_PEMS))
+        assert CERT_PEMS == [str(cert) for cert in certs]
 
-def test_parse_key():
-    keys = pem.parse(KEY_PEM)
-    assert 1 == len(keys)
-    key = keys[0]
-    assert isinstance(key, pem.RSAPrivateKey)
-    assert KEY_PEM == str(key)
-
-
-def test_parse_certificates():
-    certs = pem.parse(''.join(CERT_PEMS))
-    assert CERT_PEMS == [str(cert) for cert in certs]
-
-
-def test_parse_file(tmpdir):
-    certs_file = tmpdir.join('certs.pem')
-    certs_file.write(''.join(CERT_PEMS))
-    certs = pem.parse_file(str(certs_file))
-    assert CERT_PEMS == [str(cert) for cert in certs]
-
-
-def test_certificateOptionsFromFilesWorksWithoutChain(tmpdir):
-    pytest.importorskip('twisted')
-    keyFile = tmpdir.join('key.pem')
-    keyFile.write(KEY_PEM)
-    certFile = tmpdir.join('cert.pem')
-    certFile.write(CERT_PEMS[0])
-    ctxFactory = pem.certificateOptionsFromFiles(
-        str(keyFile), str(certFile),
-    )
-    assert [] == ctxFactory.extraCertChain
-
-
-def test_certificateOptionsFromFilesWorksWithChainInExtraFile(tmpdir):
-    pytest.importorskip('twisted')
-    keyFile = tmpdir.join('key.pem')
-    keyFile.write(KEY_PEM)
-    certFile = tmpdir.join('cert.pem')
-    certFile.write(CERT_PEMS[0])
-    chainFile = tmpdir.join('chain.pem')
-    chainFile.write(''.join(CERT_PEMS[1:]))
-    ctxFactory = pem.certificateOptionsFromFiles(
-        str(keyFile), str(certFile), str(chainFile)
-    )
-    assert 2 == len(ctxFactory.extraCertChain)
-
-
-def test_certificateOptionsFromFilesWorksWithChainInSameFile(tmpdir):
-    pytest.importorskip('twisted')
-    keyFile = tmpdir.join('key.pem')
-    keyFile.write(KEY_PEM)
-    certFile = tmpdir.join('cert_and_chain.pem')
-    certFile.write(''.join(CERT_PEMS))
-    ctxFactory = pem.certificateOptionsFromFiles(str(keyFile), str(certFile))
-    assert 2 == len(ctxFactory.extraCertChain)
+    def test_file(self, tmpdir):
+        certs_file = tmpdir.join('certs.pem')
+        certs_file.write(''.join(CERT_PEMS))
+        certs = pem.parse_file(str(certs_file))
+        assert CERT_PEMS == [str(cert) for cert in certs]
 
 
 @pytest.fixture
@@ -84,105 +47,135 @@ def allFile(tmpdir):
     return allFile
 
 
-def test_certificateOptionsFromFilesWorksWithEverythingInOneFile(allFile):
-    pytest.importorskip('twisted')
-    ctxFactory = pem.certificateOptionsFromFiles(str(allFile))
-    assert 2 == len(ctxFactory.extraCertChain)
+class TestCertificateOptionsFromFiles(object):
+    def test_worksWithoutChain(self, tmpdir):
+        pytest.importorskip('twisted')
+        keyFile = tmpdir.join('key.pem')
+        keyFile.write(KEY_PEM)
+        certFile = tmpdir.join('cert.pem')
+        certFile.write(CERT_PEMS[0])
+        ctxFactory = pem.certificateOptionsFromFiles(
+            str(keyFile), str(certFile),
+        )
+        assert [] == ctxFactory.extraCertChain
+
+    def test_worksWithChainInExtraFile(self, tmpdir):
+        pytest.importorskip('twisted')
+        keyFile = tmpdir.join('key.pem')
+        keyFile.write(KEY_PEM)
+        certFile = tmpdir.join('cert.pem')
+        certFile.write(CERT_PEMS[0])
+        chainFile = tmpdir.join('chain.pem')
+        chainFile.write(''.join(CERT_PEMS[1:]))
+        ctxFactory = pem.certificateOptionsFromFiles(
+            str(keyFile), str(certFile), str(chainFile)
+        )
+        assert 2 == len(ctxFactory.extraCertChain)
+
+    def test_worksWithChainInSameFile(self, tmpdir):
+        pytest.importorskip('twisted')
+        keyFile = tmpdir.join('key.pem')
+        keyFile.write(KEY_PEM)
+        certFile = tmpdir.join('cert_and_chain.pem')
+        certFile.write(''.join(CERT_PEMS))
+        ctxFactory = pem.certificateOptionsFromFiles(
+            str(keyFile), str(certFile)
+        )
+        assert 2 == len(ctxFactory.extraCertChain)
+
+    def test_worksWithEverythingInOneFile(self, allFile):
+        pytest.importorskip('twisted')
+        ctxFactory = pem.certificateOptionsFromFiles(str(allFile))
+        assert 2 == len(ctxFactory.extraCertChain)
+
+    def test_passesCertsInCorrectFormat(self, allFile):
+        pytest.importorskip('twisted')
+        crypto = pytest.importorskip('OpenSSL.crypto')
+        ctxFactory = pem.certificateOptionsFromFiles(str(allFile))
+        assert isinstance(ctxFactory.privateKey, crypto.PKey)
+        assert isinstance(ctxFactory.certificate, crypto.X509)
+        assert all(isinstance(cert, crypto.X509)
+                   for cert in ctxFactory.extraCertChain)
+
+    def test_forwardsKWargs(self, allFile):
+        pytest.importorskip('twisted')
+        ssl = pytest.importorskip('OpenSSL.SSL')
+        ctxFactory = pem.certificateOptionsFromFiles(
+            str(allFile),
+            method=ssl.SSLv2_METHOD,
+        )
+        assert ssl.SSLv2_METHOD == ctxFactory.method
+
+    def test_catchesMissingKey(self, tmpdir):
+        pytest.importorskip('twisted')
+        certFile = tmpdir.join('cert_and_chain.pem')
+        certFile.write(''.join(CERT_PEMS))
+        with pytest.raises(ValueError):
+            pem.certificateOptionsFromFiles(
+                str(certFile)
+            )
+
+    def test_catchesMultipleKeys(self, tmpdir):
+        pytest.importorskip('twisted')
+        allFile = tmpdir.join('key_cert_and_chain.pem')
+        allFile.write(KEY_PEM + ''.join(CERT_PEMS) + KEY_PEM2)
+        with pytest.raises(ValueError):
+            pem.certificateOptionsFromFiles(
+                str(allFile)
+            )
+
+    def test_catchesMissingCertificate(self, tmpdir):
+        pytest.importorskip('twisted')
+        keyFile = tmpdir.join('key.pem')
+        keyFile.write(KEY_PEM)
+        with pytest.raises(ValueError):
+            pem.certificateOptionsFromFiles(
+                str(keyFile)
+            )
 
 
-def test_certificateOptionsFromFilesPassesCertsInCorrectFormat(allFile):
-    pytest.importorskip('twisted')
-    crypto = pytest.importorskip('OpenSSL.crypto')
-    ctxFactory = pem.certificateOptionsFromFiles(str(allFile))
-    assert isinstance(ctxFactory.privateKey, crypto.PKey)
-    assert isinstance(ctxFactory.certificate, crypto.X509)
-    assert all(isinstance(cert, crypto.X509)
-               for cert in ctxFactory.extraCertChain)
+class TestForwardCompatibleDHE(object):
+    def test_fakeDHParameterSupport(self, monkeypatch, allFile):
+        """
+        Fake DH parameter support if Twisted doesn't support it.
+        """
+        ssl = pytest.importorskip('twisted.internet.ssl')
 
+        fakeCtxFactory = object()
+        recorder = pretend.call_recorder(lambda *a, **kw: fakeCtxFactory)
+        monkeypatch.setattr(ssl, "CertificateOptions", recorder)
+        monkeypatch.setattr(pem, "_DH_PARAMETERS_SUPPORTED", False)
 
-def test_certificateOptionsForwardsKWargs(allFile):
-    pytest.importorskip('twisted')
-    ssl = pytest.importorskip('OpenSSL.SSL')
-    ctxFactory = pem.certificateOptionsFromFiles(
-        str(allFile),
-        method=ssl.SSLv2_METHOD,
-    )
-    assert ssl.SSLv2_METHOD == ctxFactory.method
-
-
-def test_fakeDHParameterSupport(monkeypatch, allFile):
-    """
-    Fake DH parameter support if Twisted doesn't support it.
-    """
-    ssl = pytest.importorskip('twisted.internet.ssl')
-
-    fakeCtxFactory = object()
-    recorder = pretend.call_recorder(lambda *a, **kw: fakeCtxFactory)
-    monkeypatch.setattr(ssl, "CertificateOptions", recorder)
-    monkeypatch.setattr(pem, "_DH_PARAMETERS_SUPPORTED", False)
-
-    fakeParameters = object()
-    ctxFactory = pem.certificateOptionsFromFiles(
-        str(allFile),
-        dhParameters=fakeParameters
-    )
-
-    assert isinstance(ctxFactory, pem._DHParamContextFactory)
-    assert ctxFactory.ctxFactory is fakeCtxFactory
-    assert "dhParameters" not in recorder.calls[0].kwargs
-
-
-def test_realDHParameterSupport(monkeypatch, allFile):
-    """
-    Pass DH parameters directly to CertificateOptions if the installed
-    version of Twisted supports it.
-
-    """
-    ssl = pytest.importorskip('twisted.internet.ssl')
-
-    fakeCtxFactory = object()
-    recorder = pretend.call_recorder(lambda *a, **kw: fakeCtxFactory)
-    monkeypatch.setattr(ssl, "CertificateOptions", recorder)
-    monkeypatch.setattr(pem, "_DH_PARAMETERS_SUPPORTED", True)
-
-    fakeParameters = object()
-    ctxFactory = pem.certificateOptionsFromFiles(
-        str(allFile),
-        dhParameters=fakeParameters
-    )
-
-    assert ctxFactory is fakeCtxFactory
-    assert recorder.calls[0].kwargs["dhParameters"] == fakeParameters
-
-
-def test_certificateOptionsFromFilesCatchesMissingKey(tmpdir):
-    pytest.importorskip('twisted')
-    certFile = tmpdir.join('cert_and_chain.pem')
-    certFile.write(''.join(CERT_PEMS))
-    with pytest.raises(ValueError):
-        pem.certificateOptionsFromFiles(
-            str(certFile)
+        fakeParameters = object()
+        ctxFactory = pem.certificateOptionsFromFiles(
+            str(allFile),
+            dhParameters=fakeParameters
         )
 
+        assert isinstance(ctxFactory, pem._DHParamContextFactory)
+        assert ctxFactory.ctxFactory is fakeCtxFactory
+        assert "dhParameters" not in recorder.calls[0].kwargs
 
-def test_certificateOptionsFromFilesCatchesMultipleKeys(tmpdir):
-    pytest.importorskip('twisted')
-    allFile = tmpdir.join('key_cert_and_chain.pem')
-    allFile.write(KEY_PEM + ''.join(CERT_PEMS) + KEY_PEM2)
-    with pytest.raises(ValueError):
-        pem.certificateOptionsFromFiles(
-            str(allFile)
+    def test_realDHParameterSupport(self, monkeypatch, allFile):
+        """
+        Pass DH parameters directly to CertificateOptions if the installed
+        version of Twisted supports it.
+        """
+        ssl = pytest.importorskip('twisted.internet.ssl')
+
+        fakeCtxFactory = object()
+        recorder = pretend.call_recorder(lambda *a, **kw: fakeCtxFactory)
+        monkeypatch.setattr(ssl, "CertificateOptions", recorder)
+        monkeypatch.setattr(pem, "_DH_PARAMETERS_SUPPORTED", True)
+
+        fakeParameters = object()
+        ctxFactory = pem.certificateOptionsFromFiles(
+            str(allFile),
+            dhParameters=fakeParameters
         )
 
-
-def test_certificateOptionsFromFilesCatchesMissingCertificate(tmpdir):
-    pytest.importorskip('twisted')
-    keyFile = tmpdir.join('key.pem')
-    keyFile.write(KEY_PEM)
-    with pytest.raises(ValueError):
-        pem.certificateOptionsFromFiles(
-            str(keyFile)
-        )
+        assert ctxFactory is fakeCtxFactory
+        assert recorder.calls[0].kwargs["dhParameters"] == fakeParameters
 
 
 CERT_PEMS = [
