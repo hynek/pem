@@ -1,13 +1,16 @@
 language: python
-python:
-    - '2.6'
-    - '2.7'
-    - '3.3'
-# PyPy segfaults with 1.9, need to wait for Travis to upgrade.
-#   - 'pypy'
+python: 2.7
+env:
+    - TOX_ENV=py26
+    - TOX_ENV=py27
+    - TOX_ENV=py33
+    - TOX_ENV=pypy
 
 install:
-    - pip install pytest
-    - "if [[ $TRAVIS_PYTHON_VERSION != '3.3' ]]; then pip install twisted pyopenssl; fi"
+    - pip install tox coveralls
 
-script: py.test
+script:
+    - tox --hashseed 0 -e $TOX_ENV
+
+after_success:
+    - coveralls
