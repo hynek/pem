@@ -61,7 +61,7 @@ def parse_file(file_name):
         return parse(f.read())
 
 
-def certificateOptionsFromFiles(dhParameters=None, *pemFiles, **kw):
+def certificateOptionsFromFiles(*pemFiles, **kw):
     """
     Read all *pemFiles*, find one key, use the first certificate as server
     certificate and the rest as chain.
@@ -83,14 +83,17 @@ def certificateOptionsFromFiles(dhParameters=None, *pemFiles, **kw):
     chain = [ssl.Certificate.loadPEM(str(certPEM)).original
              for certPEM in certs[1:]]
 
+    fakeEDHSupport = "dhParameters" in kw and not _DH_PARAMETERS_SUPPORTED
+    if fakeEDHSupport:
+        dhParameters = kw.pop("dhParameters")
+
     ctxFactory = ssl.CertificateOptions(
         privateKey=cert.privateKey.original,
         certificate=cert.original,
         extraCertChain=chain,
-        **kw
-    )
+        **kw)
 
-    if dhParameters is not None:
+    if fakeEDHSupport:
         return _DHParamContextFactory(ctxFactory, dhParameters)
     else:
         return ctxFactory
@@ -112,7 +115,7 @@ class _DHParamContextFactory(object):
         return ctx
 
 
-class OpenSSLDiffieHellmanParameters(object):
+class _OpenSSLDiffieHellmanParameters(object):
     """
     A representation of key generation parameters that are required for
     Diffie-Hellman key exchange.
@@ -142,3 +145,11 @@ class OpenSSLDiffieHellmanParameters(object):
             <twisted.internet.ssl.DiffieHellmanParameters>}
         """
         return cls(filePath)
+
+
+try:
+    from twisted.internet.ssl import OpenSSLDiffieHellmanParameters
+    _DH_PARAMETERS_SUPPORTED = True
+except ImportError:
+    OpenSSLDiffieHellmanParameters = _OpenSSLDiffieHellmanParameters
+    _DH_PARAMETERS_SUPPORTED = False
