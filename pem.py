@@ -62,28 +62,44 @@ def parse_file(file_name):
 
 
 def certificateOptionsFromPEMs(pems, **kw):
+    from OpenSSL.SSL import FILETYPE_PEM
     from twisted.internet import ssl
-    keys = [key for key in pems if isinstance(key, Key)]
+
+    keys = list(key for key in pems if isinstance(key, Key))
     if not len(keys):
         raise ValueError('Supplied PEM file(s) do *not* contain a key.')
     if len(keys) > 1:
         raise ValueError('Supplied PEM file(s) contain *more* than one key.')
-    certs = [cert for cert in pems if isinstance(cert, Certificate)]
+
+    privateKey = ssl.KeyPair.load(keys[0].pem_str, FILETYPE_PEM)
+
+    certs = list(cert for cert in pems if isinstance(cert, Certificate))
     if not len(certs):
         raise ValueError('*At least one* certificate is required.')
-    cert = ssl.PrivateCertificate.loadPEM(str(keys[0]) + str(certs[0]))
-    chain = [ssl.Certificate.loadPEM(str(certPEM)).original
-             for certPEM in certs[1:]]
+    certificates = [ssl.Certificate.loadPEM(str(certPEM))
+                    for certPEM in certs]
+
+    certificatesByFingerprint = dict(
+        [(certificate.getPublicKey().keyHash(), certificate)
+         for certificate in certificates]
+    )
+
+    if privateKey.keyHash() not in certificatesByFingerprint:
+        raise ValueError("No certificate matching %s found")
+
+    primaryCertificate = certificatesByFingerprint.pop(privateKey.keyHash())
 
     fakeEDHSupport = "dhParameters" in kw and not _DH_PARAMETERS_SUPPORTED
     if fakeEDHSupport:
         dhParameters = kw.pop("dhParameters")
 
     ctxFactory = ssl.CertificateOptions(
-        privateKey=cert.privateKey.original,
-        certificate=cert.original,
-        extraCertChain=chain,
-        **kw)
+        privateKey=privateKey.original,
+        certificate=primaryCertificate.original,
+        extraCertChain=[chain.original
+                        for chain in certificatesByFingerprint.values()],
+        **kw
+    )
 
     if fakeEDHSupport:
         return _DHParamContextFactory(ctxFactory, dhParameters)
