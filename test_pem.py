@@ -84,6 +84,17 @@ class TestCertificateOptionsFromFiles(object):
         )
         assert 2 == len(ctxFactory.extraCertChain)
 
+    def test_worksWithChainCertsFirst(self, tmpdir):
+        pytest.importorskip('twisted')
+        keyFile = tmpdir.join('key.pem')
+        keyFile.write(KEY_PEM)
+        certFile = tmpdir.join('cert_and_chain.pem')
+        certFile.write(''.join(reversed(CERT_PEMS)))
+        ctxFactory = pem.certificateOptionsFromFiles(
+            str(keyFile), str(certFile)
+        )
+        assert 2 == len(ctxFactory.extraCertChain)
+
     def test_worksWithEverythingInOneFile(self, allFile):
         pytest.importorskip('twisted')
         ctxFactory = pem.certificateOptionsFromFiles(str(allFile))
