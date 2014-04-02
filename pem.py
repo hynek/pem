@@ -61,16 +61,8 @@ def parse_file(file_name):
         return parse(f.read())
 
 
-def certificateOptionsFromFiles(*pemFiles, **kw):
-    """
-    Read all *pemFiles*, find one key, use the first certificate as server
-    certificate and the rest as chain.
-    """
+def certificateOptionsFromPEMs(pems, **kw):
     from twisted.internet import ssl
-
-    pems = []
-    for pemFile in pemFiles:
-        pems += parse_file(pemFile)
     keys = [key for key in pems if isinstance(key, Key)]
     if not len(keys):
         raise ValueError('Supplied PEM file(s) do *not* contain a key.')
@@ -97,6 +89,17 @@ def certificateOptionsFromFiles(*pemFiles, **kw):
         return _DHParamContextFactory(ctxFactory, dhParameters)
     else:
         return ctxFactory
+
+
+def certificateOptionsFromFiles(*pemFiles, **kw):
+    """
+    Read all *pemFiles*, find one key, use the first certificate as server
+    certificate and the rest as chain.
+    """
+    pems = []
+    for pemFile in pemFiles:
+        pems += parse_file(pemFile)
+    return certificateOptionsFromPEMs(pems, **kw)
 
 
 class _DHParamContextFactory(object):
