@@ -71,9 +71,9 @@ def certificateOptionsFromPEMs(pemObjects, **kw):
 
     keys = [key for key in pemObjects if isinstance(key, Key)]
     if not len(keys):
-        raise ValueError('Supplied PEM file(s) do *not* contain a key.')
+        raise ValueError('Supplied PEM file(s) does *not* contain a key.')
     if len(keys) > 1:
-        raise ValueError('Supplied PEM file(s) contain *more* than one key.')
+        raise ValueError('Supplied PEM file(s) contains *more* than one key.')
 
     privateKey = ssl.KeyPair.load(keys[0].pem_str, FILETYPE_PEM)
 
