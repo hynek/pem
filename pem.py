@@ -94,8 +94,8 @@ def certificateOptionsFromPEMs(pemObjects, **kw):
     )
 
     if privateKey.keyHash() not in certificatesByFingerprint:
-        raise ValueError("No certificate matching {} found.".format(
-            privateKey.keyHash()
+        raise ValueError("No certificate matching {fingerprint} found.".format(
+            fingerprint=privateKey.keyHash()
         ))
 
     primaryCertificate = certificatesByFingerprint.pop(privateKey.keyHash())
