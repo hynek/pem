@@ -22,7 +22,7 @@ The core API call is the function ``parse()``:
       certs = pem.parse(f.read())
 
 The function returns a list of valid PEM objects found in the string supplied.
-Currently possible types are ``Certificate`` and ``RSAPrivateKey``.
+Currently possible types are ``DHParameters``, ``Certificate``, and ``RSAPrivateKey``.
 Both can be transformed using ``str()`` into plain strings for other APIs.
 They don’t offer any other public API at the moment.
 

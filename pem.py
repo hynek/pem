@@ -4,7 +4,7 @@ import codecs
 import re
 
 
-__version__ = '0.2.0'
+__version__ = '0.3.0'
 __author__ = 'Hynek Schlawack'
 __license__ = 'MIT'
 __copyright__ = 'Copyright 2014 Hynek Schlawack'
@@ -35,9 +35,14 @@ class RSAPrivateKey(Key):
     pass
 
 
+class DHParameters(_Base):
+    pass
+
+
 _PEM_TO_CLASS = {
     'CERTIFICATE': Certificate,
     'RSA PRIVATE KEY': RSAPrivateKey,
+    'DH PARAMETERS': DHParameters,
 }
 _PEM_RE = re.compile(u"""-----BEGIN ({0})-----
 .+?
@@ -57,7 +62,7 @@ def parse_file(file_name):
     """
     Read *file_name* and parse PEM objects from it.
     """
-    with codecs.open(file_name, 'rb', encoding='ascii') as f:
+    with codecs.open(file_name, 'rb', encoding='utf-8', errors='ignore') as f:
         return parse(f.read())
 
 

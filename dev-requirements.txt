@@ -1,6 +1,5 @@
-bumpversion
+pretend
+pyopenssl
 pytest
 pytest-cov
 twisted
-pyopenssl
-pretend

@@ -2,6 +2,7 @@
 
 from __future__ import (absolute_import, division, print_function)
 
+import certifi
 import pytest
 
 from pretend import call, call_recorder, stub
@@ -11,31 +12,73 @@ import pem
 
 class TestPEMObjects(object):
     def test_cert_has_correct_repr(self):
+        """
+        Calling repr on a Certificate instance returns the proper string.
+        """
         cert = pem.Certificate('test')
         assert "<Certificate(pem_str='test')>" == repr(cert)
 
     def test_rsa_key_has_correct_repr(self):
+        """
+        Calling repr on a RSAPrivateKey instance returns the proper string.
+        """
         key = pem.RSAPrivateKey('test')
         assert "<RSAPrivateKey(pem_str='test')>" == repr(key)
+
+    def test_dh_params_has_correct_repr(self):
+        """
+        Calling repr on a DHParameters instance returns the proper string.
+        """
+        key = pem.DHParameters('test')
+        assert "<DHParameters(pem_str='test')>" == repr(key)
 
 
 class TestParse(object):
     def test_key(self):
-        keys = pem.parse(KEY_PEM)
-        assert 1 == len(keys)
-        key = keys[0]
+        """
+        Parses a PEM string with a key into an RSAPrivateKey.
+        """
+        rv = pem.parse(KEY_PEM)
+        key, = rv
         assert isinstance(key, pem.RSAPrivateKey)
         assert KEY_PEM == str(key)
 
     def test_certificates(self):
+        """
+        Parses a PEM string with multiple certificates into a list of
+        corresponding Certificates.
+        """
         certs = pem.parse(''.join(CERT_PEMS))
+        assert all(isinstance(c, pem.Certificate) for c in certs)
         assert CERT_PEMS == [str(cert) for cert in certs]
 
+    def test_dh(self):
+        """
+        Parses a PEM string with with DH parameters into a DHParameters.
+        """
+        rv = pem.parse(DH_PEM)
+        dh, = rv
+        assert isinstance(dh, pem.DHParameters)
+        assert DH_PEM == str(dh)
+
     def test_file(self, tmpdir):
+        """
+        A file with multiple certificate PEMs is parsed into a list of
+        corresponding Certificates.
+        """
         certs_file = tmpdir.join('certs.pem')
         certs_file.write(''.join(CERT_PEMS))
         certs = pem.parse_file(str(certs_file))
+        assert all(isinstance(c, pem.Certificate) for c in certs)
         assert CERT_PEMS == [str(cert) for cert in certs]
+
+    def test_loads_certifi(self):
+        """
+        Loading certifi returns a list of Certificates.
+        """
+        cas = pem.parse_file(certifi.where())
+        assert isinstance(cas, list)
+        assert all(isinstance(ca, pem.Certificate) for ca in cas)
 
 
 @pytest.fixture
@@ -287,4 +330,19 @@ nxAWvPxLtU9HC0Pc+zYBWQIZAP8ks93ruPqtoczsmiK+YSoyU+I4bKxM/wIZAMAx
 zQIZAKm8nHjiF9iSwlsrXMrKWRhgFDf3fzl89QIZALgkMvFA5CmRO+DMECBMsxIb
 kjBF/mzooA==
 -----END RSA PRIVATE KEY-----
+"""
+
+DH_PEM = """-----BEGIN DH PARAMETERS-----
+MIICCAKCAgEAj9/hwPNNKlQEANXqFBXViNy9nVpYlqIIHaLhoKdwAFzgYM+9hNSz
+FM/k+K5FS5dXrM63Zh9NgTI1M+ZRHJAxM2hhsG8AA333PN+c3exTRGwjQhU16XJg
+Jw/r/jYfsAyKRXqZnMuXRg+3ALEHEkvNt/vMm7Zdo6SvNIN1B2I/qEGlqFRYSgx8
+dS7CRxfVf9lHE+q6HB2l/bmwZQzxvt900Dclp5DZaUnS0zS8OGsx3/QcDCZ4/4nB
+Gs53uDcFzb6BnsoT3oowvzCGTihHXGmS5dJaMEWwdoL1/X9ZrN3+Sex9XZufZLoO
+nGWjEI4yEQJbPql1iutLBR723ZDLbz9bbo86vhJJqYPJyDvxLHv6moh27PCL95JH
+Cg1mp4DCrjPYyd65fDvd/gP2Fa7Y+yH74CsV3LLzkxIEv9WobpxRamIljehVAdUA
+ZHXSLSROnc5iGNT3gJ7jcFucD7pi5MbSa1nKVc0C4Vp4f1enrVvNB/je3no0KTtN
+0aY+RqJTqypmsiv6b6zdLfaZHBcqy7/qmeJu/HTIiAYhk6LW6RDFcBLJCFEujV5Y
+5qjyk41M4luGVr0m41LkiXPgCPko8kiqnzDi7inVjKjrmKfspCzROw9edIdvAtfH
+vX0dAb0xNIpm5IRffJTVVpeZwNXuE7cNvBSZ0GY4MPkiO2dcPHeV28MCAQI=
+-----END DH PARAMETERS-----
 """
