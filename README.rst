@@ -87,6 +87,25 @@ Therefore you can distribute your key, certificate, and chain certificates over 
 A ``ValueError`` is raised if more than one key, no key, or no certificate are found.
 Any further keyword arguments will be passed to CertificateOptions_.
 
+If you want to load your PEM data from somewhere else, you can also use
+``certificateOptionsFromPEMs`` to do the same thing with already-loaded
+``Certificate``, ``Key``, and ``RSAPrivateKey`` objects, like so:
+
+.. code-block:: python
+
+    import pem
+
+    myPems = []
+    pems = pem.parse("""\
+    -----BEGIN RSA PRIVATE KEY-----
+    ...
+    -----END RSA PRIVATE KEY-----
+    -----BEGIN CERTIFICATE-----
+    ...
+    -----END CERTIFICATE-----
+    """)
+
+    ctxFactory = pem.certificateOptionsFromPEMs(pems)
 
 Ephemeral Diffie-Hellman support
 --------------------------------
