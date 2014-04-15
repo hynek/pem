@@ -136,7 +136,7 @@ class TestCertificateOptionsFromFiles(object):
         pytest.importorskip('twisted')
         allFile = tmpdir.join('key_cert_and_chain.pem')
         allFile.write(KEY_PEM + ''.join(CERT_PEMS) + KEY_PEM2)
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError) as excinfo:
             pem.certificateOptionsFromFiles(
                 str(allFile)
             )
@@ -149,6 +149,21 @@ class TestCertificateOptionsFromFiles(object):
             pem.certificateOptionsFromFiles(
                 str(keyFile)
             )
+
+    def test_catchesKeyCertificateMismatch(self, tmpdir):
+        """
+        A ValueError is raised when some certificates are present in the pem,
+        but no certificate in the pem matches the key.
+        """
+        pytest.importorskip('twisted')
+        keyFile = tmpdir.join('key.pem')
+        keyFile.write(KEY_PEM + "".join(CERT_PEMS[1:]))
+        with pytest.raises(ValueError) as excinfo:
+            pem.certificateOptionsFromFiles(
+                str(keyFile)
+            )
+        assert str(excinfo.value) == ("No certificate matching "
+                                      + KEY_PEM_HASH + " found.")
 
 
 class TestForwardCompatibleDHE(object):
@@ -261,6 +276,8 @@ Q9Rv3iOsmqoCb5mqiDra0QIZAPbJRoliNA+2w7/dfttmWcQzcq8xL8qnEwIZAMXx
 OzCeivo=
 -----END RSA PRIVATE KEY-----
 """
+KEY_PEM_HASH = "64b6b4369b914ec3a036ae736624faa8"
+
 
 KEY_PEM2 = """-----BEGIN RSA PRIVATE KEY-----
 MIH0AgEAAjEAv401YT8GeCt6oG076W/n7hxUsFO7sd74/4+2+4OcwMiLEp8BSRdW
