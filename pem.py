@@ -109,8 +109,13 @@ def certificateOptionsFromPEMs(pems, **kw):
 
 def certificateOptionsFromFiles(*pemFiles, **kw):
     """
-    Read all *pemFiles*, find one key, use the first certificate as server
-    certificate and the rest as chain.
+    Read all files named by *pemFiles*, and return a Twisted CertificateOptions
+    which can be used to run a TLS server.
+
+    In those PEM files, identify one private key and its corresponding
+    certificate to use as the primary certificate, then use the rest of the
+    certificates found as chain certificates.  Raise a ValueError if no
+    certificate matching a private key is found.
     """
     pems = []
     for pemFile in pemFiles:
