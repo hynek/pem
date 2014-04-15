@@ -127,6 +127,22 @@ class TestCertificateOptionsFromFiles(object):
         )
         assert 2 == len(ctxFactory.extraCertChain)
 
+    def test_useTypesNotOrdering(self, tmpdir):
+        """
+        L{pem.certificateOptionsFromFiles} identifies the chain, key, and
+        certificate for Twisted's L{CertificateOptions} based on their types
+        and certificate fingerprints, not their order within the file.
+        """
+        pytest.importorskip('twisted')
+        keyFile = tmpdir.join('key.pem')
+        keyFile.write(KEY_PEM)
+        certFile = tmpdir.join('cert_and_chain.pem')
+        certFile.write(''.join(reversed(CERT_PEMS)))
+        ctxFactory = pem.certificateOptionsFromFiles(
+            str(keyFile), str(certFile)
+        )
+        assert 2 == len(ctxFactory.extraCertChain)
+
     def test_worksWithEverythingInOneFile(self, allFile):
         pytest.importorskip('twisted')
         ctxFactory = pem.certificateOptionsFromFiles(str(allFile))
@@ -176,6 +192,21 @@ class TestCertificateOptionsFromFiles(object):
             pem.certificateOptionsFromFiles(
                 str(keyFile)
             )
+
+    def test_catchesKeyCertificateMismatch(self, tmpdir):
+        """
+        A ValueError is raised when some certificates are present in the pem,
+        but no certificate in the pem matches the key.
+        """
+        pytest.importorskip('twisted')
+        keyFile = tmpdir.join('key.pem')
+        keyFile.write(KEY_PEM + "".join(CERT_PEMS[1:]))
+        with pytest.raises(ValueError) as excinfo:
+            pem.certificateOptionsFromFiles(
+                str(keyFile)
+            )
+        assert str(excinfo.value) == ("No certificate matching "
+                                      + KEY_PEM_HASH + " found.")
 
 
 class TestForwardCompatibleDHE(object):
@@ -288,6 +319,8 @@ Q9Rv3iOsmqoCb5mqiDra0QIZAPbJRoliNA+2w7/dfttmWcQzcq8xL8qnEwIZAMXx
 OzCeivo=
 -----END RSA PRIVATE KEY-----
 """
+KEY_PEM_HASH = "64b6b4369b914ec3a036ae736624faa8"
+
 
 KEY_PEM2 = """-----BEGIN RSA PRIVATE KEY-----
 MIH0AgEAAjEAv401YT8GeCt6oG076W/n7hxUsFO7sd74/4+2+4OcwMiLEp8BSRdW

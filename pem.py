@@ -66,42 +66,72 @@ def parse_file(file_name):
         return parse(f.read())
 
 
-def certificateOptionsFromFiles(*pemFiles, **kw):
+def certificateOptionsFromPEMs(pemObjects, **kw):
     """
-    Read all *pemFiles*, find one key, use the first certificate as server
-    certificate and the rest as chain.
+    Load a CertificateOptions from the given collection of PEM objects
+    (already-loaded private keys and certificates).
     """
+    from OpenSSL.SSL import FILETYPE_PEM
     from twisted.internet import ssl
 
-    pems = []
-    for pemFile in pemFiles:
-        pems += parse_file(pemFile)
-    keys = [key for key in pems if isinstance(key, Key)]
+    keys = [key for key in pemObjects if isinstance(key, Key)]
     if not len(keys):
-        raise ValueError('Supplied PEM file(s) do *not* contain a key.')
+        raise ValueError('Supplied PEM file(s) does *not* contain a key.')
     if len(keys) > 1:
-        raise ValueError('Supplied PEM file(s) contain *more* than one key.')
-    certs = [cert for cert in pems if isinstance(cert, Certificate)]
+        raise ValueError('Supplied PEM file(s) contains *more* than one key.')
+
+    privateKey = ssl.KeyPair.load(keys[0].pem_str, FILETYPE_PEM)
+
+    certs = [cert for cert in pemObjects if isinstance(cert, Certificate)]
     if not len(certs):
         raise ValueError('*At least one* certificate is required.')
-    cert = ssl.PrivateCertificate.loadPEM(str(keys[0]) + str(certs[0]))
-    chain = [ssl.Certificate.loadPEM(str(certPEM)).original
-             for certPEM in certs[1:]]
+    certificates = [ssl.Certificate.loadPEM(str(certPEM))
+                    for certPEM in certs]
+
+    certificatesByFingerprint = dict(
+        [(certificate.getPublicKey().keyHash(), certificate)
+         for certificate in certificates]
+    )
+
+    if privateKey.keyHash() not in certificatesByFingerprint:
+        raise ValueError("No certificate matching {fingerprint} found.".format(
+            fingerprint=privateKey.keyHash()
+        ))
+
+    primaryCertificate = certificatesByFingerprint.pop(privateKey.keyHash())
 
     fakeEDHSupport = "dhParameters" in kw and not _DH_PARAMETERS_SUPPORTED
     if fakeEDHSupport:
         dhParameters = kw.pop("dhParameters")
 
     ctxFactory = ssl.CertificateOptions(
-        privateKey=cert.privateKey.original,
-        certificate=cert.original,
-        extraCertChain=chain,
-        **kw)
+        privateKey=privateKey.original,
+        certificate=primaryCertificate.original,
+        extraCertChain=[chain.original
+                        for chain in certificatesByFingerprint.values()],
+        **kw
+    )
 
     if fakeEDHSupport:
         return _DHParamContextFactory(ctxFactory, dhParameters)
     else:
         return ctxFactory
+
+
+def certificateOptionsFromFiles(*pemFiles, **kw):
+    """
+    Read all files named by *pemFiles*, and return a Twisted CertificateOptions
+    which can be used to run a TLS server.
+
+    In those PEM files, identify one private key and its corresponding
+    certificate to use as the primary certificate, then use the rest of the
+    certificates found as chain certificates.  Raise a ValueError if no
+    certificate matching a private key is found.
+    """
+    pems = []
+    for pemFile in pemFiles:
+        pems += parse_file(pemFile)
+    return certificateOptionsFromPEMs(pems, **kw)
 
 
 class _DHParamContextFactory(object):

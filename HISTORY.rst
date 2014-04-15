@@ -9,6 +9,7 @@ History
 
 - Auto-detect DH parameter PEMs.
 - Load PEM files as UTF-8 to allow for non-ASCII comments (like in certifi).
+- Allow keys, primary certificates, and chain certificates to occur in any order.
 
 
 0.2.0 (2014-03-13)
