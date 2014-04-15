@@ -85,6 +85,11 @@ class TestCertificateOptionsFromFiles(object):
         assert 2 == len(ctxFactory.extraCertChain)
 
     def test_worksWithChainCertsFirst(self, tmpdir):
+        """
+        L{pem.certificateOptionsFromFiles} identifies the chain, key, and
+        certificate for Twisted's L{CertificateOptions} based on their types
+        and certificate fingerprints, not their order within the file.
+        """
         pytest.importorskip('twisted')
         keyFile = tmpdir.join('key.pem')
         keyFile.write(KEY_PEM)
