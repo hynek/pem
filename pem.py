@@ -65,7 +65,7 @@ def certificateOptionsFromPEMs(pems, **kw):
     from OpenSSL.SSL import FILETYPE_PEM
     from twisted.internet import ssl
 
-    keys = list(key for key in pems if isinstance(key, Key))
+    keys = [key for key in pems if isinstance(key, Key)]
     if not len(keys):
         raise ValueError('Supplied PEM file(s) do *not* contain a key.')
     if len(keys) > 1:
@@ -73,7 +73,7 @@ def certificateOptionsFromPEMs(pems, **kw):
 
     privateKey = ssl.KeyPair.load(keys[0].pem_str, FILETYPE_PEM)
 
-    certs = list(cert for cert in pems if isinstance(cert, Certificate))
+    certs = [cert for cert in pems if isinstance(cert, Certificate)]
     if not len(certs):
         raise ValueError('*At least one* certificate is required.')
     certificates = [ssl.Certificate.loadPEM(str(certPEM))
