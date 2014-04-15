@@ -84,7 +84,7 @@ class TestCertificateOptionsFromFiles(object):
         )
         assert 2 == len(ctxFactory.extraCertChain)
 
-    def test_worksWithChainCertsFirst(self, tmpdir):
+    def test_useTypesNotOrdering(self, tmpdir):
         """
         L{pem.certificateOptionsFromFiles} identifies the chain, key, and
         certificate for Twisted's L{CertificateOptions} based on their types
