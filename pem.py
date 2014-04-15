@@ -35,9 +35,14 @@ class RSAPrivateKey(Key):
     pass
 
 
+class DHParameters(_Base):
+    pass
+
+
 _PEM_TO_CLASS = {
     'CERTIFICATE': Certificate,
     'RSA PRIVATE KEY': RSAPrivateKey,
+    'DH PARAMETERS': DHParameters,
 }
 _PEM_RE = re.compile(u"""-----BEGIN ({0})-----
 .+?
