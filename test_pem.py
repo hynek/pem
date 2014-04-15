@@ -2,11 +2,22 @@
 
 from __future__ import (absolute_import, division, print_function)
 
+import certifi
 import pytest
 
 from pretend import call, call_recorder, stub
 
 import pem
+
+
+class TestCertifi(object):
+    def test_loads_certifi(self):
+        """
+        Loading certifi returns a list of PEM objects.
+        """
+        rv = pem.parse_file(certifi.where())
+        assert isinstance(rv, list)
+        assert all(isinstance(p, pem._Base) for p in rv)
 
 
 class TestPEMObjects(object):

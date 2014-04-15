@@ -4,6 +4,12 @@ History
 =======
 
 
+0.3.0 (2014-04-15)
+------------------
+
+- Load PEM files as UTF-8 to allow for non-ASCII comments (like in certifi).
+
+
 0.2.0 (2014-03-13)
 ------------------
 

@@ -57,7 +57,7 @@ def parse_file(file_name):
     """
     Read *file_name* and parse PEM objects from it.
     """
-    with codecs.open(file_name, 'rb', encoding='ascii') as f:
+    with codecs.open(file_name, 'rb', encoding='utf-8', errors='ignore') as f:
         return parse(f.read())
 
 
