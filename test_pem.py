@@ -179,7 +179,7 @@ class TestCertificateOptionsFromFiles(object):
         pytest.importorskip('twisted')
         allFile = tmpdir.join('key_cert_and_chain.pem')
         allFile.write(KEY_PEM + ''.join(CERT_PEMS) + KEY_PEM2)
-        with pytest.raises(ValueError) as excinfo:
+        with pytest.raises(ValueError):
             pem.certificateOptionsFromFiles(
                 str(allFile)
             )
