@@ -3,3 +3,4 @@ pem.egg-info
 .coverage
 tests/certs
 dist
+*.pyc
