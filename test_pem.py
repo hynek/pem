@@ -162,9 +162,9 @@ class TestCertificateOptionsFromFiles(object):
         ssl = pytest.importorskip('OpenSSL.SSL')
         ctxFactory = pem.certificateOptionsFromFiles(
             str(allFile),
-            method=ssl.SSLv2_METHOD,
+            method=ssl.TLSv1_METHOD,
         )
-        assert ssl.SSLv2_METHOD == ctxFactory.method
+        assert ssl.TLSv1_METHOD == ctxFactory.method
 
     def test_catchesMissingKey(self, tmpdir):
         pytest.importorskip('twisted')
