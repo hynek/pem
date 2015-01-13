@@ -4,10 +4,10 @@ import codecs
 import re
 
 
-__version__ = '0.3.0'
+__version__ = '15.0.0-dev'
 __author__ = 'Hynek Schlawack'
 __license__ = 'MIT'
-__copyright__ = 'Copyright 2014 Hynek Schlawack'
+__copyright__ = 'Copyright 2014-2015 Hynek Schlawack'
 
 
 class _Base(object):
