@@ -6,7 +6,7 @@ pem: Easy PEM file parsing
 
 *pem* is an MIT_-licensed Python module for parsing and splitting of `PEM files`_, i.e. Base64 encoded DER keys and certificates.
 
-It runs on Python 2.6, 2.7, 3.3, and PyPy 2.0+, has no dependencies and does not attempt to interpret the certificate data in any way.
+It runs on Python 2.6, 2.7, 3.3, 3.4, and PyPy 2.0+, has no dependencies and does not attempt to interpret the certificate data in any way.
 *pem* is intended to ease the handling of PEM files in combination with PyOpenSSL_ and – by extension – Twisted_.
 
 It’s born from my personal need because of the inconsistent handling of chain certificates by various servers: some servers (like Apache_) expect them to be a separate file while others (like nginx_) expect them concatenated to the server certificate.
