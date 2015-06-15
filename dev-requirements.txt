@@ -1,4 +1,3 @@
-certifi
 pretend
 pyopenssl
 pytest
