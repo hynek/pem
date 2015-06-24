@@ -52,6 +52,23 @@ class TestParse(object):
         assert all(isinstance(c, pem.Certificate) for c in certs)
         assert CERT_PEMS == [str(cert) for cert in certs]
 
+    def test_certificate_no_new_line(self):
+        """
+        Parses a PEM string without a new line at the end
+        """
+        cert, = pem.parse(CERT_NO_NEW_LINE)
+        assert isinstance(cert, pem.Certificate)
+        assert CERT_NO_NEW_LINE == str(cert)
+
+    def test_certificates_no_new_line(self):
+        """
+        Parses a PEM string with multiple certificates without a new line
+        at the end into a list of corresponding Certificates.
+        """
+        certs = pem.parse(''.join(CERT_PEMS_NO_NEW_LINE))
+        assert all(isinstance(c, pem.Certificate) for c in certs)
+        assert CERT_PEMS_NO_NEW_LINE == [str(cert) for cert in certs]
+
     def test_dh(self):
         """
         Parses a PEM string with with DH parameters into a DHParameters.
@@ -346,3 +363,47 @@ ZHXSLSROnc5iGNT3gJ7jcFucD7pi5MbSa1nKVc0C4Vp4f1enrVvNB/je3no0KTtN
 vX0dAb0xNIpm5IRffJTVVpeZwNXuE7cNvBSZ0GY4MPkiO2dcPHeV28MCAQI=
 -----END DH PARAMETERS-----
 """
+
+CERT_NO_NEW_LINE = """-----BEGIN CERTIFICATE-----
+MIIBfDCCATagAwIBAgIJAK4oWdJCuqj2MA0GCSqGSIb3DQEBBQUAMBYxFDASBgNV
+BAMTC3BlbS5pbnZhbGlkMB4XDTEzMDcxNzE0NDAyMFoXDTIzMDcxNTE0NDAyMFow
+FjEUMBIGA1UEAxMLcGVtLmludmFsaWQwTDANBgkqhkiG9w0BAQEFAAM7ADA4AjEA
+wfq/eNemUKJ287E0ydVkzBxX44E6WhmnAN3oq7M881CxXLseNXHe/CRqYGpmziN5
+AgMBAAGjdzB1MB0GA1UdDgQWBBQNtv8Fx7AEj4VCmX1I08mk4/viVzBGBgNVHSME
+PzA9gBQNtv8Fx7AEj4VCmX1I08mk4/viV6EapBgwFjEUMBIGA1UEAxMLcGVtLmlu
+dmFsaWSCCQCuKFnSQrqo9jAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAAzEA
+i3qou3qkVXNKuiAFe9dBvz0nhcpAZpXrpwc9R4Qk+rirEqkdCZI1feQKBz4J3ikm
+-----END CERTIFICATE-----"""
+
+CERT_PEMS_NO_NEW_LINE = [
+    """-----BEGIN CERTIFICATE-----
+MIIBfDCCATagAwIBAgIJAK94OSlzVBsWMA0GCSqGSIb3DQEBBQUAMBYxFDASBgNV
+BAMTC3BlbS5pbnZhbGlkMB4XDTEzMDcxNzE0NDAyMFoXDTIzMDcxNTE0NDAyMFow
+FjEUMBIGA1UEAxMLcGVtLmludmFsaWQwTDANBgkqhkiG9w0BAQEFAAM7ADA4AjEA
+vtIM2QADJDHcqxZugx7MULbenrNUFrmoMDfEaedYveWY3wBxOw642L4nFWxN/fwL
+AgMBAAGjdzB1MB0GA1UdDgQWBBQ4O0ZSUfTA6C+Y+QZ3MpeMhysxYjBGBgNVHSME
+PzA9gBQ4O0ZSUfTA6C+Y+QZ3MpeMhysxYqEapBgwFjEUMBIGA1UEAxMLcGVtLmlu
+dmFsaWSCCQCveDkpc1QbFjAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAAzEA
+XwKIF+Kf4OhcqbdQp253HG2KBt/WZwvNLo/bBlkrGYwfacbGuWT8nKJG70ujdKKf
+-----END CERTIFICATE-----""",
+    """-----BEGIN CERTIFICATE-----
+MIIBfDCCATagAwIBAgIJAK9X9aUr9pYtMA0GCSqGSIb3DQEBBQUAMBYxFDASBgNV
+BAMTC3BlbS5pbnZhbGlkMB4XDTEzMDcxNzE0NDAyMFoXDTIzMDcxNTE0NDAyMFow
+FjEUMBIGA1UEAxMLcGVtLmludmFsaWQwTDANBgkqhkiG9w0BAQEFAAM7ADA4AjEA
+v401YT8GeCt6oG076W/n7hxUsFO7sd74/4+2+4OcwMiLEp8BSRdWTk3g/tdF1YHT
+AgMBAAGjdzB1MB0GA1UdDgQWBBT/dStoZFKGlnfedA7gtJV1K8JYKDBGBgNVHSME
+PzA9gBT/dStoZFKGlnfedA7gtJV1K8JYKKEapBgwFjEUMBIGA1UEAxMLcGVtLmlu
+dmFsaWSCCQCvV/WlK/aWLTAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAAzEA
+uuXLfr1DgOMNt9JGNY5mBjabj3P7ALQYglygEe+QB7d0b/mFngn/aG35TuF5aud9
+-----END CERTIFICATE-----""",
+    """-----BEGIN CERTIFICATE-----
+MIIBfDCCATagAwIBAgIJAK4oWdJCuqj2MA0GCSqGSIb3DQEBBQUAMBYxFDASBgNV
+BAMTC3BlbS5pbnZhbGlkMB4XDTEzMDcxNzE0NDAyMFoXDTIzMDcxNTE0NDAyMFow
+FjEUMBIGA1UEAxMLcGVtLmludmFsaWQwTDANBgkqhkiG9w0BAQEFAAM7ADA4AjEA
+wfq/eNemUKJ287E0ydVkzBxX44E6WhmnAN3oq7M881CxXLseNXHe/CRqYGpmziN5
+AgMBAAGjdzB1MB0GA1UdDgQWBBQNtv8Fx7AEj4VCmX1I08mk4/viVzBGBgNVHSME
+PzA9gBQNtv8Fx7AEj4VCmX1I08mk4/viV6EapBgwFjEUMBIGA1UEAxMLcGVtLmlu
+dmFsaWSCCQCuKFnSQrqo9jAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBQUAAzEA
+i3qou3qkVXNKuiAFe9dBvz0nhcpAZpXrpwc9R4Qk+rirEqkdCZI1feQKBz4J3ikm
+-----END CERTIFICATE-----"""
+]

@@ -46,8 +46,7 @@ _PEM_TO_CLASS = {
 }
 _PEM_RE = re.compile(u"""-----BEGIN ({0})-----
 .+?
------END \\1-----
-""".format('|'.join(_PEM_TO_CLASS.keys())), re.DOTALL)
+-----END \\1-----\n?""".format('|'.join(_PEM_TO_CLASS.keys())), re.DOTALL)
 
 
 def parse(pem_str):
