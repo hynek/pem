@@ -1,7 +1,27 @@
 .. :changelog:
 
-History
-=======
+Changelog
+=========
+
+15.0.0 (UNRELEASED)
+-------------------
+
+
+Backward-incompatible changes:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+*none*
+
+
+Deprecations:
+^^^^^^^^^^^^^
+
+*none*
+
+Changes:
+^^^^^^^^
+
+- Support PEM strings that do not end with a new line. [`12 <https://github.com/hynek/pem/pull/12>`_]
 
 
 0.3.0 (2014-04-15)

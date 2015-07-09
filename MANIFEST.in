@@ -1,1 +1,6 @@
-include *.rst LICENSE tox.ini dev-requirements.txt
+include *.rst LICENSE tox.ini dev-requirements.txt docs-requirements.txt
+recursive-include docs *.bat
+recursive-include docs *.py
+recursive-include docs *.rst
+recursive-include docs Makefile
+recursive-include tests *.py

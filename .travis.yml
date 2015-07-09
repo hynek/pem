@@ -15,6 +15,7 @@ env:
   - TOX_ENV=pypy
   - TOX_ENV=flake8
   - TOX_ENV=manifest
+  - TOX_ENV=docs
 
 install:
   - pip install tox codecov

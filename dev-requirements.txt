@@ -1,5 +1,6 @@
+-e .
+certifi
 pretend
 pyopenssl
 pytest
-pytest-cov
 twisted

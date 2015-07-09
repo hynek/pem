@@ -4,3 +4,5 @@ pem.egg-info
 tests/certs
 dist
 *.pyc
+_build
+.eggs

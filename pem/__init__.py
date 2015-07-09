@@ -4,10 +4,12 @@ import codecs
 import re
 
 
-__version__ = '15.0.0-dev'
-__author__ = 'Hynek Schlawack'
-__license__ = 'MIT'
-__copyright__ = 'Copyright 2014-2015 Hynek Schlawack'
+__version__ = "15.0.0.dev0"
+__author__ = "Hynek Schlawack"
+__license__ = "MIT"
+__description__ = "Easy PEM file parsing in Python."
+__uri__ = "https://pem.readthedocs.org/"
+__email__ = "hs@ox.cx"
 
 
 class _Base(object):
@@ -181,9 +183,9 @@ class _DiffieHellmanParameters(object):
         return cls(filePath)
 
 
-try:  # pragma: nocover
+try:
     from twisted.internet.ssl import DiffieHellmanParameters
     _DH_PARAMETERS_SUPPORTED = True
-except ImportError:
+except ImportError:  # pragma: nocover
     DiffieHellmanParameters = _DiffieHellmanParameters
     _DH_PARAMETERS_SUPPORTED = False
