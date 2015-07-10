@@ -26,13 +26,6 @@ Since I want my Python software to be universal and to be able to cope with both
 ``pem``\ ’s documentation lives at `Read the Docs <https://pem.readthedocs.org/>`_, the code on `GitHub <https://github.com/hynek/pem>`_.
 
 
-Future
-------
-
-``pem`` currently only supports the PyOpenSSL/Twisted combo because that’s what I’m using.
-I’d be more than happy to merge support for additional frameworks though!
-
-
 .. _MIT: https://choosealicense.com/licenses/mit/
 .. _`PEM files`: https://en.wikipedia.org/wiki/X.509#Certificate_filename_extensions
 .. _Apache: https://httpd.apache.org
