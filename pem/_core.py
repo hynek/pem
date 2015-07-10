@@ -11,6 +11,9 @@ import re
 
 
 class _Base(object):
+    """
+    Base class for parsed objects.
+    """
     def __init__(self, _pem_str):
         self.pem_str = _pem_str
 
@@ -24,19 +27,27 @@ class _Base(object):
 
 
 class Certificate(_Base):
-    pass
+    """
+    A certificate.
+    """
 
 
 class Key(_Base):
-    pass
+    """
+    A secret key.
+    """
 
 
 class RSAPrivateKey(Key):
-    pass
+    """
+    A secret RSA key.
+    """
 
 
 class DHParameters(_Base):
-    pass
+    """
+    Diffie-Hellman parameters for DHE.
+    """
 
 
 _PEM_TO_CLASS = {
