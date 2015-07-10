@@ -55,9 +55,9 @@ _PEM_TO_CLASS = {
     'RSA PRIVATE KEY': RSAPrivateKey,
     'DH PARAMETERS': DHParameters,
 }
-_PEM_RE = re.compile(u"""-----BEGIN ({0})-----
-.+?
------END \\1-----\n?""".format('|'.join(_PEM_TO_CLASS.keys())), re.DOTALL)
+_PEM_RE = re.compile(u"""-----BEGIN ({0})-----\r?
+.+?\r?
+-----END \\1-----\r?\n?""".format('|'.join(_PEM_TO_CLASS.keys())), re.DOTALL)
 
 
 def parse(pem_str):

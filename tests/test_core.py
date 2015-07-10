@@ -101,3 +101,11 @@ class TestParse(object):
         cas = pem.parse_file(certifi.where())
         assert isinstance(cas, list)
         assert all(isinstance(ca, pem.Certificate) for ca in cas)
+
+    def test_allows_lf(self):
+        """
+        \n and \r\n are treated equal.
+        """
+        lf_pem = KEY_PEM.replace("\n", "\r\n")
+        rv, = pem.parse(lf_pem)
+        assert str(rv) == lf_pem

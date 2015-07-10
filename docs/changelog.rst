@@ -28,6 +28,7 @@ Changes:
 ^^^^^^^^
 
 - Support PEM strings that do not end with a new line. [`12 <https://github.com/hynek/pem/pull/12>`_]
+- Support PEM strings that end with ``\r\n``.
 
 
 0.3.0 (2014-04-15)
