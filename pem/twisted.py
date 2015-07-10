@@ -18,6 +18,18 @@ def certificateOptionsFromPEMs(pemObjects, **kw):
     """
     Load a CertificateOptions from the given collection of PEM objects
     (already-loaded private keys and certificates).
+
+    In those PEM objects, identify one private key and its corresponding
+    certificate to use as the primary certificate.  Then use the rest of the
+    certificates found as chain certificates.  Raise a ValueError if no
+    certificate matching a private key is found.
+
+    :return: A TLS context factory using *pemObjects*
+    :rtype: `twisted.internet.ssl.CertificateOptions`_
+
+    .. _`twisted.internet.ssl.CertificateOptions`: \
+        https://twistedmatrix.com/documents/current/api/\
+        twisted.internet.ssl.CertificateOptions.html
     """
     keys = [key for key in pemObjects if isinstance(key, Key)]
     if not len(keys):
@@ -73,13 +85,8 @@ def certificateOptionsFromPEMs(pemObjects, **kw):
 
 def certificateOptionsFromFiles(*pemFiles, **kw):
     """
-    Read all files named by *pemFiles*, and return a Twisted CertificateOptions
-    which can be used to run a TLS server.
-
-    In those PEM files, identify one private key and its corresponding
-    certificate to use as the primary certificate, then use the rest of the
-    certificates found as chain certificates.  Raise a ValueError if no
-    certificate matching a private key is found.
+    Read all files named by *pemFiles*, and parse them using
+    :func:`certificateOptionsFromPEMs`.
     """
     pems = []
     for pemFile in pemFiles:
