@@ -6,7 +6,7 @@ Changelog
 Please refer to :doc:`backward-compatibility` for details on deprecations and backward-incompatible changes.
 
 
-15.0.0 (UNRELEASED)
+15.0.0 (2015-07-10)
 -------------------
 
 
