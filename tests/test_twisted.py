@@ -28,6 +28,9 @@ def allFile(tmpdir):
 
 class TestCertificateOptionsFromFiles(object):
     def test_worksWithoutChain(self, tmpdir):
+        """
+        Creating CO without chain certificates works.
+        """
         keyFile = tmpdir.join('key.pem')
         keyFile.write(KEY_PEM)
         certFile = tmpdir.join('cert.pem')
@@ -38,6 +41,9 @@ class TestCertificateOptionsFromFiles(object):
         assert [] == ctxFactory.extraCertChain
 
     def test_worksWithChainInExtraFile(self, tmpdir):
+        """
+        Chain can be in a seperate file.
+        """
         keyFile = tmpdir.join('key.pem')
         keyFile.write(KEY_PEM)
         certFile = tmpdir.join('cert.pem')
@@ -50,6 +56,9 @@ class TestCertificateOptionsFromFiles(object):
         assert 2 == len(ctxFactory.extraCertChain)
 
     def test_worksWithChainInSameFile(self, tmpdir):
+        """
+        Chain can be in the same file as the certificate.
+        """
         keyFile = tmpdir.join('key.pem')
         keyFile.write(KEY_PEM)
         certFile = tmpdir.join('cert_and_chain.pem')
@@ -75,10 +84,16 @@ class TestCertificateOptionsFromFiles(object):
         assert 2 == len(ctxFactory.extraCertChain)
 
     def test_worksWithEverythingInOneFile(self, allFile):
+        """
+        Key, certificate, and chain can also be in a single file.
+        """
         ctxFactory = certificateOptionsFromFiles(str(allFile))
         assert 2 == len(ctxFactory.extraCertChain)
 
     def test_passesCertsInCorrectFormat(self, allFile):
+        """
+        PEM objects are correctly detected and passed into CO.
+        """
         ctxFactory = certificateOptionsFromFiles(str(allFile))
         assert isinstance(ctxFactory.privateKey, crypto.PKey)
         assert isinstance(ctxFactory.certificate, crypto.X509)
@@ -86,13 +101,19 @@ class TestCertificateOptionsFromFiles(object):
                    for cert in ctxFactory.extraCertChain)
 
     def test_forwardsKWargs(self, allFile):
+        """
+        Extra keyword arguments are passed into CO.
+        """
         ctxFactory = certificateOptionsFromFiles(
             str(allFile),
             method=SSL.TLSv1_METHOD,
         )
-        assert SSL.TLSv1_METHOD == ctxFactory.method
+        assert SSL.TLSv1_METHOD is ctxFactory.method
 
     def test_catchesMissingKey(self, tmpdir):
+        """
+        Raises ValueError if a key is missing.
+        """
         certFile = tmpdir.join('cert_and_chain.pem')
         certFile.write(''.join(CERT_PEMS))
         with pytest.raises(ValueError):
@@ -101,6 +122,9 @@ class TestCertificateOptionsFromFiles(object):
             )
 
     def test_catchesMultipleKeys(self, tmpdir):
+        """
+        Raises ValueError if multiple keys are present.
+        """
         allFile = tmpdir.join('key_cert_and_chain.pem')
         allFile.write(KEY_PEM + ''.join(CERT_PEMS) + KEY_PEM2)
         with pytest.raises(ValueError):
@@ -109,6 +133,9 @@ class TestCertificateOptionsFromFiles(object):
             )
 
     def test_catchesMissingCertificate(self, tmpdir):
+        """
+        Raises ValueError if no certificate is passed.
+        """
         keyFile = tmpdir.join('key.pem')
         keyFile.write(KEY_PEM)
         with pytest.raises(ValueError):
