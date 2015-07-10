@@ -15,27 +15,34 @@ from .data import (
 )
 
 
+# SHA-1 of "test"
+TEST_DIGEST = (
+    "PEM string with SHA-1 digest "
+    "'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3'"
+)
+
+
 class TestPEMObjects(object):
     def test_cert_has_correct_repr(self):
         """
         Calling repr on a Certificate instance returns the proper string.
         """
-        cert = pem.Certificate('test')
-        assert "<Certificate(pem_str='test')>" == repr(cert)
+        cert = pem.Certificate(b"test")
+        assert "<Certificate({0})>".format(TEST_DIGEST) == repr(cert)
 
     def test_rsa_key_has_correct_repr(self):
         """
         Calling repr on a RSAPrivateKey instance returns the proper string.
         """
-        key = pem.RSAPrivateKey('test')
-        assert "<RSAPrivateKey(pem_str='test')>" == repr(key)
+        key = pem.RSAPrivateKey(b"test")
+        assert "<RSAPrivateKey({0})>".format(TEST_DIGEST) == repr(key)
 
     def test_dh_params_has_correct_repr(self):
         """
         Calling repr on a DHParameters instance returns the proper string.
         """
-        key = pem.DHParameters('test')
-        assert "<DHParameters(pem_str='test')>" == repr(key)
+        key = pem.DHParameters(b"test")
+        assert "<DHParameters({0})>".format(TEST_DIGEST) == repr(key)
 
 
 class TestParse(object):

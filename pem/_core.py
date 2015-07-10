@@ -7,6 +7,7 @@ Framework agnostic PEM file parsing functions.
 from __future__ import absolute_import, division, print_function
 
 import codecs
+import hashlib
 import re
 
 
@@ -14,15 +15,16 @@ class _Base(object):
     """
     Base class for parsed objects.
     """
-    def __init__(self, pem_str):
-        self.pem_str = pem_str
+    def __init__(self, _pem_str):
+        self._pem_str = _pem_str
 
     def __str__(self):
-        return self.pem_str
+        return self._pem_str
 
     def __repr__(self):
-        return '<{0}(pem_str={1!r})>'.format(
-            self.__class__.__name__, self.pem_str
+        return '<{0}(PEM string with SHA-1 digest {1!r})>'.format(
+            self.__class__.__name__,
+            hashlib.sha1(self._pem_str).hexdigest()
         )
 
 
