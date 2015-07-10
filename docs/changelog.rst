@@ -19,7 +19,8 @@ Backward-incompatible changes:
 Deprecations:
 ^^^^^^^^^^^^^
 
-- The Twisted-related helpers have been moved to ``pem.twisted``.
+- The usage of Twisted helpers from the pem module is deprecated.
+  Use their pendants from the ``pem.twisted`` module now.
 - The usage of the backport of ephemeral Diffie-Hellman support is hereby deprecated.
   Nobody should use a Twisted release that is older than 14.0.0 because it contains essential SSL/TLS fixes.
 
@@ -29,6 +30,7 @@ Changes:
 
 - Support PEM strings that do not end with a new line. [`12 <https://github.com/hynek/pem/pull/12>`_]
 - Support PEM strings that end with ``\r\n``.
+- The Twisted-related helpers have been moved to ``pem.twisted``.
 
 
 0.3.0 (2014-04-15)

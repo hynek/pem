@@ -68,7 +68,7 @@ def parse(pem_str):
 
     :param pem_str: String to parse.
     :type pem_str: bytes
-    :return: list of PEM objects like :class:`Certificate`
+    :return: list of :ref:`pem-objects`
     """
     return [_PEM_TO_CLASS[match.group(1)](match.group(0))
             for match in _PEM_RE.finditer(pem_str)]

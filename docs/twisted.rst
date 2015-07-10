@@ -1,14 +1,14 @@
 Twisted
 =======
 
-A typical use case in Twisted with the core APIs would be::
+A typical use case in Twisted with the core API would be::
 
    import pem
 
    from twisted.internet import ssl
 
-   key = pem.parse_file('key.pem')
-   cert, chain = pem.parse_file('cert_and_chain.pem')
+   key = pem.parse_file("key.pem")
+   cert, chain = pem.parse_file("cert_and_chain.pem")
    cert = ssl.PrivateCertificate.loadPEM(str(key) + str(cert))
    chainCert = ssl.Certificate.loadPEM(str(chain))
 
@@ -20,8 +20,6 @@ A typical use case in Twisted with the core APIs would be::
 
 Turns out, this is a major use case.
 Therefore it can be simplified to::
-
-   import pem
 
    ctxFactory = pem.twisted.certificateOptionsFromFiles(
       'key.pem', 'cert_and_chain.pem',
@@ -35,10 +33,7 @@ A ``ValueError`` is raised if more than one key, no key, or no certificate are f
 Any further keyword arguments will be passed to CertificateOptions_.
 
 If you want to load your PEM data from somewhere else, you can also use
-``certificateOptionsFromPEMs`` to do the same thing with already-loaded
-``Certificate``, ``Key``, and ``RSAPrivateKey`` objects, like so::
-
-    import pem
+:func:`pem.twisted.certificateOptionsFromPEMs` to do the same thing with already-loaded PEM objects, like so::
 
     myPems = []
     pems = pem.parse("""\
@@ -65,7 +60,7 @@ Since ``pem`` just passes keyword arguments to ``CertificateOptions`` verbatim, 
 
 However, ``pem`` is also forward compatible.
 If your version of Twisted predates 14.0.0, ``pem`` lets you use the API described above anyway.
-You can just use ``pem.DiffieHellmanParameters``: if your version of Twisted comes with that class, you just get the Twisted version; if it doesn't, you get a version from ``pem``.
+You can just use ``pem.twisted.DiffieHellmanParameters``: if your version of Twisted comes with that class, you just get the Twisted version; if it doesn't, you get a version from ``pem``.
 
 Just pass instances of that class as ``dhParameters`` to ``certificateOptionsFromFiles``, and ``pem`` will make it magically work::
 

@@ -1,31 +1,22 @@
 Core API
 ========
 
-The core API call is the function ``parse()``::
+The core API call is the function :func:`pem.parse`::
 
    import pem
 
-   with open('cert.pem', 'rb') as f:
+   with open("cert.pem", "rb") as f:
       certs = pem.parse(f.read())
 
-The function returns a list of valid PEM objects found in the string supplied.
-Currently possible types are ``DHParameters``, ``Certificate``, and ``RSAPrivateKey``.
+The function returns a list of valid :ref:`PEM objects <pem-objects>` found in the string supplied.
 Both can be transformed using ``str()`` into plain strings for other APIs.
 They don’t offer any other public API at the moment.
-
-
-Convenience
------------
-
-Since ``pem`` is mostly a convenience module, there are several helper functions.
 
 
 Files
 ^^^^^
 
-``parse_file(file_name)`` reads the file ``file_name`` and parses its contents.
+For convenience, there's the helper function :func:`pem.parse_file` that reads a file and parses its contents.
 So the following example is equivalent with the first one::
 
-   import pem
-
-   certs = pem.parse_file('cert.pem')
+   certs = pem.parse_file("cert.pem")

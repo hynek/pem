@@ -1,7 +1,7 @@
 .. _api:
 
-API
-===
+API Reference
+=============
 
 
 Core
@@ -18,6 +18,8 @@ Parsers
 
 .. autofunction:: parse_file
 
+
+.. _pem-objects:
 
 PEM Objects
 ^^^^^^^^^^^
