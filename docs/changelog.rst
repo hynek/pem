@@ -3,6 +3,9 @@
 Changelog
 =========
 
+Please refer to :doc:`backward-compatibility` for details on deprecations and backward-incompatible changes.
+
+
 15.0.0 (UNRELEASED)
 -------------------
 
@@ -16,7 +19,10 @@ Backward-incompatible changes:
 Deprecations:
 ^^^^^^^^^^^^^
 
-*none*
+- The Twisted-related helpers have been moved to ``pem.twisted``.
+- The usage of the backport of ephemeral Diffie-Hellman support is hereby deprecated.
+  Nobody should use a Twisted release that is older than 14.0.0 because it contains essential SSL/TLS fixes.
+
 
 Changes:
 ^^^^^^^^

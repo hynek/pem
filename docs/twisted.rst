@@ -1,7 +1,7 @@
 Twisted
 =======
 
-A typical use case in Twisted with the APIs above would be::
+A typical use case in Twisted with the core APIs would be::
 
    import pem
 
@@ -18,15 +18,12 @@ A typical use case in Twisted with the APIs above would be::
          extraCertChain=[chainCert.original],
    )
 
-Turns out, this is the major use case for me.
-Therefore it can be simplified to:
-
-
-.. code-block:: python
+Turns out, this is a major use case.
+Therefore it can be simplified to::
 
    import pem
 
-   ctxFactory = pem.certificateOptionsFromFiles(
+   ctxFactory = pem.twisted.certificateOptionsFromFiles(
       'key.pem', 'cert_and_chain.pem',
    )
 
@@ -53,29 +50,31 @@ If you want to load your PEM data from somewhere else, you can also use
     -----END CERTIFICATE-----
     """)
 
-    ctxFactory = pem.certificateOptionsFromPEMs(pems)
+    ctxFactory = pem.twisted.certificateOptionsFromPEMs(pems)
 
 
 Ephemeral Diffie-Hellman support
 --------------------------------
 
-Starting with version 14.0.0, Twisted will support ephemeral Diffie-Hellman ciphersuites; you can pass an instance of ``twisted.internet.ssl.DiffieHellmanParameters`` as the ``dhParameters`` keyword argument to ``CertificateOptions``.
+.. warning::
+   This feature is deprecated and will be removed a year after the release of 15.0.0.
+
+Starting with version 14.0.0, Twisted supports ephemeral Diffie-Hellman ciphersuites.
+You can pass an instance of ``twisted.internet.ssl.DiffieHellmanParameters`` as the ``dhParameters`` keyword argument to ``CertificateOptions``.
 Since ``pem`` just passes keyword arguments to ``CertificateOptions`` verbatim, that will just work.
 
 However, ``pem`` is also forward compatible.
 If your version of Twisted predates 14.0.0, ``pem`` lets you use the API described above anyway.
 You can just use ``pem.DiffieHellmanParameters``: if your version of Twisted comes with that class, you just get the Twisted version; if it doesn't, you get a version from ``pem``.
 
-Just pass instances of that class as ``dhParameters`` to ``certificateOptionsFromFiles``, and ``pem`` will make it magically work:
-
-.. code-block:: python
+Just pass instances of that class as ``dhParameters`` to ``certificateOptionsFromFiles``, and ``pem`` will make it magically work::
 
    import pem
 
    from twisted.python.filepath import FilePath
 
    path = FilePath("/path/to/the/dh/params")
-   ctxFactory = pem.certificateOptionsFromFiles(
+   ctxFactory = pem.twisted.certificateOptionsFromFiles(
       'key.pem', 'cert_and_chain.pem',
       dhParameters=pem.DiffieHellmanParameters.fromFile(path)
    )

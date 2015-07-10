@@ -6,6 +6,11 @@ Twisted-specific convenience helpers.
 
 from __future__ import absolute_import, division, print_function
 
+import warnings
+
+from OpenSSL.SSL import FILETYPE_PEM
+from twisted.internet import ssl
+
 from ._core import parse_file, Certificate, Key
 
 
@@ -14,9 +19,6 @@ def certificateOptionsFromPEMs(pemObjects, **kw):
     Load a CertificateOptions from the given collection of PEM objects
     (already-loaded private keys and certificates).
     """
-    from OpenSSL.SSL import FILETYPE_PEM
-    from twisted.internet import ssl
-
     keys = [key for key in pemObjects if isinstance(key, Key)]
     if not len(keys):
         raise ValueError('Supplied PEM file(s) does *not* contain a key.')
@@ -46,6 +48,14 @@ def certificateOptionsFromPEMs(pemObjects, **kw):
     fakeEDHSupport = "dhParameters" in kw and not _DH_PARAMETERS_SUPPORTED
     if fakeEDHSupport:
         dhParameters = kw.pop("dhParameters")
+
+    if _DH_PARAMETERS_SUPPORTED is False:
+        warnings.warn(
+            "Using pem with Twisted older than 14.0.0 is deprecated as of pem"
+            " 15.0.0.  "
+            "The backport of DiffieHellmanParameters will be removed.",
+            DeprecationWarning
+        )
 
     ctxFactory = ssl.CertificateOptions(
         privateKey=privateKey.original,
