@@ -84,8 +84,8 @@ master_doc = 'index'
 project = u'pem'
 author = u'Hynek Schlawack'
 year = datetime.date.today().year
-copyright = u'2015{0}, {1}'.format(
-    u'-{0}'.format(year) if year != 2015 else u"", author
+copyright = u'2013{0}, {1}'.format(
+    u'-{0}'.format(year), author
 )
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
