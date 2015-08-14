@@ -1,10 +1,6 @@
 pem: Easy PEM file parsing
 ==========================
 
-.. image:: https://img.shields.io/pypi/v/pem.svg
-   :target: https://pypi.python.org/pypi/pem/
-   :alt: Latest Version
-
 .. image:: https://secure.travis-ci.org/hynek/pem.png
    :target: https://secure.travis-ci.org/hynek/pem
    :alt: CI status
