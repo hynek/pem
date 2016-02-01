@@ -1,6 +1,5 @@
 from __future__ import absolute_import, division, print_function
 
-from . import twisted
 from ._core import (
     Certificate,
     DHParameters,
@@ -9,11 +8,14 @@ from ._core import (
     parse,
     parse_file,
 )
-from .twisted import (
-    certificateOptionsFromFiles as certificateOptionsFromFilesOriginal,
-    certificateOptionsFromPEMs as certificateOptionsFromPEMsOriginal,
-)
-
+try:
+    from . import twisted
+    from .twisted import (
+        certificateOptionsFromFiles as certificateOptionsFromFilesOriginal,
+        certificateOptionsFromPEMs as certificateOptionsFromPEMsOriginal,
+    )
+except:
+    pass
 
 __version__ = "15.1.0.dev0"
 __author__ = "Hynek Schlawack"
