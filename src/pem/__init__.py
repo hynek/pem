@@ -1,6 +1,9 @@
 from __future__ import absolute_import, division, print_function
 
-from . import twisted
+try:
+    from . import twisted
+except ImportError:
+    twisted = None
 from ._core import (
     Certificate,
     DHParameters,
@@ -9,13 +12,9 @@ from ._core import (
     parse,
     parse_file,
 )
-from .twisted import (
-    certificateOptionsFromFiles as certificateOptionsFromFilesOriginal,
-    certificateOptionsFromPEMs as certificateOptionsFromPEMsOriginal,
-)
 
 
-__version__ = "15.1.0.dev0"
+__version__ = "16.0.0.dev0"
 __author__ = "Hynek Schlawack"
 __license__ = "MIT"
 __description__ = "Easy PEM file parsing in Python."
@@ -29,28 +28,34 @@ _DEPRECATION_WARNING = (
 )
 
 
-def certificateOptionsFromFiles(*a, **kw):
+def certificateOptionsFromFiles(*args, **kw):
     """
     Deprecated function.  Please use pem.twisted.certificateOptionsFromFiles.
     """
     import warnings
+
+    from .twisted import certificateOptionsFromFiles
+
     warnings.warn(
         _DEPRECATION_WARNING.format(func="certificateOptionsFromFiles"),
         DeprecationWarning
     )
-    return certificateOptionsFromFilesOriginal(*a, **kw)
+    return certificateOptionsFromFiles(*args, **kw)
 
 
-def certificateOptionsFromPEMs(*a, **kw):
+def certificateOptionsFromPEMs(*args, **kw):
     """
     Deprecated function.  Please use pem.twisted.certificateOptionsFromPEMs.
     """
     import warnings
+
+    from .twisted import certificateOptionsFromPEMs
+
     warnings.warn(
         _DEPRECATION_WARNING.format(func="certificateOptionsFromPEMs"),
         DeprecationWarning
     )
-    return certificateOptionsFromPEMsOriginal(*a, **kw)
+    return certificateOptionsFromPEMs(*args, **kw)
 
 
 __all__ = [

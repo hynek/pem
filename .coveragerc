@@ -1,0 +1,12 @@
+[run]
+branch = True
+source = pem
+
+[paths]
+source =
+   src/pem
+   .tox/*/lib/python*/site-packages/pem
+   .tox/pypy*/site-packages/pem
+
+[report]
+show_missing = True

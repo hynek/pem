@@ -92,7 +92,7 @@ copyright = u'2013{0}, {1}'.format(
 # built documents.
 #
 # The short X.Y version.
-version = find_version("../pem/__init__.py")
+version = find_version("../src/pem/__init__.py")
 # The full version, including alpha/beta/rc tags.
 release = version
 

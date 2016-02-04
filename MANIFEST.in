@@ -1,4 +1,4 @@
-include *.rst LICENSE tox.ini dev-requirements.txt docs-requirements.txt
+include *.rst LICENSE tox.ini dev-requirements.txt docs-requirements.txt .coveragerc
 recursive-include docs *.bat
 recursive-include docs *.py
 recursive-include docs *.rst

@@ -1,8 +1,10 @@
 pem.egg-info
 .tox
 .coverage
+.coverage.*
 tests/certs
 dist
 *.pyc
 _build
 .eggs
+.cache

@@ -1,6 +1,6 @@
 -e .
 certifi
+coverage
 pretend
 pyopenssl
 pytest
-twisted
