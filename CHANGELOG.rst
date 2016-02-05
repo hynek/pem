@@ -13,6 +13,8 @@ The third digit is only for regressions.
 Changes:
 ^^^^^^^^
 
+- PKCS #8 keys are now supported.
+  [`14 <https://github.com/hynek/pem/pull/14>`_]
 - ``pem`` is now fully functional without installing Twisted.
   [`16 <https://github.com/hynek/pem/pull/16>`_]
 

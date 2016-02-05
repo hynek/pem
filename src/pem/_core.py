@@ -36,7 +36,7 @@ class Certificate(_Base):
 
 class Key(_Base):
     """
-    A secret key.
+    A secret key of unknown type.
     """
 
 
@@ -53,9 +53,10 @@ class DHParameters(_Base):
 
 
 _PEM_TO_CLASS = {
-    'CERTIFICATE': Certificate,
-    'RSA PRIVATE KEY': RSAPrivateKey,
-    'DH PARAMETERS': DHParameters,
+    "CERTIFICATE": Certificate,
+    "PRIVATE KEY": Key,
+    "RSA PRIVATE KEY": RSAPrivateKey,
+    "DH PARAMETERS": DHParameters,
 }
 _PEM_RE = re.compile(u"""-----BEGIN ({0})-----\r?
 .+?\r?
