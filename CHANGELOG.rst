@@ -24,7 +24,7 @@ Backward-incompatible changes:
 Changes:
 ^^^^^^^^
 
-*none*
+- `pem.twisted.certificateOptionsFromPEMs` will now load Ephemeral Diffie-Hellman parameters if found.
 
 
 ----
