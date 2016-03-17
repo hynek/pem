@@ -224,6 +224,8 @@ class TestForwardCompatibleDHE(object):
         """
         Pass explicitly supplied DH parameters directly to CertificateOptions
         if the installed version of Twisted supports it.
+
+        Warns about deprecation.
         """
         fakeCtxFactory = object()
         recorder = call_recorder(lambda *a, **kw: fakeCtxFactory)
