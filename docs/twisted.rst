@@ -26,7 +26,8 @@ Therefore it can be simplified to::
    )
 
 
-The first certificate found will be used as the server certificate, the rest is passed as the chain.
+There must be exactly one private key present.
+The certificate matching the private key will be used as the server certificate, the rest is passed as the chain.
 You can pass as many PEM files as you like.
 Therefore you can distribute your key, certificate, and chain certificates over a arbitrary number of files.
 A ``ValueError`` is raised if more than one key, no key, or no certificate are found.
