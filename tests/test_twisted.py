@@ -176,12 +176,16 @@ class TestCertificateOptionsFromFiles(object):
 
 
 class TestForwardCompatibleDHE(object):
-    def test_fakeDHParameterSupport(self, monkeypatch, allFile, recwarn):
+    def test_fakeDHParameterSupport(self, monkeypatch, tmpdir, recwarn):
         """
-        Fake DH parameter support if Twisted doesn't support it.
+        Fake DH parameter support if Twisted doesn't support it for explicitly
+        passed DH parameters.
 
         Warns about deprecation.
         """
+        allFile = tmpdir.join('key_cert_and_chain.pem')
+        allFile.write(KEY_PEM + ''.join(CERT_PEMS))
+
         fakeCtxFactory = object()
         recorder = call_recorder(lambda *a, **kw: fakeCtxFactory)
         monkeypatch.setattr(ssl, "CertificateOptions", recorder)
@@ -204,8 +208,8 @@ class TestForwardCompatibleDHE(object):
 
     def test_realDHParameterSupport(self, monkeypatch, tmpdir):
         """
-        Pass DH parameters directly to CertificateOptions if the installed
-        version of Twisted supports it.
+        Pass explicitly supplied DH parameters directly to CertificateOptions
+        if the installed version of Twisted supports it.
         """
         allFile = tmpdir.join('key_cert_and_chain.pem')
         allFile.write(KEY_PEM + ''.join(CERT_PEMS))
@@ -223,6 +227,50 @@ class TestForwardCompatibleDHE(object):
 
         assert ctxFactory is fakeCtxFactory
         assert recorder.calls[0].kwargs["dhParameters"] == fakeParameters
+
+    def test_fakeDHParameterFileSupport(self, monkeypatch, allFile, recwarn):
+        """
+        Fake DH parameter support if Twisted doesn't support it for DH
+        parameters loaded from file.
+
+        Warns about deprecation.
+        """
+        fakeCtxFactory = object()
+        recorder = call_recorder(lambda *a, **kw: fakeCtxFactory)
+        monkeypatch.setattr(ssl, "CertificateOptions", recorder)
+        monkeypatch.setattr(pem.twisted, "_DH_PARAMETERS_SUPPORTED", False)
+
+        with pytest.warns(DeprecationWarning) as ws:
+            ctxFactory = certificateOptionsFromFiles(
+                str(allFile),
+            )
+            assert (
+                "The backport of DiffieHellmanParameters will be removed."
+                in str(ws[0].message)
+            )
+
+        assert isinstance(ctxFactory, pem.twisted._DHParamContextFactory)
+        assert ctxFactory.ctxFactory is fakeCtxFactory
+        assert "dhParameters" not in recorder.calls[0].kwargs
+
+    def test_realDHParameterFileSupport(self, monkeypatch, allFile):
+        """
+        Pass DH parameters loaded from a file directly to CertificateOptions if
+        the installed version of Twisted supports it.
+        """
+        fakeCtxFactory = object()
+        recorder = call_recorder(lambda *a, **kw: fakeCtxFactory)
+        monkeypatch.setattr(ssl, "CertificateOptions", recorder)
+        monkeypatch.setattr(pem.twisted, "_DH_PARAMETERS_SUPPORTED", True)
+
+        ctxFactory = certificateOptionsFromFiles(
+            str(allFile),
+        )
+
+        assert ctxFactory is fakeCtxFactory
+        assert isinstance(
+            recorder.calls[0].kwargs["dhParameters"],
+            pem.twisted.DiffieHellmanParameters)
 
     def test_DiffieHellmanParameters(self):
         """
