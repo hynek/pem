@@ -57,13 +57,20 @@ def certificateOptionsFromPEMs(pemObjects, **kw):
 
     primaryCertificate = certificatesByFingerprint.pop(privateKey.keyHash())
 
-    dhparams = [o for o in pemObjects if isinstance(o, DHParameters)]
-    if len(dhparams) > 1:
-        raise ValueError(
-            "Supplied PEM file(s) contain(s) *more* than one set of DH "
-            "parameters.")
-    elif len(dhparams) == 1:
-        kw["dhParameters"] = DiffieHellmanParameters(str(dhparams[0]))
+    if "dhParameters" in kw:
+        warnings.warn(
+            "Passing DH parameters as a keyword argument instead of a PEM "
+            "object is deprecated as of pem 16.1.0.",
+            DeprecationWarning
+        )
+    else:
+        dhparams = [o for o in pemObjects if isinstance(o, DHParameters)]
+        if len(dhparams) > 1:
+            raise ValueError(
+                "Supplied PEM file(s) contain(s) *more* than one set of DH "
+                "parameters.")
+        elif len(dhparams) == 1:
+            kw["dhParameters"] = DiffieHellmanParameters(str(dhparams[0]))
 
     fakeEDHSupport = "dhParameters" in kw and not _DH_PARAMETERS_SUPPORTED
     if fakeEDHSupport:

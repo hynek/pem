@@ -206,15 +206,21 @@ class TestForwardCompatibleDHE(object):
                 dhParameters=fakeParameters
             )
             assert (
-                "The backport of DiffieHellmanParameters will be removed."
+                "Passing DH parameters as a keyword argument instead of a PEM "
+                "object is deprecated"
                 in str(ws[0].message)
+            )
+            assert (
+                "The backport of DiffieHellmanParameters will be removed."
+                in str(ws[1].message)
             )
 
         assert isinstance(ctxFactory, pem.twisted._DHParamContextFactory)
         assert ctxFactory.ctxFactory is fakeCtxFactory
         assert "dhParameters" not in recorder.calls[0].kwargs
 
-    def test_realDHParameterSupport(self, monkeypatch, keyCertChainFile):
+    def test_realDHParameterSupport(self, monkeypatch, keyCertChainFile,
+                                    recwarn):
         """
         Pass explicitly supplied DH parameters directly to CertificateOptions
         if the installed version of Twisted supports it.
@@ -225,10 +231,16 @@ class TestForwardCompatibleDHE(object):
         monkeypatch.setattr(pem.twisted, "_DH_PARAMETERS_SUPPORTED", True)
         fakeParameters = object()
 
-        ctxFactory = certificateOptionsFromFiles(
-            str(keyCertChainFile),
-            dhParameters=fakeParameters
-        )
+        with pytest.warns(DeprecationWarning) as ws:
+            ctxFactory = certificateOptionsFromFiles(
+                str(keyCertChainFile),
+                dhParameters=fakeParameters
+            )
+            assert (
+                "Passing DH parameters as a keyword argument instead of a PEM "
+                "object is deprecated"
+                in str(ws[0].message)
+            )
 
         assert ctxFactory is fakeCtxFactory
         assert recorder.calls[0].kwargs["dhParameters"] == fakeParameters

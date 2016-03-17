@@ -25,6 +25,7 @@ Changes:
 ^^^^^^^^
 
 - ``pem.twisted.certificateOptionsFromPEMs`` will now load Ephemeral Diffie-Hellman parameters if found.
+  Passing these as a keyword argument is now deprecated.
   [`21 <https://github.com/hynek/pem/pull/21`_]
 
 
