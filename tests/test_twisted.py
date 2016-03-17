@@ -14,16 +14,16 @@ import pem
 
 from pem.twisted import certificateOptionsFromFiles
 
-from .data import KEY_PEM, KEY_PEM2, CERT_PEMS
+from .data import KEY_PEM, KEY_PEM2, CERT_PEMS, DH_PEM
 
 
 @pytest.fixture
 def allFile(tmpdir):
     """
-    Returns a file containing the key and three certificates.
+    Returns a file containing the key, three certificates, and DH parameters.
     """
-    allFile = tmpdir.join('key_cert_and_chain.pem')
-    allFile.write(KEY_PEM + ''.join(CERT_PEMS))
+    allFile = tmpdir.join('key_cert_and_chain_and_params.pem')
+    allFile.write(KEY_PEM + ''.join(CERT_PEMS) + DH_PEM)
     return allFile
 
 
@@ -99,6 +99,7 @@ class TestCertificateOptionsFromFiles(object):
         ctxFactory = certificateOptionsFromFiles(str(allFile))
 
         assert 2 == len(ctxFactory.extraCertChain)
+        assert ctxFactory.dhParameters is not None
 
     def test_passesCertsInCorrectFormat(self, allFile):
         """
@@ -201,11 +202,14 @@ class TestForwardCompatibleDHE(object):
         assert ctxFactory.ctxFactory is fakeCtxFactory
         assert "dhParameters" not in recorder.calls[0].kwargs
 
-    def test_realDHParameterSupport(self, monkeypatch, allFile):
+    def test_realDHParameterSupport(self, monkeypatch, tmpdir):
         """
         Pass DH parameters directly to CertificateOptions if the installed
         version of Twisted supports it.
         """
+        allFile = tmpdir.join('key_cert_and_chain.pem')
+        allFile.write(KEY_PEM + ''.join(CERT_PEMS))
+
         fakeCtxFactory = object()
         recorder = call_recorder(lambda *a, **kw: fakeCtxFactory)
         monkeypatch.setattr(ssl, "CertificateOptions", recorder)

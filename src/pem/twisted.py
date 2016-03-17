@@ -11,7 +11,7 @@ import warnings
 from OpenSSL.SSL import FILETYPE_PEM
 from twisted.internet import ssl
 
-from ._core import parse_file, Certificate, Key
+from ._core import parse_file, Certificate, DHParameters, Key
 
 
 def certificateOptionsFromPEMs(pemObjects, **kw):
@@ -56,6 +56,14 @@ def certificateOptionsFromPEMs(pemObjects, **kw):
         ))
 
     primaryCertificate = certificatesByFingerprint.pop(privateKey.keyHash())
+
+    dhparams = [o for o in pemObjects if isinstance(o, DHParameters)]
+    if len(dhparams) > 1:
+        raise ValueError(
+            'Supplied PEM file(s) contain(s) *more* than one set of DH '
+            'parameters.')
+    elif len(dhparams) == 1:
+        kw['dhParameters'] = DiffieHellmanParameters(str(dhparams[0]))
 
     fakeEDHSupport = "dhParameters" in kw and not _DH_PARAMETERS_SUPPORTED
     if fakeEDHSupport:
