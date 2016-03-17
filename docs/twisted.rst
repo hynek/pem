@@ -35,7 +35,7 @@ You can pass as many PEM files as you like.
 Therefore you can distribute your key, certificate, chain certificates, and DH parameters over a arbitrary number of files.
 A ``ValueError`` is raised if more than one key, no key, or no certificate are found.
 Any further keyword arguments will be passed to CertificateOptions_.
-Passing ``dhParameters`` as a keyword argument is deprecated; pass these as a PEM object instead.
+Passing ``dhParameters`` directly as a keyword argument is deprecated; pass these as part of the PEM files instead.
 
 If you want to load your PEM data from somewhere else, you can also use
 :func:`pem.twisted.certificateOptionsFromPEMs` to do the same thing with already-loaded PEM objects, like so::
