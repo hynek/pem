@@ -30,7 +30,7 @@ Backward-incompatible changes:
 Changes:
 ^^^^^^^^
 
-- ``pem.twisted.certificateOptionsFromPEMs`` will now load Ephemeral Diffie-Hellman parameters if found.
+- ``pem.twisted.certificateOptionsFromPEMs`` and ``certificateOptionsFromFiles`` will now load Ephemeral Diffie-Hellman parameters if found.
   [`21 <https://github.com/hynek/pem/pull/21>`_]
 
 
