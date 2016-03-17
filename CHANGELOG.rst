@@ -10,6 +10,12 @@ The third digit is only for regressions.
 16.1.0 (UNRELEASED)
 -------------------
 
+Deprecations:
+^^^^^^^^^^^^^
+
+- Passing ``dhParameters`` to ``pem.twisted.certifateOptionsFromPEMs`` and ``certificateOptionsFromFiles`` is now deprecated;
+  instead, include the DH parameters in the PEM objects or files.
+
 Backward-incompatible changes:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -25,7 +31,6 @@ Changes:
 ^^^^^^^^
 
 - ``pem.twisted.certificateOptionsFromPEMs`` will now load Ephemeral Diffie-Hellman parameters if found.
-  Passing these as a keyword argument is now deprecated.
   [`21 <https://github.com/hynek/pem/pull/21>`_]
 
 
