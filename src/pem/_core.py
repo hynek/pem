@@ -10,22 +10,34 @@ import codecs
 import hashlib
 import re
 
+from ._compat import PY3, unicode
+
 
 class _Base(object):
     """
     Base class for parsed objects.
     """
-    def __init__(self, _pem_str):
-        self._pem_str = _pem_str
+    def __init__(self, _pem_bytes):
+        self._pem_bytes = _pem_bytes
 
-    def __str__(self):
-        return self._pem_str
+    if PY3:
+        def __str__(self):
+            return self._pem_bytes.decode('ascii')
+    else:
+        def __str__(self):
+            return self._pem_bytes
 
     def __repr__(self):
         return '<{0}(PEM string with SHA-1 digest {1!r})>'.format(
             self.__class__.__name__,
-            hashlib.sha1(self._pem_str).hexdigest()
+            hashlib.sha1(self._pem_bytes).hexdigest()
         )
+
+    def as_bytes(self):
+        """
+        Return the PEM-encoded content as :obj:`bytes`.
+        """
+        return self._pem_bytes
 
 
 class Certificate(_Base):
@@ -53,14 +65,14 @@ class DHParameters(_Base):
 
 
 _PEM_TO_CLASS = {
-    "CERTIFICATE": Certificate,
-    "PRIVATE KEY": Key,
-    "RSA PRIVATE KEY": RSAPrivateKey,
-    "DH PARAMETERS": DHParameters,
+    b"CERTIFICATE": Certificate,
+    b"PRIVATE KEY": Key,
+    b"RSA PRIVATE KEY": RSAPrivateKey,
+    b"DH PARAMETERS": DHParameters,
 }
-_PEM_RE = re.compile(u"""-----BEGIN ({0})-----\r?
+_PEM_RE = re.compile(b"""-----BEGIN (%s)-----\r?
 .+?\r?
------END \\1-----\r?\n?""".format('|'.join(_PEM_TO_CLASS.keys())), re.DOTALL)
+-----END \\1-----\r?\n?""" % (b'|'.join(_PEM_TO_CLASS.keys()),), re.DOTALL)
 
 
 def parse(pem_str):
@@ -79,5 +91,5 @@ def parse_file(file_name):
     """
     Read *file_name* and parse PEM objects from it using :func:`parse`.
     """
-    with codecs.open(file_name, 'rb', encoding='utf-8', errors='ignore') as f:
+    with open(file_name, 'rb') as f:
         return parse(f.read())
