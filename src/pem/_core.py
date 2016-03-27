@@ -6,9 +6,9 @@ Framework agnostic PEM file parsing functions.
 
 from __future__ import absolute_import, division, print_function
 
-import codecs
 import hashlib
 import re
+import warnings
 
 from ._compat import PY3, unicode
 
@@ -18,6 +18,12 @@ class _Base(object):
     Base class for parsed objects.
     """
     def __init__(self, _pem_bytes):
+        if isinstance(_pem_bytes, unicode):
+            warnings.warn(
+                "Passing unicode instead of bytes to {!s} is deprecated"
+                .format(type(self)),
+                DeprecationWarning)
+            _pem_bytes = _pem_bytes.encode('ascii')
         self._pem_bytes = _pem_bytes
 
     if PY3:
