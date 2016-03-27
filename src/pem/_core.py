@@ -21,7 +21,7 @@ class _Base(object):
         if isinstance(_pem_bytes, unicode):
             warnings.warn(
                 "Passing unicode instead of bytes to {!s} is deprecated"
-                .format(type(self)),
+                .format(type(self).__name__),
                 DeprecationWarning)
             _pem_bytes = _pem_bytes.encode('ascii')
         self._pem_bytes = _pem_bytes
