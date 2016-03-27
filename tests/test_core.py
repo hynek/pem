@@ -111,6 +111,63 @@ class TestPEMObjects(object):
         assert params.as_bytes() == b'a string'
         assert str(params) == 'a string'
 
+    def test_certs_equal(self):
+        """
+        Two Certificate instances with equal contents are equal.
+        """
+        cert1 = pem.Certificate(b"test")
+        cert2 = pem.Certificate(b"test")
+        assert cert1 == cert2
+        assert hash(cert1) == hash(cert2)
+
+    def test_keys_equal(self):
+        """
+        Two Key instances with equal contents are equal and have equal hashes.
+        """
+        key1 = pem.Key(b"test")
+        key2 = pem.Key(b"test")
+        assert key1 == key2
+        assert hash(key1) == hash(key2)
+
+    def test_rsa_keys_equal(self):
+        """
+        Two RSAPrivateKey instances with equal contents are equal and have
+        equal hashes.
+        """
+        key1 = pem.RSAPrivateKey(b"test")
+        key2 = pem.RSAPrivateKey(b"test")
+        assert key1 == key2
+        assert hash(key1) == hash(key2)
+
+    def test_dh_params_equal(self):
+        """
+        Two DHParameters instances with equal contents are equal and have equal
+        hashes.
+        """
+        params1 = pem.DHParameters(b"test")
+        params2 = pem.DHParameters(b"test")
+        assert params1 == params2
+        assert hash(params1) == hash(params2)
+
+    def test_cert_contents_unequal(self):
+        """
+        Two Certificate instances with unequal contents are not equal.
+        """
+        cert1 = pem.Certificate(b"test1")
+        cert2 = pem.Certificate(b"test2")
+        assert cert1 != cert2
+
+    def test_different_objects_unequal(self):
+        """
+        Two PEM objects of different types but with equal contents are not
+        equal.
+        """
+        cert = pem.Certificate(b"test")
+        key = pem.Key(b"test")
+        rsa_key = pem.RSAPrivateKey(b"test")
+        assert cert != key
+        assert key != rsa_key
+
 
 class TestParse(object):
     def test_key(self):

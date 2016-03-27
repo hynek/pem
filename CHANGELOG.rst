@@ -36,6 +36,8 @@ Changes:
   [`24 <https://github.com/hynek/pem/pull/24>`_]
 - PEM objects now have an ``as_bytes`` method that returns the PEM-encoded content as bytes, always.
   [`24 <https://github.com/hynek/pem/pull/24>`_]
+- PEM objects are now hashable and comparable for equality.
+
 
 ----
 
