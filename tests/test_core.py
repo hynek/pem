@@ -80,6 +80,38 @@ class TestPEMObjects(object):
         params = pem.DHParameters(b"test")
         assert str(params) == "test"
 
+    def test_certificate_unicode(self):
+        """
+        Passing unicode to Certificate encodes the string as ASCII.
+        """
+        cert = pem.Certificate(u'a string')
+        assert cert.as_bytes() == b'a string'
+        assert str(cert) == 'a string'
+
+    def test_key_unicode(self):
+        """
+        Passing unicode to Key encodes the string as ASCII.
+        """
+        key = pem.Key(u'a string')
+        assert key.as_bytes() == b'a string'
+        assert str(key) == 'a string'
+
+    def test_rsa_key_unicode(self):
+        """
+        Passing unicode to RSAPrivateKey encodes the string as ASCII.
+        """
+        key = pem.RSAPrivateKey(u'a string')
+        assert key.as_bytes() == b'a string'
+        assert str(key) == 'a string'
+
+    def test_dhparams_unicode_deprecated(self):
+        """
+        Passing unicode to DHParameters encodes the string as ASCII.
+        """
+        params = pem.DHParameters(u'a string')
+        assert params.as_bytes() == b'a string'
+        assert str(params) == 'a string'
+
 
 class TestParse(object):
     def test_key(self):
@@ -152,49 +184,3 @@ class TestParse(object):
         lf_pem = KEY_PEM.replace(b"\n", b"\r\n")
         rv, = pem.parse(lf_pem)
         assert rv.as_bytes() == lf_pem
-
-
-class TestDeprecations(object):
-    def test_certificate_unicode_deprecated(self):
-        """
-        Passing unicode to Certificate emits a deprecation warning and encodes
-        the string as ASCII.
-        """
-        with pytest.warns(DeprecationWarning) as ws:
-            cert = pem.Certificate(u'a string')
-        assert "Passing unicode instead of bytes" in str(ws[0].message)
-        assert cert.as_bytes() == b'a string'
-        assert str(cert) == 'a string'
-
-    def test_key_unicode_deprecated(self):
-        """
-        Passing unicode to Key emits a deprecation warning and enncodes the
-        string as ASCII.
-        """
-        with pytest.warns(DeprecationWarning) as ws:
-            key = pem.Key(u'a string')
-        assert "Passing unicode instead of bytes" in str(ws[0].message)
-        assert key.as_bytes() == b'a string'
-        assert str(key) == 'a string'
-
-    def test_rsa_key_unicode_deprecated(self):
-        """
-        Passing unicode to RSAPrivateKey emits a deprecation warning and
-        encodes the string as ASCII.
-        """
-        with pytest.warns(DeprecationWarning) as ws:
-            key = pem.RSAPrivateKey(u'a string')
-        assert "Passing unicode instead of bytes" in str(ws[0].message)
-        assert key.as_bytes() == b'a string'
-        assert str(key) == 'a string'
-
-    def test_dhparams_unicode_deprecated(self):
-        """
-        Passing unicode to DHParameters emits a deprecation warning and
-        encodes the string as ASCII.
-        """
-        with pytest.warns(DeprecationWarning) as ws:
-            params = pem.DHParameters(u'a string')
-        assert "Passing unicode instead of bytes" in str(ws[0].message)
-        assert params.as_bytes() == b'a string'
-        assert str(params) == 'a string'
