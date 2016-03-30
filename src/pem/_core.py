@@ -41,11 +41,16 @@ class _Base(object):
         return self._pem_bytes
 
     def __eq__(self, other):
+        if not isinstance(other, _Base):
+            return NotImplemented
         return (type(self) == type(other) and
                 self._pem_bytes == other._pem_bytes)
 
     def __ne__(self, other):
-        return not self.__eq__(other)
+        if not isinstance(other, _Base):
+            return NotImplemented
+        return (type(self) != type(other) or
+                self._pem_bytes != other._pem_bytes)
 
     def __hash__(self):
         return hash(self._pem_bytes)

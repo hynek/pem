@@ -118,6 +118,7 @@ class TestPEMObjects(object):
         cert1 = pem.Certificate(b"test")
         cert2 = pem.Certificate(b"test")
         assert cert1 == cert2
+        assert cert2 == cert1
         assert hash(cert1) == hash(cert2)
 
     def test_keys_equal(self):
@@ -127,6 +128,7 @@ class TestPEMObjects(object):
         key1 = pem.Key(b"test")
         key2 = pem.Key(b"test")
         assert key1 == key2
+        assert key2 == key1
         assert hash(key1) == hash(key2)
 
     def test_rsa_keys_equal(self):
@@ -137,6 +139,7 @@ class TestPEMObjects(object):
         key1 = pem.RSAPrivateKey(b"test")
         key2 = pem.RSAPrivateKey(b"test")
         assert key1 == key2
+        assert key2 == key1
         assert hash(key1) == hash(key2)
 
     def test_dh_params_equal(self):
@@ -147,6 +150,7 @@ class TestPEMObjects(object):
         params1 = pem.DHParameters(b"test")
         params2 = pem.DHParameters(b"test")
         assert params1 == params2
+        assert params2 == params1
         assert hash(params1) == hash(params2)
 
     def test_cert_contents_unequal(self):
@@ -156,6 +160,7 @@ class TestPEMObjects(object):
         cert1 = pem.Certificate(b"test1")
         cert2 = pem.Certificate(b"test2")
         assert cert1 != cert2
+        assert cert2 != cert1
 
     def test_different_objects_unequal(self):
         """
@@ -166,7 +171,17 @@ class TestPEMObjects(object):
         key = pem.Key(b"test")
         rsa_key = pem.RSAPrivateKey(b"test")
         assert cert != key
+        assert key != cert
         assert key != rsa_key
+        assert rsa_key != key
+
+    def test_incompatible_types(self):
+        """
+        A PEM object is not equal to some other arbitrary object.
+        """
+        cert = pem.Certificate(b"test")
+        assert cert != object()
+        assert object() != cert
 
 
 class TestParse(object):
