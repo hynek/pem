@@ -32,7 +32,10 @@ Changes:
 
 - ``pem.twisted.certificateOptionsFromPEMs`` and ``certificateOptionsFromFiles`` will now load Ephemeral Diffie-Hellman parameters if found.
   [`21 <https://github.com/hynek/pem/pull/21>`_]
-
+- PEM objects now correctly handle being constructed with unicode and bytes on both Python 2 and 3.
+  [`24 <https://github.com/hynek/pem/pull/24>`_]
+- PEM objects now have an ``as_bytes`` method that returns the PEM-encoded content as bytes, always.
+  [`24 <https://github.com/hynek/pem/pull/24>`_]
 
 ----
 

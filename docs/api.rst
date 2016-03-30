@@ -25,7 +25,9 @@ PEM Objects
 ^^^^^^^^^^^
 
 The following objects can be returned by the parsing functions.
-They have *no public API* except that they can be transformed using ``str(obj)`` into a PEM string.
+The provided API is minimal:
+they can be transformed using ``str(obj)`` into a PEM string (of type ``str``),
+and they can be transformed into bytes using ``obj.as_bytes()``.
 
 The ``repr`` methods of the objects contain a SHA-1 hash digest of the PEM string.
 The sole purpose of this digest is to keep objects from each other without printing the actual (long) PEM string.

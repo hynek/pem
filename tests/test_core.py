@@ -30,6 +30,27 @@ class TestPEMObjects(object):
         cert = pem.Certificate(b"test")
         assert "<Certificate({0})>".format(TEST_DIGEST) == repr(cert)
 
+    def test_cert_has_correct_str(self):
+        """
+        Calling str on a Certificate instance returns the proper string.
+        """
+        cert = pem.Certificate(b"test")
+        assert str(cert) == "test"
+
+    def test_key_has_correct_repr(self):
+        """
+        Calling repr on a Key instance returns the proper string.
+        """
+        key = pem.Key(b"test")
+        assert "<Key({0})>".format(TEST_DIGEST) == repr(key)
+
+    def test_key_has_correct_str(self):
+        """
+        Calling str on a Key instance returns the proper string.
+        """
+        key = pem.Key(b"test")
+        assert str(key) == "test"
+
     def test_rsa_key_has_correct_repr(self):
         """
         Calling repr on a RSAPrivateKey instance returns the proper string.
@@ -37,12 +58,58 @@ class TestPEMObjects(object):
         key = pem.RSAPrivateKey(b"test")
         assert "<RSAPrivateKey({0})>".format(TEST_DIGEST) == repr(key)
 
+    def test_rsa_key_has_correct_str(self):
+        """
+        Calling str on a RSAPrivateKey instance returns the proper string.
+        """
+        key = pem.RSAPrivateKey(b"test")
+        assert str(key) == "test"
+
     def test_dh_params_has_correct_repr(self):
         """
         Calling repr on a DHParameters instance returns the proper string.
         """
-        key = pem.DHParameters(b"test")
-        assert "<DHParameters({0})>".format(TEST_DIGEST) == repr(key)
+        params = pem.DHParameters(b"test")
+        assert "<DHParameters({0})>".format(TEST_DIGEST) == repr(params)
+
+    def test_dh_params_has_correct_str(self):
+        """
+        Calling str on a DHParameters instance returns the proper string.
+        """
+        params = pem.DHParameters(b"test")
+        assert str(params) == "test"
+
+    def test_certificate_unicode(self):
+        """
+        Passing unicode to Certificate encodes the string as ASCII.
+        """
+        cert = pem.Certificate(u'a string')
+        assert cert.as_bytes() == b'a string'
+        assert str(cert) == 'a string'
+
+    def test_key_unicode(self):
+        """
+        Passing unicode to Key encodes the string as ASCII.
+        """
+        key = pem.Key(u'a string')
+        assert key.as_bytes() == b'a string'
+        assert str(key) == 'a string'
+
+    def test_rsa_key_unicode(self):
+        """
+        Passing unicode to RSAPrivateKey encodes the string as ASCII.
+        """
+        key = pem.RSAPrivateKey(u'a string')
+        assert key.as_bytes() == b'a string'
+        assert str(key) == 'a string'
+
+    def test_dhparams_unicode_deprecated(self):
+        """
+        Passing unicode to DHParameters encodes the string as ASCII.
+        """
+        params = pem.DHParameters(u'a string')
+        assert params.as_bytes() == b'a string'
+        assert str(params) == 'a string'
 
 
 class TestParse(object):
@@ -53,16 +120,16 @@ class TestParse(object):
         rv = pem.parse(KEY_PEM)
         key, = rv
         assert isinstance(key, pem.RSAPrivateKey)
-        assert KEY_PEM == str(key)
+        assert KEY_PEM == key.as_bytes()
 
     def test_certificates(self):
         """
         Parses a PEM string with multiple certificates into a list of
         corresponding Certificates.
         """
-        certs = pem.parse(''.join(CERT_PEMS))
+        certs = pem.parse(b''.join(CERT_PEMS))
         assert all(isinstance(c, pem.Certificate) for c in certs)
-        assert CERT_PEMS == [str(cert) for cert in certs]
+        assert CERT_PEMS == [cert.as_bytes() for cert in certs]
 
     def test_certificate_no_new_line(self):
         """
@@ -70,16 +137,16 @@ class TestParse(object):
         """
         cert, = pem.parse(CERT_NO_NEW_LINE)
         assert isinstance(cert, pem.Certificate)
-        assert CERT_NO_NEW_LINE == str(cert)
+        assert CERT_NO_NEW_LINE == cert.as_bytes()
 
     def test_certificates_no_new_line(self):
         """
         Parses a PEM string with multiple certificates without a new line
         at the end into a list of corresponding Certificates.
         """
-        certs = pem.parse(''.join(CERT_PEMS_NO_NEW_LINE))
+        certs = pem.parse(b''.join(CERT_PEMS_NO_NEW_LINE))
         assert all(isinstance(c, pem.Certificate) for c in certs)
-        assert CERT_PEMS_NO_NEW_LINE == [str(cert) for cert in certs]
+        assert CERT_PEMS_NO_NEW_LINE == [cert.as_bytes() for cert in certs]
 
     def test_dh(self):
         """
@@ -88,7 +155,7 @@ class TestParse(object):
         rv = pem.parse(DH_PEM)
         dh, = rv
         assert isinstance(dh, pem.DHParameters)
-        assert DH_PEM == str(dh)
+        assert DH_PEM == dh.as_bytes()
 
     def test_file(self, tmpdir):
         """
@@ -96,10 +163,10 @@ class TestParse(object):
         corresponding Certificates.
         """
         certs_file = tmpdir.join('certs.pem')
-        certs_file.write(''.join(CERT_PEMS))
+        certs_file.write(b''.join(CERT_PEMS))
         certs = pem.parse_file(str(certs_file))
         assert all(isinstance(c, pem.Certificate) for c in certs)
-        assert CERT_PEMS == [str(cert) for cert in certs]
+        assert CERT_PEMS == [cert.as_bytes() for cert in certs]
 
     def test_loads_certifi(self):
         """
@@ -113,6 +180,6 @@ class TestParse(object):
         """
         \n and \r\n are treated equal.
         """
-        lf_pem = KEY_PEM.replace("\n", "\r\n")
+        lf_pem = KEY_PEM.replace(b"\n", b"\r\n")
         rv, = pem.parse(lf_pem)
-        assert str(rv) == lf_pem
+        assert rv.as_bytes() == lf_pem

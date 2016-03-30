@@ -23,7 +23,7 @@ def keyCertChainDHFile(tmpdir):
     Returns a file containing the key, three certificates, and DH parameters.
     """
     pemFile = tmpdir.join('key_cert_and_chain_and_params.pem')
-    pemFile.write(KEY_PEM + ''.join(CERT_PEMS) + DH_PEM)
+    pemFile.write(KEY_PEM + b''.join(CERT_PEMS) + DH_PEM)
     return pemFile
 
 
@@ -33,7 +33,7 @@ def keyCertChainFile(tmpdir):
     Returns a file containing the key and three certificates.
     """
     pemFile = tmpdir.join('key_cert_and_chain.pem')
-    pemFile.write(KEY_PEM + ''.join(CERT_PEMS))
+    pemFile.write(KEY_PEM + b''.join(CERT_PEMS))
     return pemFile
 
 
@@ -62,7 +62,7 @@ class TestCertificateOptionsFromFiles(object):
         certFile = tmpdir.join('cert.pem')
         certFile.write(CERT_PEMS[0])
         chainFile = tmpdir.join('chain.pem')
-        chainFile.write(''.join(CERT_PEMS[1:]))
+        chainFile.write(b''.join(CERT_PEMS[1:]))
 
         ctxFactory = certificateOptionsFromFiles(
             str(keyFile), str(certFile), str(chainFile)
@@ -77,7 +77,7 @@ class TestCertificateOptionsFromFiles(object):
         keyFile = tmpdir.join('key.pem')
         keyFile.write(KEY_PEM)
         certFile = tmpdir.join('cert_and_chain.pem')
-        certFile.write(''.join(CERT_PEMS))
+        certFile.write(b''.join(CERT_PEMS))
 
         ctxFactory = certificateOptionsFromFiles(
             str(keyFile), str(certFile)
@@ -94,7 +94,7 @@ class TestCertificateOptionsFromFiles(object):
         keyFile = tmpdir.join('key.pem')
         keyFile.write(KEY_PEM)
         certFile = tmpdir.join('cert_and_chain.pem')
-        certFile.write(''.join(reversed(CERT_PEMS)))
+        certFile.write(b''.join(reversed(CERT_PEMS)))
 
         ctxFactory = certificateOptionsFromFiles(
             str(keyFile), str(certFile)
@@ -138,7 +138,7 @@ class TestCertificateOptionsFromFiles(object):
         Raises ValueError if a key is missing.
         """
         certFile = tmpdir.join('cert_and_chain.pem')
-        certFile.write(''.join(CERT_PEMS))
+        certFile.write(b''.join(CERT_PEMS))
 
         with pytest.raises(ValueError):
             certificateOptionsFromFiles(
@@ -150,7 +150,7 @@ class TestCertificateOptionsFromFiles(object):
         Raises ValueError if multiple keys are present.
         """
         allFile = tmpdir.join('key_cert_and_chain.pem')
-        allFile.write(KEY_PEM + ''.join(CERT_PEMS) + KEY_PEM2)
+        allFile.write(KEY_PEM + b''.join(CERT_PEMS) + KEY_PEM2)
 
         with pytest.raises(ValueError):
             certificateOptionsFromFiles(
@@ -175,7 +175,7 @@ class TestCertificateOptionsFromFiles(object):
         but no certificate in the pem matches the key.
         """
         keyFile = tmpdir.join('key.pem')
-        keyFile.write(KEY_PEM + "".join(CERT_PEMS[1:]))
+        keyFile.write(KEY_PEM + b"".join(CERT_PEMS[1:]))
 
         with pytest.raises(ValueError) as excinfo:
             certificateOptionsFromFiles(
