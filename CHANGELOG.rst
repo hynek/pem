@@ -7,7 +7,7 @@ Versions are year-based with a strict backward compatibility policy.
 The third digit is only for regressions.
 
 
-16.1.0 (UNRELEASED)
+16.1.0 (2016-04-08)
 -------------------
 
 Deprecations:
@@ -38,6 +38,7 @@ Changes:
   [`24 <https://github.com/hynek/pem/pull/24>`_]
 - PEM objects are now hashable and comparable for equality.
   [`25 <https://github.com/hynek/pem/pull/25>`_]
+
 
 
 ----
