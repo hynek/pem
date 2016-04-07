@@ -185,6 +185,10 @@ class TestCertificateOptionsFromFiles(object):
         assert str(excinfo.value).startswith("No certificate matching ")
 
     def test_catchesMultipleDHParams(self, tmpdir):
+        """
+        A ValueError is raised when more than one set of DH parameters is
+        present.
+        """
         pemFile = tmpdir.join('multiple_params.pem')
         pemFile.write(KEY_PEM + CERT_PEMS[0] + DH_PEM + DH_PEM)
 
@@ -193,9 +197,9 @@ class TestCertificateOptionsFromFiles(object):
                 str(pemFile)
             )
 
-        assert str(excinfo.value) == (
+        assert (
             "Supplied PEM file(s) contain(s) *more* than one set of DH "
-            "parameters.")
+            "parameters." == str(excinfo.value))
 
 
 class TestForwardCompatibleDHE(object):
