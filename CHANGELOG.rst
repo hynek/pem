@@ -7,6 +7,18 @@ Versions are year-based with a strict backward compatibility policy.
 The third digit is only for regressions.
 
 
+16.2.0 (UNRELEASED)
+-------------------
+
+Changes:
+^^^^^^^^
+
+*none*
+
+
+----
+
+
 16.1.0 (2016-04-08)
 -------------------
 
@@ -31,13 +43,13 @@ Changes:
 ^^^^^^^^
 
 - ``pem.twisted.certificateOptionsFromPEMs`` and ``certificateOptionsFromFiles`` will now load Ephemeral Diffie-Hellman parameters if found.
-  [`21 <https://github.com/hynek/pem/pull/21>`_]
+  `#21 <https://github.com/hynek/pem/pull/21>`_
 - PEM objects now correctly handle being constructed with unicode and bytes on both Python 2 and 3.
-  [`24 <https://github.com/hynek/pem/pull/24>`_]
+  `#24 <https://github.com/hynek/pem/pull/24>`_
 - PEM objects now have an ``as_bytes`` method that returns the PEM-encoded content as bytes, always.
-  [`24 <https://github.com/hynek/pem/pull/24>`_]
+  `#24 <https://github.com/hynek/pem/pull/24>`_
 - PEM objects are now hashable and comparable for equality.
-  [`25 <https://github.com/hynek/pem/pull/25>`_]
+  `#25 <https://github.com/hynek/pem/pull/25>`_
 
 
 
@@ -51,9 +63,9 @@ Changes:
 ^^^^^^^^
 
 - PKCS #8 keys are now supported.
-  [`14 <https://github.com/hynek/pem/pull/14>`_]
+  `#14 <https://github.com/hynek/pem/pull/14>`_
 - ``pem`` is now fully functional without installing Twisted.
-  [`16 <https://github.com/hynek/pem/pull/16>`_]
+  `#16 <https://github.com/hynek/pem/pull/16>`_
 
 
 ----
@@ -74,7 +86,7 @@ Changes:
 ^^^^^^^^
 
 - Support PEM strings that do not end with a new line.
-  [`12 <https://github.com/hynek/pem/pull/12>`_]
+  `#12 <https://github.com/hynek/pem/pull/12>`_
 - Support PEM strings that end with ``\r\n``.
 - The Twisted-related helpers have been moved to ``pem.twisted``.
 

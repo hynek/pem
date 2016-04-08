@@ -8,7 +8,7 @@ import re
 ###############################################################################
 
 NAME = "pem"
-KEYWORDS = ["pyopenssl", "ssl", "tls", "pem", "cryptography"]
+KEYWORDS = ["pyopenssl", "ssl", "tls", "pem", "cryptography", "twisted"]
 CLASSIFIERS = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
