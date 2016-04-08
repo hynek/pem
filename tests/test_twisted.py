@@ -199,7 +199,8 @@ class TestCertificateOptionsFromFiles(object):
 
         assert (
             "Supplied PEM file(s) contain(s) *more* than one set of DH "
-            "parameters." == str(excinfo.value))
+            "parameters."
+        ) == str(excinfo.value)
 
 
 class TestForwardCompatibleDHE(object):
