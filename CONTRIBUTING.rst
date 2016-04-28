@@ -35,7 +35,7 @@ Thank you for considering to contribute to ``pem``!
 .. _`good test docstrings`: https://jml.io/pages/test-docstrings.html
 .. _`Code of Conduct`: https://github.com/hynek/pem/blob/master/CODE_OF_CONDUCT.rst
 .. _changelog: https://github.com/hynek/pem/blob/master/CHANGELOG.rst
-.. _`backward compatibility`: https://pem.readthedocs.org/en/latest/backward-compatibility.html
+.. _`backward compatibility`: https://pem.readthedocs.io/en/latest/backward-compatibility.html
 .. _`tox`: https://testrun.org/tox/
 .. _`Travis CI`: https://travis-ci.org/
 .. _pyenv: https://github.com/yyuu/pyenv

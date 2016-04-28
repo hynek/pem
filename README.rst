@@ -1,13 +1,17 @@
 pem: Easy PEM file parsing
 ==========================
 
+.. image:: https://readthedocs.org/projects/pem/badge/?version=stable
+  :target: https://pem.readthedocs.io/en/stable/?badge=stable
+  :alt: Documentation Status
+
 .. image:: https://secure.travis-ci.org/hynek/pem.png
-   :target: https://secure.travis-ci.org/hynek/pem
-   :alt: CI status
+  :target: https://secure.travis-ci.org/hynek/pem
+  :alt: CI status
 
 .. image:: https://codecov.io/github/hynek/pem/coverage.svg?branch=master
-   :target: https://codecov.io/github/hynek/pem?branch=master
-   :alt: Coverage
+  :target: https://codecov.io/github/hynek/pem?branch=master
+  :alt: Coverage
 
 .. teaser-begin
 
@@ -30,7 +34,7 @@ To be able to cope with both scenarios in Python, ``pem`` was born:
 
 Additionally to the vanilla parsing code, ``pem`` also contains helpers for Twisted that save a lot of boilerplate code.
 
-``pem``\ ’s documentation lives at `Read the Docs <https://pem.readthedocs.org/>`_, the code on `GitHub <https://github.com/hynek/pem>`_.
+``pem``\ ’s documentation lives at `Read the Docs <https://pem.readthedocs.io/>`_, the code on `GitHub <https://github.com/hynek/pem>`_.
 
 
 .. _MIT: http://choosealicense.com/licenses/mit/

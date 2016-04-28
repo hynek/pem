@@ -18,7 +18,7 @@ __version__ = "16.2.0.dev0"
 __author__ = "Hynek Schlawack"
 __license__ = "MIT"
 __description__ = "Easy PEM file parsing in Python."
-__uri__ = "https://pem.readthedocs.org/"
+__uri__ = "https://pem.readthedocs.io/"
 __email__ = "hs@ox.cx"
 
 
