@@ -10,8 +10,11 @@ pem: Easy PEM file parsing
    :alt: CI status
 
 .. image:: https://codecov.io/gh/hynek/pem/branch/master/graph/badge.svg
-  :target: https://codecov.io/github/hynek/pem
-  :alt: Coverage
+   :target: https://codecov.io/github/hynek/pem
+   :alt: Coverage
+
+.. image:: https://www.irccloud.com/invite-svg?channel=%23cryptography-dev&amp;hostname=irc.freenode.net&amp;port=6697&amp;ssl=1
+   :target: https://www.irccloud.com/invite?channel=%23cryptography-dev&amp;hostname=irc.freenode.net&amp;port=6697&amp;ssl=1
 
 .. teaser-begin
 
