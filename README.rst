@@ -5,12 +5,12 @@ pem: Easy PEM file parsing
   :target: https://pem.readthedocs.io/en/stable/?badge=stable
   :alt: Documentation Status
 
-.. image:: https://secure.travis-ci.org/hynek/pem.png
-  :target: https://secure.travis-ci.org/hynek/pem
-  :alt: CI status
+.. image:: https://travis-ci.org/hynek/pem.svg?branch=master
+   :target: https://travis-ci.org/hynek/pem
+   :alt: CI status
 
-.. image:: https://codecov.io/github/hynek/pem/coverage.svg?branch=master
-  :target: https://codecov.io/github/hynek/pem?branch=master
+.. image:: https://codecov.io/gh/hynek/pem/branch/master/graph/badge.svg
+  :target: https://codecov.io/github/hynek/pem
   :alt: Coverage
 
 .. teaser-begin
