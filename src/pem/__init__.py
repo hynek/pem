@@ -6,6 +6,7 @@ except ImportError:
     twisted = None
 from ._core import (
     Certificate,
+    CertificateRequest,
     DHParameters,
     Key,
     RSAPrivateKey,
@@ -60,6 +61,7 @@ def certificateOptionsFromPEMs(*args, **kw):
 
 __all__ = [
     "Certificate",
+    "CertificateRequest",
     "DHParameters",
     "Key",
     "RSAPrivateKey",

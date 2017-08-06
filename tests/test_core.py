@@ -37,6 +37,23 @@ class TestPEMObjects(object):
         cert = pem.Certificate(b"test")
         assert str(cert) == "test"
 
+    def test_cert_req_has_correct_repr(self):
+        """
+        Calling repr on a CertificateRequest instance returns the proper
+        string.
+        """
+        cert_req = pem.CertificateRequest(b"test")
+        assert "<CertificateRequest({0})>".format(
+            TEST_DIGEST
+        ) == repr(cert_req)
+
+    def test_cert_req_has_correct_str(self):
+        """
+        Calling str on a CertificateRequest instance returns the proper string.
+        """
+        cert_req = pem.CertificateRequest(b"test")
+        assert str(cert_req) == "test"
+
     def test_key_has_correct_repr(self):
         """
         Calling repr on a Key instance returns the proper string.
@@ -87,6 +104,14 @@ class TestPEMObjects(object):
         assert cert.as_bytes() == b'a string'
         assert str(cert) == 'a string'
 
+    def test_certificate_request_unicode(self):
+        """
+        Passing unicode to CertificateRequest encodes the string as ASCII.
+        """
+        cert_req = pem.CertificateRequest(u'a string')
+        assert cert_req.as_bytes() == b'a string'
+        assert str(cert_req) == 'a string'
+
     def test_key_unicode(self):
         """
         Passing unicode to Key encodes the string as ASCII.
@@ -120,6 +145,16 @@ class TestPEMObjects(object):
         assert cert1 == cert2
         assert cert2 == cert1
         assert hash(cert1) == hash(cert2)
+
+    def test_cert_reqs_equal(self):
+        """
+        Two Certificate Request instances with equal contents are equal.
+        """
+        cert_req1 = pem.CertificateRequest(b"test")
+        cert_req2 = pem.CertificateRequest(b"test")
+        assert cert_req1 == cert_req2
+        assert cert_req2 == cert_req1
+        assert hash(cert_req1) == hash(cert_req2)
 
     def test_keys_equal(self):
         """
@@ -162,16 +197,28 @@ class TestPEMObjects(object):
         assert cert1 != cert2
         assert cert2 != cert1
 
+    def test_cert_req_contents_unequal(self):
+        """
+        Two CertificateRequest instances with unequal contents are not equal.
+        """
+        cert_req1 = pem.CertificateRequest(b"test1")
+        cert_req2 = pem.CertificateRequest(b"test2")
+        assert cert_req1 != cert_req2
+        assert cert_req2 != cert_req1
+
     def test_different_objects_unequal(self):
         """
         Two PEM objects of different types but with equal contents are not
         equal.
         """
         cert = pem.Certificate(b"test")
+        cert_req = pem.CertificateRequest(b"test")
         key = pem.Key(b"test")
         rsa_key = pem.RSAPrivateKey(b"test")
         assert cert != key
         assert key != cert
+        assert cert != cert_req
+        assert cert_req != cert
         assert key != rsa_key
         assert rsa_key != key
 
