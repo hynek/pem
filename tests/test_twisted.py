@@ -24,6 +24,7 @@ def keyCertChainDHFile(tmpdir):
     """
     pemFile = tmpdir.join('key_cert_and_chain_and_params.pem')
     pemFile.write(KEY_PEM + b''.join(CERT_PEMS) + DH_PEM)
+
     return pemFile
 
 
@@ -34,6 +35,7 @@ def keyCertChainFile(tmpdir):
     """
     pemFile = tmpdir.join('key_cert_and_chain.pem')
     pemFile.write(KEY_PEM + b''.join(CERT_PEMS))
+
     return pemFile
 
 
