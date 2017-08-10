@@ -10,10 +10,18 @@ The third digit is only for regressions.
 16.2.0 (UNRELEASED)
 -------------------
 
+Backward-incompatible changes:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Python 3.4 is not supported anymore.
+  It may still work (and most likely does), but is not part of the CI anymore.
+
+
 Changes:
 ^^^^^^^^
 
-*none*
+- Added support for Cert
+  `#29 <https://github.com/hynek/pem/pull/29>`_
 
 
 ----
@@ -28,6 +36,7 @@ Deprecations:
 - Passing ``dhParameters`` to ``pem.twisted.certifateOptionsFromPEMs`` and ``certificateOptionsFromFiles`` is now deprecated;
   instead, include the DH parameters in the PEM objects or files.
 
+
 Backward-incompatible changes:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -38,6 +47,7 @@ Backward-incompatible changes:
   Major Python packages like Django and Twisted dropped Python 2.6 a while ago already.
 
   Python 3.3 never had a significant user base and wasn't part of any distribution's LTS release.
+
 
 Changes:
 ^^^^^^^^
@@ -81,6 +91,7 @@ Deprecations:
   Use their pendants from the ``pem.twisted`` module now.
 - The usage of the backport of ephemeral Diffie-Hellman support is hereby deprecated.
   Nobody should use a Twisted release that is older than 14.0.0 because it contains essential SSL/TLS fixes.
+
 
 Changes:
 ^^^^^^^^
