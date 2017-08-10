@@ -7,20 +7,14 @@ Versions are year-based with a strict backward compatibility policy.
 The third digit is only for regressions.
 
 
-16.2.0 (UNRELEASED)
+17.1.0 (UNRELEASED)
 -------------------
-
-Backward-incompatible changes:
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-- Python 3.4 is not supported anymore.
-  It may still work (and most likely does), but is not part of the CI anymore.
 
 
 Changes:
 ^^^^^^^^
 
-- Added support for Cert
+- Added ``pem.CertificateRequest`` for `certificate signing requests <https://en.wikipedia.org/wiki/Certificate_signing_request>`_.
   `#29 <https://github.com/hynek/pem/pull/29>`_
 
 
