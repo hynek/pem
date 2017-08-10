@@ -20,12 +20,14 @@ matrix:
       env: TOXENV=py36-twisted
     - python: "3.6"
       env: TOXENV=py36
-    - python: "pypy"
+    - python: "pypy-2.7-5.8.0"
       env: TOXENV=pypy-twisted
-    - python: "pypy"
+    - python: "pypy-2.7-5.8.0"
       env: TOXENV=pypy
     - python: "pypy3.5-5.8.0"
       env: TOXENV=pypy3
+    - python: "pypy3.5-5.8.0"
+      env: TOXENV=pypy3-twisted
 
     # Meta
     - python: "3.6"
