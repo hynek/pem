@@ -36,6 +36,7 @@ The sole purpose of this digest is to keep objects from each other without print
 .. autoclass:: Key()
 .. autoclass:: RSAPrivateKey(Key)
 .. autoclass:: DHParameters()
+.. autoclass:: CertificateRequest()
 
 
 Twisted

@@ -62,6 +62,12 @@ class Certificate(_Base):
     """
 
 
+class CertificateRequest(_Base):
+    """
+    A certificate signing request.
+    """
+
+
 class Key(_Base):
     """
     A secret key of unknown type.
@@ -85,6 +91,8 @@ _PEM_TO_CLASS = {
     b"PRIVATE KEY": Key,
     b"RSA PRIVATE KEY": RSAPrivateKey,
     b"DH PARAMETERS": DHParameters,
+    b"NEW CERTIFICATE REQUEST": CertificateRequest,
+    b"CERTIFICATE REQUEST": CertificateRequest,
 }
 _PEM_RE = re.compile(
     b"-----BEGIN (" + b"|".join(_PEM_TO_CLASS.keys()) + b""")-----\r?
