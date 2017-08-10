@@ -15,7 +15,7 @@ from ._core import (
 )
 
 
-__version__ = "17.1.0.dev0"
+__version__ = "17.1.0"
 __author__ = "Hynek Schlawack"
 __license__ = "MIT"
 __description__ = "Easy PEM file parsing in Python."
