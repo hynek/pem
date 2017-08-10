@@ -40,7 +40,7 @@ Additionally to the vanilla parsing code, ``pem`` also contains helpers for Twis
 ``pem``\ ’s documentation lives at `Read the Docs <https://pem.readthedocs.io/>`_, the code on `GitHub <https://github.com/hynek/pem>`_.
 
 
-.. _MIT: http://choosealicense.com/licenses/mit/
+.. _MIT: https://choosealicense.com/licenses/mit/
 .. _`PEM files`: https://en.wikipedia.org/wiki/X.509#Certificate_filename_extensions
 .. _Apache: https://httpd.apache.org/
 .. _nginx: https://nginx.org/
