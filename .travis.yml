@@ -43,13 +43,6 @@ install:
 
 
 script:
-  - |
-    # activate the pypy env we installed via our custom pyenv in the install stage
-    if [[ "${TOXENV}" == "pypy" ]]; then
-        PYENV_ROOT="$HOME/.pyenv"
-        PATH="$PYENV_ROOT/bin:$PATH"
-        eval "$(pyenv init -)"
-    fi
   - tox
 
 
