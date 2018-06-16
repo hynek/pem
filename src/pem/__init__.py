@@ -1,6 +1,7 @@
 from __future__ import absolute_import, division, print_function
 
 from ._core import (
+    AbstractPEMObject,
     Certificate,
     CertificateRequest,
     DHParameters,
@@ -26,6 +27,7 @@ __email__ = "hs@ox.cx"
 
 
 __all__ = [
+    "AbstractPEMObject",
     "Certificate",
     "CertificateRequest",
     "DHParameters",

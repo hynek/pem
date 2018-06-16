@@ -25,20 +25,17 @@ PEM Objects
 ^^^^^^^^^^^
 
 The following objects can be returned by the parsing functions.
-The provided API is minimal:
-they can be transformed using ``str(obj)`` into a native ``str``,
-into Unicode text using ``obj.as_text()`` (``str`` on Python 3, ``unicode`` on Python 2),
-and into ``bytes`` using ``obj.as_bytes()``.
-
-The ``repr`` methods of the objects contain a SHA-1 hexadecimal hash digest of the PEM string.
-The sole purpose of this digest is to keep objects from each other without printing the actual (long) PEM strings.
-The SHA-1 hash digest is also available as ``obj.sha1_hexdigest`` as a native string.
 
 .. autoclass:: Certificate()
 .. autoclass:: Key()
 .. autoclass:: RSAPrivateKey(Key)
 .. autoclass:: DHParameters()
 .. autoclass:: CertificateRequest()
+
+Their shared provided API is minimal:
+
+.. autoclass:: AbstractPEMObject
+   :members: __str__, as_bytes, as_text, sha1_hexdigest
 
 
 Twisted

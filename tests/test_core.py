@@ -6,7 +6,7 @@ import certifi
 
 import pem
 
-from pem._compat import unicode
+from pem._compat import text_type
 
 from .data import (
     CERT_NO_NEW_LINE,
@@ -71,7 +71,7 @@ class TestPEMObjects(object):
         cert_text = pem.Certificate(b"test").as_text()
 
         assert "test" == cert_text
-        assert isinstance(cert_text, unicode)
+        assert isinstance(cert_text, text_type)
 
     def test_cert_req_has_correct_str(self):
         """

@@ -6,32 +6,31 @@ Framework agnostic PEM file parsing functions.
 
 from __future__ import absolute_import, division, print_function
 
+import abc
 import hashlib
 import re
 
-from ._compat import PY3, unicode
+from ._compat import PY2, text_type, with_metaclass
 
 
-class _Base(object):
+class AbstractPEMObject(with_metaclass(abc.ABCMeta, object)):
     """
     Base class for parsed objects.
     """
 
     def __init__(self, _pem_bytes):
-        if isinstance(_pem_bytes, unicode):
+        if isinstance(_pem_bytes, text_type):
             _pem_bytes = _pem_bytes.encode("ascii")
         self._pem_bytes = _pem_bytes
         self._sha1_hexdigest = None
 
-    if PY3:
-
-        def __str__(self):
+    def __str__(self):
+        """
+        Return the PEM-encoded content as a native :obj:`str`.
+        """
+        if not PY2:
             return self._pem_bytes.decode("ascii")
-
-    else:
-
-        def __str__(self):
-            return self._pem_bytes
+        return self._pem_bytes
 
     def __repr__(self):
         return "<{0}(PEM string with SHA-1 digest {1!r})>".format(
@@ -50,7 +49,7 @@ class _Base(object):
 
     def as_bytes(self):
         """
-        Return the PEM-encoded content as :type:`bytes`.
+        Return the PEM-encoded content as :obj:`bytes`.
         """
         return self._pem_bytes
 
@@ -76,19 +75,19 @@ class _Base(object):
         return hash(self._pem_bytes)
 
 
-class Certificate(_Base):
+class Certificate(AbstractPEMObject):
     """
     A certificate.
     """
 
 
-class CertificateRequest(_Base):
+class CertificateRequest(AbstractPEMObject):
     """
     A certificate signing request.
     """
 
 
-class Key(_Base):
+class Key(AbstractPEMObject):
     """
     A secret key of unknown type.
     """
@@ -100,7 +99,7 @@ class RSAPrivateKey(Key):
     """
 
 
-class DHParameters(_Base):
+class DHParameters(AbstractPEMObject):
     """
     Diffie-Hellman parameters for DHE.
     """
