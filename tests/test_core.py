@@ -50,6 +50,16 @@ class TestPEMObjects(object):
             cert_req
         )
 
+    def test_sha1_hexdigest(self):
+        """
+        obj.sha1_digest contains the correct digest.
+        """
+        cert = pem.Certificate(b"test")
+
+        assert (
+            "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3" == cert.sha1_hexdigest
+        )
+
     def test_cert_req_has_correct_str(self):
         """
         Calling str on a CertificateRequest instance returns the proper string.

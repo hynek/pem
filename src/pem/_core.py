@@ -21,6 +21,7 @@ class _Base(object):
         if isinstance(_pem_bytes, unicode):
             _pem_bytes = _pem_bytes.encode("ascii")
         self._pem_bytes = _pem_bytes
+        self._sha1_hexdigest = None
 
     if PY3:
 
@@ -34,8 +35,18 @@ class _Base(object):
 
     def __repr__(self):
         return "<{0}(PEM string with SHA-1 digest {1!r})>".format(
-            self.__class__.__name__, hashlib.sha1(self._pem_bytes).hexdigest()
+            self.__class__.__name__, self.sha1_hexdigest
         )
+
+    @property
+    def sha1_hexdigest(self):
+        """
+        A SHA-1 digest of the whole object for easy differentiation.
+        """
+        if self._sha1_hexdigest is None:
+            self._sha1_hexdigest = hashlib.sha1(self._pem_bytes).hexdigest()
+
+        return self._sha1_hexdigest
 
     def as_bytes(self):
         """

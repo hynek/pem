@@ -27,7 +27,7 @@ Deprecations:
 Changes:
 ^^^^^^^^
 
-*none*
+- All PEM objects now have a ``obj.sha1_hexdigest()`` method that returns the SHA-1 digest that is used by ``pem``'s ``__repr__`` as a native string.
 
 
 ----

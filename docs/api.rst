@@ -29,8 +29,9 @@ The provided API is minimal:
 they can be transformed using ``str(obj)`` into a PEM string (of type ``str``),
 and they can be transformed into bytes using ``obj.as_bytes()``.
 
-The ``repr`` methods of the objects contain a SHA-1 hash digest of the PEM string.
-The sole purpose of this digest is to keep objects from each other without printing the actual (long) PEM string.
+The ``repr`` methods of the objects contain a SHA-1 hexadecimal hash digest of the PEM string.
+The sole purpose of this digest is to keep objects from each other without printing the actual (long) PEM strings.
+The SHA-1 hash digest is also available as ``obj.sha1_hexdigest`` as a native string.
 
 .. autoclass:: Certificate()
 .. autoclass:: Key()

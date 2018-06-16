@@ -9,8 +9,10 @@ The core API call is the function :func:`pem.parse`::
       certs = pem.parse(f.read())
 
 The function returns a list of valid :ref:`PEM objects <pem-objects>` found in the string supplied.
-Both can be transformed using ``str()`` into plain strings for other APIs.
-They don’t offer any other public API at the moment.
+
+- They can be transformed using ``str(obj)`` into native strings,
+- or using ``obj.as_bytes()`` into bytes.
+- Additional you can obtain the SHA-1 hexdigest using ``obj.hashdigest()`` for quick comparison of objects.
 
 
 Files
