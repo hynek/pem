@@ -1,9 +1,5 @@
 from __future__ import absolute_import, division, print_function
 
-try:
-    from . import twisted
-except ImportError:
-    twisted = None
 from ._core import (
     Certificate,
     CertificateRequest,
@@ -15,7 +11,13 @@ from ._core import (
 )
 
 
-__version__ = "17.2.0.dev0"
+try:
+    from . import twisted
+except ImportError:
+    twisted = None
+
+
+__version__ = "18.1.0.dev0"
 __author__ = "Hynek Schlawack"
 __license__ = "MIT"
 __description__ = "Easy PEM file parsing in Python."
@@ -39,7 +41,7 @@ def certificateOptionsFromFiles(*args, **kw):
 
     warnings.warn(
         _DEPRECATION_WARNING.format(func="certificateOptionsFromFiles"),
-        DeprecationWarning
+        DeprecationWarning,
     )
     return certificateOptionsFromFiles(*args, **kw)
 
@@ -54,7 +56,7 @@ def certificateOptionsFromPEMs(*args, **kw):
 
     warnings.warn(
         _DEPRECATION_WARNING.format(func="certificateOptionsFromPEMs"),
-        DeprecationWarning
+        DeprecationWarning,
     )
     return certificateOptionsFromPEMs(*args, **kw)
 

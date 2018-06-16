@@ -39,7 +39,9 @@ Code
          :rtype: str
          """
 - If you add or change public APIs, tag the docstring using ``..  versionadded:: 16.0.0 WHAT`` or ``..  versionchanged:: 17.1.0 WHAT``.
-- Prefer double quotes (``"``) over single quotes (``'``) unless the string contains double quotes itself.
+- We use isort_ to sort our imports, and we follow the Black_ code style with a line length of 79 characters.
+  As long as you run our full tox suite before committing, or install our pre-commit_ hooks (ideally you'll do both -- see below "Local Development Environment"), you won't have to spend any time on formatting your code at all.
+  If you don't, CI will catch it for you -- but that seems like a waste of your time!
 
 
 Tests
@@ -100,11 +102,12 @@ Documentation
 Local Development Environment
 -----------------------------
 
-You can (and should) run our test suite using tox_ however you’ll probably want a more traditional environment too.
+You can (and should) run our test suite using tox_.
+However, you’ll probably want a more traditional environment as well.
 We highly recommend to develop using the latest Python 3 release because you're more likely to catch certain bugs earlier.
 
 First create a `virtual environment <https://virtualenv.pypa.io/>`_.
-It’s out of scope for this document to list all the ways to manage virtual environments in Python but if you don’t have already a pet way, take some time to look at tools like `pew <https://github.com/berdario/pew>`_, `virtualfish <http://virtualfish.readthedocs.io/>`_, and `virtualenvwrapper <http://virtualenvwrapper.readthedocs.io/>`_.
+It’s out of scope for this document to list all the ways to manage virtual environments in Python, but if you don’t already have a pet way, take some time to look at tools like `pew <https://github.com/berdario/pew>`_, `virtualfish <http://virtualfish.readthedocs.io/>`_, and `virtualenvwrapper <http://virtualenvwrapper.readthedocs.io/>`_.
 
 Next get an up to date checkout of the ``pem`` repository:
 
@@ -112,28 +115,43 @@ Next get an up to date checkout of the ``pem`` repository:
 
     git checkout git@github.com:hynek/pem.git
 
-Change into the newly created directory and **after activating your virtual environment** install an editable version of ``pem``:
+Change into the newly created directory and **after activating your virtual environment** install an editable version of ``pem`` along with its tests and docs requirements:
 
 .. code-block:: bash
 
     cd pem
-    pip install -e .
+    pip install -e .[dev]
 
-If you run the virtual environment’s Python and try to ``import pem`` it should work!
-
-To run the test suite, you'll need our development dependencies which can be installed using
+At this point,
 
 .. code-block:: bash
 
-    pip install -r dev-requirements.txt
+   $ python -m pytest
 
-At this point
+should work and pass, as should:
 
 .. code-block:: bash
 
-   python -m pytest
+   $ cd docs
+   $ make html
 
-should work and pass!
+The built documentation can then be found in ``docs/_build/html/``.
+
+To avoid committing code that violates our style guide, we strongly advice you to install pre-commit_ [#f1]_ hooks:
+
+.. code-block:: bash
+
+   $ pre-commit install
+
+You can also run them anytime (as our tox does) using:
+
+.. code-block:: bash
+
+   $ pre-commit run --all-files
+
+
+.. [#f1] pre-commit should have been installed into your virtualenv automatically when you ran ``pip install -e .[dev]`` above. If pre-commit is missing, it may be that you need to re-run ``pip install -e .[dev]``.
+
 
 ****
 
@@ -159,3 +177,6 @@ Thank you for considering contributing to ``pem``!
 .. _reStructuredText: http://sphinx-doc.org/rest.html
 .. _semantic newlines: http://rhodesmill.org/brandon/2012/one-sentence-per-line/
 .. _CI: https://travis-ci.org/hynek/pem/
+.. _black: https://github.com/ambv/black
+.. _pre-commit: https://pre-commit.com/
+.. _isort: https://github.com/timothycrosley/isort

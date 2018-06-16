@@ -46,9 +46,9 @@ class TestPEMObjects(object):
         """
         cert_req = pem.CertificateRequest(b"test")
 
-        assert "<CertificateRequest({0})>".format(
-            TEST_DIGEST
-        ) == repr(cert_req)
+        assert "<CertificateRequest({0})>".format(TEST_DIGEST) == repr(
+            cert_req
+        )
 
     def test_cert_req_has_correct_str(self):
         """
@@ -110,46 +110,46 @@ class TestPEMObjects(object):
         """
         Passing unicode to Certificate encodes the string as ASCII.
         """
-        cert = pem.Certificate(u'a string')
+        cert = pem.Certificate(u"a string")
 
-        assert cert.as_bytes() == b'a string'
-        assert str(cert) == 'a string'
+        assert cert.as_bytes() == b"a string"
+        assert str(cert) == "a string"
 
     def test_certificate_request_unicode(self):
         """
         Passing unicode to CertificateRequest encodes the string as ASCII.
         """
-        cert_req = pem.CertificateRequest(u'a string')
+        cert_req = pem.CertificateRequest(u"a string")
 
-        assert cert_req.as_bytes() == b'a string'
-        assert str(cert_req) == 'a string'
+        assert cert_req.as_bytes() == b"a string"
+        assert str(cert_req) == "a string"
 
     def test_key_unicode(self):
         """
         Passing unicode to Key encodes the string as ASCII.
         """
-        key = pem.Key(u'a string')
+        key = pem.Key(u"a string")
 
-        assert key.as_bytes() == b'a string'
-        assert str(key) == 'a string'
+        assert key.as_bytes() == b"a string"
+        assert str(key) == "a string"
 
     def test_rsa_key_unicode(self):
         """
         Passing unicode to RSAPrivateKey encodes the string as ASCII.
         """
-        key = pem.RSAPrivateKey(u'a string')
+        key = pem.RSAPrivateKey(u"a string")
 
-        assert key.as_bytes() == b'a string'
-        assert str(key) == 'a string'
+        assert key.as_bytes() == b"a string"
+        assert str(key) == "a string"
 
     def test_dhparams_unicode_deprecated(self):
         """
         Passing unicode to DHParameters encodes the string as ASCII.
         """
-        params = pem.DHParameters(u'a string')
+        params = pem.DHParameters(u"a string")
 
-        assert params.as_bytes() == b'a string'
-        assert str(params) == 'a string'
+        assert params.as_bytes() == b"a string"
+        assert str(params) == "a string"
 
     def test_certs_equal(self):
         """
@@ -271,7 +271,7 @@ class TestParse(object):
         Parses a PEM string with multiple certificates into a list of
         corresponding Certificates.
         """
-        certs = pem.parse(b''.join(CERT_PEMS))
+        certs = pem.parse(b"".join(CERT_PEMS))
         assert all(isinstance(c, pem.Certificate) for c in certs)
         assert CERT_PEMS == [cert.as_bytes() for cert in certs]
 
@@ -288,7 +288,7 @@ class TestParse(object):
         Parses a PEM string with multiple certificates without a new line
         at the end into a list of corresponding Certificates.
         """
-        certs = pem.parse(b''.join(CERT_PEMS_NO_NEW_LINE))
+        certs = pem.parse(b"".join(CERT_PEMS_NO_NEW_LINE))
         assert all(isinstance(c, pem.Certificate) for c in certs)
         assert CERT_PEMS_NO_NEW_LINE == [cert.as_bytes() for cert in certs]
 
@@ -306,8 +306,8 @@ class TestParse(object):
         A file with multiple certificate PEMs is parsed into a list of
         corresponding Certificates.
         """
-        certs_file = tmpdir.join('certs.pem')
-        certs_file.write(b''.join(CERT_PEMS))
+        certs_file = tmpdir.join("certs.pem")
+        certs_file.write(b"".join(CERT_PEMS))
         certs = pem.parse_file(str(certs_file))
         assert all(isinstance(c, pem.Certificate) for c in certs)
         assert CERT_PEMS == [cert.as_bytes() for cert in certs]

@@ -11,7 +11,7 @@ import warnings
 from OpenSSL.SSL import FILETYPE_PEM
 from twisted.internet import ssl
 
-from ._core import parse_file, Certificate, DHParameters, Key
+from ._core import Certificate, DHParameters, Key, parse_file
 
 
 def certificateOptionsFromPEMs(pemObjects, **kw):
@@ -33,27 +33,30 @@ def certificateOptionsFromPEMs(pemObjects, **kw):
     """
     keys = [key for key in pemObjects if isinstance(key, Key)]
     if not len(keys):
-        raise ValueError('Supplied PEM file(s) does *not* contain a key.')
+        raise ValueError("Supplied PEM file(s) does *not* contain a key.")
     if len(keys) > 1:
-        raise ValueError('Supplied PEM file(s) contains *more* than one key.')
+        raise ValueError("Supplied PEM file(s) contains *more* than one key.")
 
     privateKey = ssl.KeyPair.load(str(keys[0]), FILETYPE_PEM)
 
     certs = [cert for cert in pemObjects if isinstance(cert, Certificate)]
     if not len(certs):
-        raise ValueError('*At least one* certificate is required.')
-    certificates = [ssl.Certificate.loadPEM(str(certPEM))
-                    for certPEM in certs]
+        raise ValueError("*At least one* certificate is required.")
+    certificates = [ssl.Certificate.loadPEM(str(certPEM)) for certPEM in certs]
 
     certificatesByFingerprint = dict(
-        [(certificate.getPublicKey().keyHash(), certificate)
-         for certificate in certificates]
+        [
+            (certificate.getPublicKey().keyHash(), certificate)
+            for certificate in certificates
+        ]
     )
 
     if privateKey.keyHash() not in certificatesByFingerprint:
-        raise ValueError("No certificate matching {fingerprint} found.".format(
-            fingerprint=privateKey.keyHash()
-        ))
+        raise ValueError(
+            "No certificate matching {fingerprint} found.".format(
+                fingerprint=privateKey.keyHash()
+            )
+        )
 
     primaryCertificate = certificatesByFingerprint.pop(privateKey.keyHash())
 
@@ -61,14 +64,15 @@ def certificateOptionsFromPEMs(pemObjects, **kw):
         warnings.warn(
             "Passing DH parameters as a keyword argument instead of a PEM "
             "object is deprecated as of pem 16.1.0.",
-            DeprecationWarning
+            DeprecationWarning,
         )
     else:
         dhparams = [o for o in pemObjects if isinstance(o, DHParameters)]
         if len(dhparams) > 1:
             raise ValueError(
                 "Supplied PEM file(s) contain(s) *more* than one set of DH "
-                "parameters.")
+                "parameters."
+            )
         elif len(dhparams) == 1:
             kw["dhParameters"] = DiffieHellmanParameters(str(dhparams[0]))
 
@@ -81,14 +85,15 @@ def certificateOptionsFromPEMs(pemObjects, **kw):
             "Using pem with Twisted older than 14.0.0 is deprecated as of pem"
             " 15.0.0.  "
             "The backport of DiffieHellmanParameters will be removed.",
-            DeprecationWarning
+            DeprecationWarning,
         )
 
     ctxFactory = ssl.CertificateOptions(
         privateKey=privateKey.original,
         certificate=primaryCertificate.original,
-        extraCertChain=[chain.original
-                        for chain in certificatesByFingerprint.values()],
+        extraCertChain=[
+            chain.original for chain in certificatesByFingerprint.values()
+        ],
         **kw
     )
 
@@ -115,6 +120,7 @@ class _DHParamContextFactory(object):
     context factory and then sets temporary DH params on it. This
     enables PFS ciphersuites using DHE.
     """
+
     def __init__(self, ctxFactory, dhParameters):
         self.ctxFactory = ctxFactory
         self.dhParameters = dhParameters
@@ -130,6 +136,7 @@ class _DiffieHellmanParameters(object):
     A representation of key generation parameters that are required for
     Diffie-Hellman key exchange.
     """
+
     def __init__(self, parameters):
         self._dhFile = parameters
 
@@ -159,6 +166,7 @@ class _DiffieHellmanParameters(object):
 
 try:
     from twisted.internet.ssl import DiffieHellmanParameters
+
     _DH_PARAMETERS_SUPPORTED = True
 except ImportError:  # pragma: nocover
     DiffieHellmanParameters = _DiffieHellmanParameters

@@ -1,8 +1,8 @@
-from setuptools import setup, find_packages
-
 import codecs
 import os
 import re
+
+from setuptools import find_packages, setup
 
 
 ###############################################################################
@@ -24,10 +24,19 @@ CLASSIFIERS = [
     "Programming Language :: Python :: 3.4",
     "Programming Language :: Python :: 3.5",
     "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 INSTALL_REQUIRES = []
-EXTRAS_REQUIRE = {}
+EXTRAS_REQUIRE = {
+    "docs": ["sphinx"],
+    "tests": ["coverage", "pytest", "certifi", "pretend", "pyopenssl"],
+}
+EXTRAS_REQUIRE["dev"] = (
+    EXTRAS_REQUIRE["tests"]
+    + EXTRAS_REQUIRE["docs"]
+    + ["twisted[tls]", "pre-commit"]
+)
 
 ###############################################################################
 
@@ -61,8 +70,7 @@ def find_meta(meta):
     Extract __*meta*__ from META_FILE.
     """
     meta_match = re.search(
-        r"^__{meta}__ = ['\"]([^'\"]*)['\"]".format(meta=meta),
-        META_FILE, re.M
+        r"^__{meta}__ = ['\"]([^'\"]*)['\"]".format(meta=meta), META_FILE, re.M
     )
     if meta_match:
         return meta_match.group(1)
@@ -71,14 +79,16 @@ def find_meta(meta):
 
 URI = find_meta("uri")
 LONG = (
-    read("README.rst") + "\n\n" +
-    "Release Information\n" +
-    "===================\n\n" +
-    re.search("(\d+.\d.\d \(.*?\)\n.*?)\n\n\n----\n\n\n",
-              read("CHANGELOG.rst"), re.S).group(1) +
-    "\n\n`Full changelog " +
-    "<{uri}en/stable/changelog.html>`_.\n\n".format(uri=URI) +
-    read("AUTHORS.rst")
+    read("README.rst")
+    + "\n\n"
+    + "Release Information\n"
+    + "===================\n\n"
+    + re.search(
+        "(\d+.\d.\d \(.*?\)\n.*?)\n\n\n----\n\n\n", read("CHANGELOG.rst"), re.S
+    ).group(1)
+    + "\n\n`Full changelog "
+    + "<{uri}en/stable/changelog.html>`_.\n\n".format(uri=URI)
+    + read("AUTHORS.rst")
 )
 
 if __name__ == "__main__":
