@@ -53,30 +53,4 @@ If you want to load your PEM data from somewhere else, you can also use
     ctxFactory = pem.twisted.certificateOptionsFromPEMs(pems)
 
 
-Ephemeral Diffie-Hellman support
---------------------------------
-
-.. warning::
-   This feature is deprecated and will be removed a year after the release of 15.0.0.
-
-Starting with version 14.0.0, Twisted supports ephemeral Diffie-Hellman ciphersuites.
-You can pass an instance of ``twisted.internet.ssl.DiffieHellmanParameters`` as the ``dhParameters`` keyword argument to ``CertificateOptions``.
-Since ``pem`` just passes keyword arguments to ``CertificateOptions`` verbatim, that will just work.
-
-However, ``pem`` is also forward compatible.
-If your version of Twisted predates 14.0.0, ``pem`` lets you use the API described above anyway.
-You can just use ``pem.twisted.DiffieHellmanParameters``: if your version of Twisted comes with that class, you just get the Twisted version; if it doesn't, you get a version from ``pem``.
-
-Just pass instances of that class as ``dhParameters`` to ``certificateOptionsFromFiles``, and ``pem`` will make it magically work::
-
-   import pem
-
-   from twisted.python.filepath import FilePath
-
-   path = FilePath("/path/to/the/dh/params")
-   ctxFactory = pem.twisted.certificateOptionsFromFiles(
-      'key.pem', 'cert_and_chain.pem',
-      dhParameters=pem.DiffieHellmanParameters.fromFile(path)
-   )
-
 .. _CertificateOptions: https://twistedmatrix.com/documents/current/api/twisted.internet.ssl.CertificateOptions.html

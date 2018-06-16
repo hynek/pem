@@ -186,94 +186,19 @@ class TestCertificateOptionsFromFiles(object):
             "parameters."
         ) == str(excinfo.value)
 
-
-class TestForwardCompatibleDHE(object):
-    def test_fakeDHParameterSupport(
-        self, monkeypatch, keyCertChainFile, recwarn
-    ):
+    def test_removedLegacyDHParameterSupport(self, keyCertChainFile):
         """
-        Fake DH parameter support if Twisted doesn't support it for explicitly
-        passed DH parameters.
-
-        Warns about deprecation.
+        Passing dhParameters as an argument raises a TypeError.
         """
-        fakeCtxFactory = object()
-        recorder = call_recorder(lambda *a, **kw: fakeCtxFactory)
-        monkeypatch.setattr(ssl, "CertificateOptions", recorder)
-        monkeypatch.setattr(pem.twisted, "_DH_PARAMETERS_SUPPORTED", False)
         fakeParameters = object()
 
-        with pytest.warns(DeprecationWarning) as ws:
-            ctxFactory = certificateOptionsFromFiles(
+        with pytest.raises(TypeError, match="Passing DH parameters"):
+            certificateOptionsFromFiles(
                 str(keyCertChainFile), dhParameters=fakeParameters
             )
 
-            assert (
-                "Passing DH parameters as a keyword argument instead of a PEM "
-                "object is deprecated" in str(ws[0].message)
-            )
-            assert (
-                "The backport of DiffieHellmanParameters will be removed."
-                in str(ws[1].message)
-            )
 
-        assert isinstance(ctxFactory, pem.twisted._DHParamContextFactory)
-        assert ctxFactory.ctxFactory is fakeCtxFactory
-        assert "dhParameters" not in recorder.calls[0].kwargs
-
-    def test_realDHParameterSupport(
-        self, monkeypatch, keyCertChainFile, recwarn
-    ):
-        """
-        Pass explicitly supplied DH parameters directly to CertificateOptions
-        if the installed version of Twisted supports it.
-
-        Warns about deprecation.
-        """
-        fakeCtxFactory = object()
-        recorder = call_recorder(lambda *a, **kw: fakeCtxFactory)
-        monkeypatch.setattr(ssl, "CertificateOptions", recorder)
-        monkeypatch.setattr(pem.twisted, "_DH_PARAMETERS_SUPPORTED", True)
-        fakeParameters = object()
-
-        with pytest.warns(DeprecationWarning) as ws:
-            ctxFactory = certificateOptionsFromFiles(
-                str(keyCertChainFile), dhParameters=fakeParameters
-            )
-            assert (
-                "Passing DH parameters as a keyword argument instead of a PEM "
-                "object is deprecated" in str(ws[0].message)
-            )
-
-        assert ctxFactory is fakeCtxFactory
-        assert recorder.calls[0].kwargs["dhParameters"] == fakeParameters
-
-    def test_fakeDHParameterFileSupport(
-        self, monkeypatch, keyCertChainDHFile, recwarn
-    ):
-        """
-        Fake DH parameter support if Twisted doesn't support it for DH
-        parameters loaded from file.
-
-        Warns about deprecation.
-        """
-        fakeCtxFactory = object()
-        recorder = call_recorder(lambda *a, **kw: fakeCtxFactory)
-        monkeypatch.setattr(ssl, "CertificateOptions", recorder)
-        monkeypatch.setattr(pem.twisted, "_DH_PARAMETERS_SUPPORTED", False)
-
-        with pytest.warns(DeprecationWarning) as ws:
-            ctxFactory = certificateOptionsFromFiles(str(keyCertChainDHFile))
-
-            assert (
-                "The backport of DiffieHellmanParameters will be removed."
-                in str(ws[0].message)
-            )
-
-        assert isinstance(ctxFactory, pem.twisted._DHParamContextFactory)
-        assert ctxFactory.ctxFactory is fakeCtxFactory
-        assert "dhParameters" not in recorder.calls[0].kwargs
-
+class _TestForwardCompatibleDHE(object):
     def test_realDHParameterFileSupport(self, monkeypatch, keyCertChainDHFile):
         """
         Pass DH parameters loaded from a file directly to CertificateOptions if
@@ -291,16 +216,6 @@ class TestForwardCompatibleDHE(object):
             recorder.calls[0].kwargs["dhParameters"],
             pem.twisted.DiffieHellmanParameters,
         )
-
-    def test_DiffieHellmanParameters(self):
-        """
-        Make sure lines are executed.
-        """
-        o = object()
-
-        dhp = pem.twisted._DiffieHellmanParameters.fromFile(o)
-
-        assert o is dhp._dhFile
 
     def test_DHParamContextFactory(self):
         """
