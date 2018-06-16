@@ -25,7 +25,6 @@ pem: Easy PEM file parsing
 ``pem`` is an MIT_-licensed Python module for parsing and splitting of `PEM files`_, i.e. Base64 encoded DER keys and certificates.
 
 It runs on Python 2.7, 3.4+, and PyPy, has no dependencies, and does not attempt to interpret the certificate data in any way.
-``pem``\ ’s original intent was to ease the handling of PEM files in combination with pyOpenSSL_ and – by extension – Twisted_.
 
 It’s born from the need to load keys, certificates, trust chains, and DH parameters from various certificate deployments: some servers (like Apache_) expect them to be a separate file, others (like nginx_) expect them concatenated to the server certificate and finally some (like HAProxy_) expect key, certificate, and chain to be in one file.
 With ``pem``, your Python application can cope with all of those scenarios:
@@ -39,7 +38,7 @@ With ``pem``, your Python application can cope with all of those scenarios:
    >>> str(certs[0])
    '-----BEGIN CERTIFICATE-----\n...'
 
-Additionally to the vanilla parsing code, ``pem`` also contains helpers for Twisted that save a lot of boilerplate code.
+Additionally to the vanilla parsing code, ``pem`` also contains helpers for Twisted_ that save a lot of boilerplate code.
 
 ``pem``\ ’s documentation lives at `Read the Docs <https://pem.readthedocs.io/>`_, the code on `GitHub <https://github.com/hynek/pem>`_.
 
@@ -48,6 +47,5 @@ Additionally to the vanilla parsing code, ``pem`` also contains helpers for Twis
 .. _`PEM files`: https://en.wikipedia.org/wiki/X.509#Certificate_filename_extensions
 .. _Apache: https://httpd.apache.org/
 .. _nginx: https://nginx.org/
-.. _HAProxy: http://www.haproxy.org/
-.. _pyOpenSSL: http://www.pyopenssl.org/
+.. _HAProxy: https://www.haproxy.org/
 .. _Twisted: https://twistedmatrix.com/documents/current/api/twisted.internet.ssl.Certificate.html#loadPEM
