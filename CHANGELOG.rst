@@ -7,14 +7,15 @@ Versions are year-based with a strict backward compatibility policy.
 The third digit is only for regressions.
 
 
-17.2.0 (UNRELEASED)
+18.1.0 (UNRELEASED)
 -------------------
 
 
 Backward-incompatible changes:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-*none*
+- ``pem.certificateOptionsFromFiles()`` and ``pem.certificateOptionsFromPEMs()`` have been removed after three years of deprecation.
+  Please use ``pem.twisted.certificateOptionsFromFiles()`` ``pem.twisted.certificateOptionsFromPEMs()`` instead.
 
 
 Deprecations:

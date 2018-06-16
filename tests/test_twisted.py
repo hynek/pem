@@ -207,6 +207,7 @@ class TestForwardCompatibleDHE(object):
             ctxFactory = certificateOptionsFromFiles(
                 str(keyCertChainFile), dhParameters=fakeParameters
             )
+
             assert (
                 "Passing DH parameters as a keyword argument instead of a PEM "
                 "object is deprecated" in str(ws[0].message)
@@ -263,6 +264,7 @@ class TestForwardCompatibleDHE(object):
 
         with pytest.warns(DeprecationWarning) as ws:
             ctxFactory = certificateOptionsFromFiles(str(keyCertChainDHFile))
+
             assert (
                 "The backport of DiffieHellmanParameters will be removed."
                 in str(ws[0].message)
@@ -315,30 +317,3 @@ class TestForwardCompatibleDHE(object):
 
         assert fakeContext is ctx
         assert [call(b"foo")] == fakeContext.load_tmp_dh.calls
-
-
-class TestDeprecations(object):
-    def test_certificateOptionsFromFiles(self, tmpdir, recwarn):
-        """
-        pem.certificateOptionsFromFiles raises a deprecation warning.
-        """
-        keyFile = tmpdir.join("key.pem")
-        keyFile.write(KEY_PEM)
-        certFile = tmpdir.join("cert.pem")
-        certFile.write(CERT_PEMS[0])
-
-        with pytest.warns(DeprecationWarning) as ws:
-            pem.certificateOptionsFromFiles(str(keyFile), str(certFile))
-
-            assert "certificateOptionsFromFiles" in str(ws[0].message)
-
-    def test_certificateOptionsFromPEMs(self, tmpdir, recwarn):
-        """
-        pem.certificateOptionsFromPEMs raises a deprecation warning.
-        """
-        with pytest.warns(DeprecationWarning) as ws:
-            pem.certificateOptionsFromPEMs(
-                pem.parse(CERT_PEMS[0]) + pem.parse(KEY_PEM)
-            )
-
-            assert "certificateOptionsFromPEMs" in str(ws[0].message)
