@@ -54,12 +54,14 @@ class TestPEMObjects(object):
 
     def test_sha1_hexdigest(self):
         """
-        obj.sha1_digest contains the correct digest.
+        obj.sha1_digest contains the correct digest and caches it properly.
         """
         cert = pem.Certificate(b"test")
 
         assert (
-            "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3" == cert.sha1_hexdigest
+            "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3"
+            == cert.sha1_hexdigest
+            == cert.sha1_hexdigest
         )
 
     def test_as_text(self):

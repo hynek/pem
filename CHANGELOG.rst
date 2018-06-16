@@ -16,6 +16,7 @@ Backward-incompatible changes:
 
 - ``pem.certificateOptionsFromFiles()`` and ``pem.certificateOptionsFromPEMs()`` have been removed after three years of deprecation.
   Please use ``pem.twisted.certificateOptionsFromFiles()`` ``pem.twisted.certificateOptionsFromPEMs()`` instead.
+- Diffie-Hellman support for Twisted older than 14.0 has been removed.
 
 
 Deprecations:
