@@ -50,9 +50,15 @@ class _Base(object):
 
     def as_bytes(self):
         """
-        Return the PEM-encoded content as :obj:`bytes`.
+        Return the PEM-encoded content as :type:`bytes`.
         """
         return self._pem_bytes
+
+    def as_text(self):
+        """
+        Return the PEM-encoded content as Unicode text.
+        """
+        return self._pem_bytes.decode("utf-8")
 
     def __eq__(self, other):
         if not isinstance(other, self.__class__):

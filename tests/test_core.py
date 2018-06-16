@@ -6,6 +6,8 @@ import certifi
 
 import pem
 
+from pem._compat import unicode
+
 from .data import (
     CERT_NO_NEW_LINE,
     CERT_PEMS,
@@ -59,6 +61,15 @@ class TestPEMObjects(object):
         assert (
             "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3" == cert.sha1_hexdigest
         )
+
+    def test_as_text(self):
+        """
+        obj.as_text() returns the contents as Unicode.
+        """
+        cert_text = pem.Certificate(b"test").as_text()
+
+        assert "test" == cert_text
+        assert isinstance(cert_text, unicode)
 
     def test_cert_req_has_correct_str(self):
         """
@@ -202,6 +213,7 @@ class TestPEMObjects(object):
 
         key1 = pem.RSAPrivateKey(b"test")
         key2 = pem.RSAPrivateKey(b"test")
+
         assert key1 == key2
         assert key2 == key1
         assert hash(key1) == hash(key2)
@@ -234,6 +246,7 @@ class TestPEMObjects(object):
         """
         cert_req1 = pem.CertificateRequest(b"test1")
         cert_req2 = pem.CertificateRequest(b"test2")
+
         assert cert_req1 != cert_req2
         assert cert_req2 != cert_req1
 
@@ -273,6 +286,7 @@ class TestParse(object):
         """
         rv = pem.parse(KEY_PEM)
         key, = rv
+
         assert isinstance(key, pem.RSAPrivateKey)
         assert KEY_PEM == key.as_bytes()
 
@@ -282,6 +296,7 @@ class TestParse(object):
         corresponding Certificates.
         """
         certs = pem.parse(b"".join(CERT_PEMS))
+
         assert all(isinstance(c, pem.Certificate) for c in certs)
         assert CERT_PEMS == [cert.as_bytes() for cert in certs]
 
@@ -290,6 +305,7 @@ class TestParse(object):
         Parses a PEM string without a new line at the end
         """
         cert, = pem.parse(CERT_NO_NEW_LINE)
+
         assert isinstance(cert, pem.Certificate)
         assert CERT_NO_NEW_LINE == cert.as_bytes()
 
@@ -299,6 +315,7 @@ class TestParse(object):
         at the end into a list of corresponding Certificates.
         """
         certs = pem.parse(b"".join(CERT_PEMS_NO_NEW_LINE))
+
         assert all(isinstance(c, pem.Certificate) for c in certs)
         assert CERT_PEMS_NO_NEW_LINE == [cert.as_bytes() for cert in certs]
 
@@ -308,6 +325,7 @@ class TestParse(object):
         """
         rv = pem.parse(DH_PEM)
         dh, = rv
+
         assert isinstance(dh, pem.DHParameters)
         assert DH_PEM == dh.as_bytes()
 
@@ -319,6 +337,7 @@ class TestParse(object):
         certs_file = tmpdir.join("certs.pem")
         certs_file.write(b"".join(CERT_PEMS))
         certs = pem.parse_file(str(certs_file))
+
         assert all(isinstance(c, pem.Certificate) for c in certs)
         assert CERT_PEMS == [cert.as_bytes() for cert in certs]
 
@@ -327,6 +346,7 @@ class TestParse(object):
         Loading certifi returns a list of Certificates.
         """
         cas = pem.parse_file(certifi.where())
+
         assert isinstance(cas, list)
         assert all(isinstance(ca, pem.Certificate) for ca in cas)
 
@@ -336,4 +356,5 @@ class TestParse(object):
         """
         lf_pem = KEY_PEM.replace(b"\n", b"\r\n")
         rv, = pem.parse(lf_pem)
+
         assert rv.as_bytes() == lf_pem

@@ -27,7 +27,9 @@ Deprecations:
 Changes:
 ^^^^^^^^
 
-- All PEM objects now have a ``obj.sha1_hexdigest()`` method that returns the SHA-1 digest that is used by ``pem``'s ``__repr__`` as a native string.
+- PEM objects now have an ``obj.sha1_hexdigest`` property with the SHA-1 digest of the stored bytes  as a native string.
+  This is the same digest as the one that is used by the PEM objects' ``__repr__``\ s.
+- PEM objects now have an ``obj.as_text()`` method that returns the PEM-encoded content as unicode, always.
 
 
 ----
