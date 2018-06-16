@@ -3,7 +3,6 @@ repos:
     rev: 18.6b2
     hooks:
       - id: black
-        types: [python]
         language_version: python3.6
   - repo: https://github.com/asottile/seed-isort-config
     rev: v1.0.1
@@ -13,4 +12,3 @@ repos:
     rev: v4.3.4
     hooks:
       - id: isort
-        types: [python]
