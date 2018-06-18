@@ -15,7 +15,7 @@ from ._core import (
 try:
     from . import twisted
 except ImportError:
-    twisted = None
+    twisted = None  # type: ignore
 
 
 __version__ = "18.1.0.dev0"

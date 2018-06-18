@@ -37,6 +37,8 @@ EXTRAS_REQUIRE["dev"] = (
     + EXTRAS_REQUIRE["docs"]
     + ["twisted[tls]", "pre-commit"]
 )
+PACKAGE_DATA = {"pem": ["py.typed"]}
+
 
 ###############################################################################
 
@@ -106,8 +108,10 @@ if __name__ == "__main__":
         keywords=KEYWORDS,
         packages=PACKAGES,
         package_dir={"": "src"},
+        package_data=PACKAGE_DATA,
+        include_package_data=True,
+        zip_safe=False,
         classifiers=CLASSIFIERS,
         install_requires=INSTALL_REQUIRES,
         extras_require=EXTRAS_REQUIRE,
-        zip_safe=False,
     )

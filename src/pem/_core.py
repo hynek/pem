@@ -6,25 +6,32 @@ Framework agnostic PEM file parsing functions.
 
 from __future__ import absolute_import, division, print_function
 
-import abc
 import hashlib
 import re
 
-from ._compat import PY2, text_type, with_metaclass
+from ._compat import ABC, PY2, text_type
 
 
-class AbstractPEMObject(with_metaclass(abc.ABCMeta, object)):
+# mypy hack: Import typing information without actually importing anything.
+if False:  # pragma: nocover
+    from typing import List, Any, Union, AnyStr, Optional, Dict, Type  # noqa
+
+
+class AbstractPEMObject(ABC):
     """
     Base class for parsed objects.
     """
 
-    def __init__(self, _pem_bytes):
-        if isinstance(_pem_bytes, text_type):
-            _pem_bytes = _pem_bytes.encode("ascii")
-        self._pem_bytes = _pem_bytes
-        self._sha1_hexdigest = None
+    def __init__(self, pem_bytes):
+        # type: (Union[text_type, bytes]) -> None
+        if isinstance(pem_bytes, text_type):
+            self._pem_bytes = pem_bytes.encode("ascii")  # type: bytes
+        else:
+            self._pem_bytes = pem_bytes  # type: bytes
+        self._sha1_hexdigest = None  # type: Optional[str]
 
     def __str__(self):
+        # type: () -> str
         """
         Return the PEM-encoded content as a native :obj:`str`.
         """
@@ -39,6 +46,7 @@ class AbstractPEMObject(with_metaclass(abc.ABCMeta, object)):
 
     @property
     def sha1_hexdigest(self):
+        # type: () -> str
         """
         A SHA-1 digest of the whole object for easy differentiation.
         """
@@ -48,30 +56,37 @@ class AbstractPEMObject(with_metaclass(abc.ABCMeta, object)):
         return self._sha1_hexdigest
 
     def as_bytes(self):
+        # type: () -> bytes
         """
         Return the PEM-encoded content as :obj:`bytes`.
         """
         return self._pem_bytes
 
     def as_text(self):
+        # type: () -> text_type
         """
         Return the PEM-encoded content as Unicode text.
         """
         return self._pem_bytes.decode("utf-8")
 
     def __eq__(self, other):
-        if not isinstance(other, self.__class__):
+        # type: (object) -> Union[NotImplemented, bool]
+        if not isinstance(other, type(self)):
             return NotImplemented
+
         return (
             type(self) == type(other) and self._pem_bytes == other._pem_bytes
         )
 
     def __ne__(self, other):
-        if not isinstance(other, self.__class__):
+        # type: (object) -> Union[NotImplemented, bool]
+        if not isinstance(other, type(self)):
             return NotImplemented
+
         return type(self) != type(other) or self._pem_bytes != other._pem_bytes
 
     def __hash__(self):
+        # type: () -> int
         return hash(self._pem_bytes)
 
 
@@ -112,7 +127,7 @@ _PEM_TO_CLASS = {
     b"DH PARAMETERS": DHParameters,
     b"NEW CERTIFICATE REQUEST": CertificateRequest,
     b"CERTIFICATE REQUEST": CertificateRequest,
-}
+}  # type: Dict[bytes, Type[AbstractPEMObject]]
 _PEM_RE = re.compile(
     b"-----BEGIN ("
     + b"|".join(_PEM_TO_CLASS.keys())
@@ -124,6 +139,7 @@ _PEM_RE = re.compile(
 
 
 def parse(pem_str):
+    # type: (bytes) -> List[AbstractPEMObject]
     """
     Extract PEM objects from *pem_str*.
 
@@ -138,6 +154,7 @@ def parse(pem_str):
 
 
 def parse_file(file_name):
+    # type: (str) -> List[AbstractPEMObject]
     """
     Read *file_name* and parse PEM objects from it using :func:`parse`.
     """
