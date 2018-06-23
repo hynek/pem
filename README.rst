@@ -20,6 +20,10 @@ pem: Easy PEM file parsing
    :target: https://github.com/ambv/black
    :alt: Code style: black
 
+.. image:: http://www.mypy-lang.org/static/mypy_badge.svg
+   :target: http://mypy-lang.org
+   :alt: Checked with mypy
+
 .. teaser-begin
 
 ``pem`` is an MIT_-licensed Python module for parsing and splitting of `PEM files`_, i.e. Base64 encoded DER keys and certificates.
