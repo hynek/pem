@@ -13,7 +13,8 @@ from ._core import Certificate, DHParameters, Key, parse_file
 
 
 # mypy hack: Import typing information without actually importing anything.
-if False:  # pragma: nocover
+MYPY = False
+if MYPY:  # pragma: nocover
     from ._core import AbstractPEMObject  # noqa
     from typing import List, Any  # noqa
 

@@ -13,7 +13,8 @@ from ._compat import ABC, PY2, text_type
 
 
 # mypy hack: Import typing information without actually importing anything.
-if False:  # pragma: nocover
+MYPY = False
+if MYPY:  # pragma: nocover
     from typing import List, Any, Union, AnyStr, Optional, Dict, Type  # noqa
 
 
