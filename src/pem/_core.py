@@ -41,6 +41,7 @@ class AbstractPEMObject(ABC):
         return self._pem_bytes
 
     def __repr__(self):
+        # type: () -> str
         return "<{0}(PEM string with SHA-1 digest {1!r})>".format(
             self.__class__.__name__, self.sha1_hexdigest
         )
