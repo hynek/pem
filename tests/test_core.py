@@ -2,6 +2,8 @@
 
 from __future__ import absolute_import, division, print_function
 
+from itertools import combinations
+
 import certifi
 
 import pem
@@ -12,6 +14,7 @@ from .data import (
     CERT_NO_NEW_LINE,
     CERT_PEMS,
     CERT_PEMS_NO_NEW_LINE,
+    CRL_PEMS,
     DH_PEM,
     KEY_PEM,
 )
@@ -129,6 +132,26 @@ class TestPEMObjects(object):
 
         assert str(params) == "test"
 
+    def test_crl_has_correct_repr(self):
+        """
+        Calling repr on a CertificateRevocationList instance returns the proper
+        string.
+        """
+        crl = pem.CertificateRevocationList(b"test")
+
+        assert "<CertificateRevocationList({0})>".format(TEST_DIGEST) == repr(
+            crl
+        )
+
+    def test_crl_has_correct_str(self):
+        """
+        Calling str on a CertificateRevocationList instance returns the proper
+        string.
+        """
+        crl = pem.CertificateRevocationList(b"test")
+
+        assert str(crl) == "test"
+
     def test_certificate_unicode(self):
         """
         Passing unicode to Certificate encodes the string as ASCII.
@@ -173,6 +196,16 @@ class TestPEMObjects(object):
 
         assert params.as_bytes() == b"a string"
         assert str(params) == "a string"
+
+    def test_crl_unicode(self):
+        """
+        Passing unicode to CertificateRevocationList encodes the string as
+        ASCII.
+        """
+        crl = pem.CertificateRevocationList(u"a string")
+
+        assert crl.as_bytes() == b"a string"
+        assert str(crl) == "a string"
 
     def test_certs_equal(self):
         """
@@ -232,6 +265,18 @@ class TestPEMObjects(object):
         assert params2 == params1
         assert hash(params1) == hash(params2)
 
+    def test_crl_equal(self):
+        """
+        Two CertificateRevocationList instances with equal contents are equal
+        and have equal hashes.
+        """
+        crl1 = pem.CertificateRevocationList(b"test")
+        crl2 = pem.CertificateRevocationList(b"test")
+
+        assert crl1 == crl2
+        assert crl2 == crl1
+        assert hash(crl1) == hash(crl2)
+
     def test_cert_contents_unequal(self):
         """
         Two Certificate instances with unequal contents are not equal.
@@ -252,23 +297,35 @@ class TestPEMObjects(object):
         assert cert_req1 != cert_req2
         assert cert_req2 != cert_req1
 
+    def test_crl_unequal(self):
+        """
+        Two CertificateRevocationList instances with unequal contents are not
+        equal.
+        """
+        crl1 = pem.CertificateRevocationList(b"test1")
+        crl2 = pem.CertificateRevocationList(b"test2")
+
+        assert crl1 != crl2
+        assert crl2 != crl1
+
     def test_different_objects_unequal(self):
         """
         Two PEM objects of different types but with equal contents are not
         equal.
         """
-        cert = pem.Certificate(b"test")
-        cert_req = pem.CertificateRequest(b"test")
-        key = pem.Key(b"test")
-        rsa_key = pem.RSAPrivateKey(b"test")
+        c = b"test"
 
-        assert not cert == key
-        assert cert != key
-        assert key != cert
-        assert cert != cert_req
-        assert cert_req != cert
-        assert key != rsa_key
-        assert rsa_key != key
+        pems = [
+            pem.Certificate(c),
+            pem.CertificateRequest(c),
+            pem.Key(c),
+            pem.RSAPrivateKey(c),
+            pem.CertificateRevocationList(c),
+        ]
+
+        for pem1, pem2 in combinations(pems, 2):
+            assert not pem1 == pem2
+            assert pem1 != pem2
 
     def test_incompatible_types(self):
         """
@@ -330,6 +387,16 @@ class TestParse(object):
 
         assert isinstance(dh, pem.DHParameters)
         assert DH_PEM == dh.as_bytes()
+
+    def test_crl(self):
+        """
+        Parses a PEM string with multiple certificate revocation lists into a
+        list of corresponding CertificateRevocationLists
+        """
+        crls = pem.parse(b"".join(CRL_PEMS))
+
+        assert all(isinstance(c, pem.CertificateRevocationList) for c in crls)
+        assert CRL_PEMS == [crl.as_bytes() for crl in crls]
 
     def test_file(self, tmpdir):
         """

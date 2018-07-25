@@ -104,6 +104,12 @@ class CertificateRequest(AbstractPEMObject):
     """
 
 
+class CertificateRevocationList(AbstractPEMObject):
+    """
+    A certificate revocation list.
+    """
+
+
 class Key(AbstractPEMObject):
     """
     A secret key of unknown type.
@@ -129,7 +135,9 @@ _PEM_TO_CLASS = {
     b"DH PARAMETERS": DHParameters,
     b"NEW CERTIFICATE REQUEST": CertificateRequest,
     b"CERTIFICATE REQUEST": CertificateRequest,
+    b"X509 CRL": CertificateRevocationList,
 }  # type: Dict[bytes, Type[AbstractPEMObject]]
+
 _PEM_RE = re.compile(
     b"-----BEGIN ("
     + b"|".join(_PEM_TO_CLASS.keys())
