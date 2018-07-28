@@ -26,7 +26,8 @@ Deprecations:
 Changes:
 ^^^^^^^^
 
-*none*
+- Added ``pem.CertificateRevocationList`` for certificate revocation lists (CRLs).
+  `#32 <https://github.com/hynek/pem/pull/32>`_
 
 
 ----

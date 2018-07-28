@@ -31,6 +31,7 @@ The following objects can be returned by the parsing functions.
 .. autoclass:: RSAPrivateKey(Key)
 .. autoclass:: DHParameters()
 .. autoclass:: CertificateRequest()
+.. autoclass:: CertificateRevocationList()
 
 Their shared provided API is minimal:
 

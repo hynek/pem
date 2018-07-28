@@ -51,6 +51,8 @@ class AbstractPEMObject(ABC):
         # type: () -> str
         """
         A SHA-1 digest of the whole object for easy differentiation.
+
+        .. versionadded:: 18.1.0
         """
         if self._sha1_hexdigest is None:
             self._sha1_hexdigest = hashlib.sha1(self._pem_bytes).hexdigest()
@@ -61,6 +63,8 @@ class AbstractPEMObject(ABC):
         # type: () -> bytes
         """
         Return the PEM-encoded content as :obj:`bytes`.
+
+        .. versionadded:: 16.1.0
         """
         return self._pem_bytes
 
@@ -68,6 +72,8 @@ class AbstractPEMObject(ABC):
         # type: () -> text_type
         """
         Return the PEM-encoded content as Unicode text.
+
+        .. versionadded:: 18.1.0
         """
         return self._pem_bytes.decode("utf-8")
 
@@ -101,12 +107,16 @@ class Certificate(AbstractPEMObject):
 class CertificateRequest(AbstractPEMObject):
     """
     A certificate signing request.
+
+    .. versionadded:: 17.1.0
     """
 
 
 class CertificateRevocationList(AbstractPEMObject):
     """
     A certificate revocation list.
+
+    .. versionadded:: 18.2.0
     """
 
 
