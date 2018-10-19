@@ -54,6 +54,75 @@ kjBF/mzooA==
 -----END RSA PRIVATE KEY-----
 """
 
+# KEY_PEM_PKCS8_* and KEY_PEM_PKCS5_* contain the same private key, but in
+# different formats.
+
+# PKCS#5 RSA unencrypted.
+# Generated with:
+# openssl genrsa -out private.pem 512
+KEY_PEM_PKCS5_UNENCRYPTED = b"""-----BEGIN RSA PRIVATE KEY-----
+MIIBOwIBAAJBAKX6cRhPHvdyoftEHGiRje3tTLRDnddg01AvgsJJcCFoIjwdgfa9
+aKFdzCcgD/htjvfRZl24M7E89sMUBMNHk8ECAwEAAQJABcBi8OO1AAAh6tIWZe09
+TNRfRxPcwVzilbG/xznCP/YMf72E8hsZazu+HGMKITg9dFeJOyjXZ4e8sD/pL/I6
+0QIhANzULu4JjJxpoTK8NnF/CemF7neLROA18NDB/mao5ZZtAiEAwGnYobinxuHS
+UQh8cT3w7aLsVlarZmCtoapxjW+ObiUCIQCcAltVV/G63vU/PrDH5hQ+opwiYIW8
+UN9c3HC6XkA00QIhAJ8YpfwKgAfNfyZrmuHTspv7Q+mb3jtXoxnyodOtsxpVAiBC
+a4FDqkr+bDwV4SwaGdG/AC40fR3P8hhOADAhtFDwlw==
+-----END RSA PRIVATE KEY-----
+"""
+
+# PKCS#5 RSA encrypted with `test` as password.
+# Generated with:
+# openssl genrsa -des3 -out private.pem 512
+KEY_PEM_PKCS5_ENCRYPTED = b"""-----BEGIN RSA PRIVATE KEY-----
+Proc-Type: 4,ENCRYPTED
+DEK-Info: DES-EDE3-CBC,8A72BD2DC1C9092F
+
+6LgvCNeXdcuTayEOKhQo2N4IveCP0S3t8xJCeihW9yizLeQFzSjqSfKtmRyImjfg
+fMl8IMDFozR+xVE9uWaIo98wKWpjyu6cytYyjL/8SP3jswBoSP5P9OekUSLifPWM
+ghUEu6tGissqSs/8i2wzLIdho3DdUnUMPZIprENmK6HrYmdRtJT3qMgkFTCtCS9Q
+r9oPm7xKPsfKBhaUHK51JcsPkPjrny8Dl56W0IYf/dfvRPwSr5yFQFLk6Nbgnx0N
+32aT3ZMRCEvOTxhX1cO3f5JqYLxFAGKBFwvsulTisJ6rGYOEDSMBDwZc3sqLvt5g
+h0vKRPqSkylQ0W5shNg0bwbxySiRxJPBL8kWDAbJVfauArabLPuNkUNwmYhIjy7j
+lY0oYw2xeJ9hTUly/Zg3+DI8oYYY3z7WaxPHXEoicCE=
+-----END RSA PRIVATE KEY-----
+"""
+
+# PKCS#8 RSA encrypted with `test` as password.
+# Generated with pkc5 as intermediate file:
+# openssl genrsa -des3 -out private.pem 512
+# openssl pkcs8 -topk8 -in private.pem
+KEY_PEM_PKCS8_ENCRYPTED = b"""-----BEGIN ENCRYPTED PRIVATE KEY-----
+MIIBvTBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQIyqwWErm7rlcCAggA
+MAwGCCqGSIb3DQIJBQAwHQYJYIZIAWUDBAEqBBAkVu+KRbmcfWIGKzgnjjBMBIIB
+YI3aRS0ebuzb1Tq26/HAq8pplPu+96dM1SnRNXwH0ijmP3fLBjEDH4hB/X9H8arT
+xWSfKQ80+FKI07DsLQKmO+cuB12MAWPSoCNBRtLwGUiwYvlMcBp6XR4NQQ+YG/Nw
+OgZ1InH2w7uSnDPdxV9dZculYWzJE82IohnFVZokO2nYSEfIqr1xVQZht6lfzpx2
+aRje42fpYfgkEm13w4oJKIlekzA9M4CeYku7Q4l9GDSHRmoeypMSHPI8RFV9pxub
+ME3AMXGcRioJ0Ic/cpmwqFaJbTVRPsqFVEsMCz1T/CQ4oLjPTWg+zkxfsPIyGj7L
+K3yLZmTA6IxSu+wuO/bsbqiM3x718AW6U0FHXd4zk+llu3mUfhTiMYPvN/cedv/M
+wsT85CHM6reIBopGMqeZD965tNEcWPGMEvXXnG71dxxgrfHFv7l/o8+moVRNIQCh
+EArlaXgT3MlI1jb9HoNvVNg=
+-----END ENCRYPTED PRIVATE KEY-----
+"""
+
+# RSA unencrypted
+# Generated with pkc5 as intermediate file:
+# openssl genrsa -des3 -out private.pem 512
+# openssl pkcs8 -topk8 -in private.pem -nocrypt
+KEY_PEM_PKCS8_UNENCRYPTED = b"""-----BEGIN PRIVATE KEY-----
+MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEApfpxGE8e93Kh+0Qc
+aJGN7e1MtEOd12DTUC+CwklwIWgiPB2B9r1ooV3MJyAP+G2O99FmXbgzsTz2wxQE
+w0eTwQIDAQABAkAFwGLw47UAACHq0hZl7T1M1F9HE9zBXOKVsb/HOcI/9gx/vYTy
+GxlrO74cYwohOD10V4k7KNdnh7ywP+kv8jrRAiEA3NQu7gmMnGmhMrw2cX8J6YXu
+d4tE4DXw0MH+Zqjllm0CIQDAadihuKfG4dJRCHxxPfDtouxWVqtmYK2hqnGNb45u
+JQIhAJwCW1VX8bre9T8+sMfmFD6inCJghbxQ31zccLpeQDTRAiEAnxil/AqAB81/
+Jmua4dOym/tD6ZveO1ejGfKh062zGlUCIEJrgUOqSv5sPBXhLBoZ0b8ALjR9Hc/y
+GE4AMCG0UPCX
+-----END PRIVATE KEY-----
+"""
+
+
 DH_PEM = b"""-----BEGIN DH PARAMETERS-----
 MIICCAKCAgEAj9/hwPNNKlQEANXqFBXViNy9nVpYlqIIHaLhoKdwAFzgYM+9hNSz
 FM/k+K5FS5dXrM63Zh9NgTI1M+ZRHJAxM2hhsG8AA333PN+c3exTRGwjQhU16XJg

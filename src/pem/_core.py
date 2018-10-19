@@ -141,6 +141,7 @@ class DHParameters(AbstractPEMObject):
 _PEM_TO_CLASS = {
     b"CERTIFICATE": Certificate,
     b"PRIVATE KEY": Key,
+    b"ENCRYPTED PRIVATE KEY": Key,
     b"RSA PRIVATE KEY": RSAPrivateKey,
     b"DH PARAMETERS": DHParameters,
     b"NEW CERTIFICATE REQUEST": CertificateRequest,
