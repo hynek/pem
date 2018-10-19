@@ -18,8 +18,7 @@ Workflow
   Whether you prefer to rebase on master or merge master into your branch, do whatever is more comfortable for you.
 - *Always* add tests and docs for your code.
   This is a hard rule; patches with missing tests or documentation can't be merged.
-- Consider updating CHANGELOG.rst to reflect the changes as observed by people
-  using this library.
+- Consider updating CHANGELOG.rst to reflect the changes as observed by people using this library.
 - Make sure your changes pass our CI_.
   You won't get any feedback until it's green unless you ask for it.
 - Once you've addressed review feedback, make sure to bump the pull request with a short note, so we know you're done.
