@@ -6,7 +6,9 @@ from itertools import combinations
 
 import certifi
 
-from OpenSSL import crypto
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 
 import pem
 
@@ -343,6 +345,12 @@ class TestPEMObjects(object):
         assert object() != cert
 
 
+def load_rsa_key(key, password=None):
+    return serialization.load_pem_private_key(
+        key.as_bytes(), password=password, backend=default_backend()
+    )
+
+
 class TestParse(object):
     """
     Tests for parsing input with one or multiple PEM objects.
@@ -359,33 +367,32 @@ class TestParse(object):
         assert isinstance(key, pem.RSAPrivateKey)
         assert KEY_PEM_PKCS5_UNENCRYPTED == key.as_bytes()
 
-        crypto_key = crypto.load_privatekey(
-            crypto.FILETYPE_PEM, key.as_bytes()
-        )
-        assert crypto.TYPE_RSA, crypto_key.type()
-        assert 512, crypto_key.bits()
+        crypto_key = load_rsa_key(key)
+
+        assert isinstance(crypto_key, RSAPrivateKey)
+        assert 512, crypto_key.key_size()
 
     def test_key_pkcs5_encrypted(self):
         """
         It can load an encrypted PKCS#5 RSA key as PEM string
         as an RSAPrivateKey.
         """
+
         rv = pem.parse(KEY_PEM_PKCS5_ENCRYPTED)
         key, = rv
 
         assert isinstance(key, pem.RSAPrivateKey)
         assert KEY_PEM_PKCS5_ENCRYPTED == key.as_bytes()
 
-        crypto_key = crypto.load_privatekey(
-            crypto.FILETYPE_PEM, key.as_bytes(), b"test"
-        )
-        assert crypto.TYPE_RSA, crypto_key.type()
-        assert 512, crypto_key.bits()
+        crypto_key = load_rsa_key(key, password=b"test")
+
+        assert isinstance(crypto_key, RSAPrivateKey)
+        assert 512, crypto_key.key_size()
 
     def test_key_pkcs8_unencrypted(self):
         """
         It can load an unencrypted PKCS#8 RSA key as PEM string
-        as an RSAPrivateKey.
+        as an Key.
         """
         rv = pem.parse(KEY_PEM_PKCS8_UNENCRYPTED)
         key, = rv
@@ -393,16 +400,15 @@ class TestParse(object):
         assert isinstance(key, pem.Key)
         assert KEY_PEM_PKCS8_UNENCRYPTED == key.as_bytes()
 
-        crypto_key = crypto.load_privatekey(
-            crypto.FILETYPE_PEM, key.as_bytes()
-        )
-        assert crypto.TYPE_RSA, crypto_key.type()
-        assert 512, crypto_key.bits()
+        crypto_key = load_rsa_key(key)
+
+        assert isinstance(crypto_key, RSAPrivateKey)
+        assert 512, crypto_key.key_size()
 
     def test_key_pkcs8_encrypted(self):
         """
         It can load an encrypted PKCS#8 RSA key as PEM string
-        as an RSAPrivateKey.
+        as an Key.
         """
         rv = pem.parse(KEY_PEM_PKCS8_ENCRYPTED)
         key, = rv
@@ -410,10 +416,10 @@ class TestParse(object):
         assert isinstance(key, pem.Key)
         assert KEY_PEM_PKCS8_ENCRYPTED == key.as_bytes()
 
-        crypto_key = crypto.load_privatekey(
-            crypto.FILETYPE_PEM, key.as_bytes(), b"test"
-        )
-        assert crypto.TYPE_RSA, crypto_key
+        crypto_key = load_rsa_key(key, password=b"test")
+
+        assert isinstance(crypto_key, RSAPrivateKey)
+        assert 512, crypto_key.key_size()
 
     def test_certificates(self):
         """
