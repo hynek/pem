@@ -4,7 +4,7 @@ from __future__ import absolute_import, division, print_function
 
 import pytest
 
-from OpenSSL import SSL, crypto
+from OpenSSL import crypto
 from pretend import call, call_recorder, stub
 from twisted.internet import ssl
 
@@ -122,10 +122,10 @@ class TestCertificateOptionsFromFiles(object):
         Extra keyword arguments are passed into CO.
         """
         ctxFactory = certificateOptionsFromFiles(
-            str(keyCertChainDHFile), method=SSL.TLSv1_METHOD
+            str(keyCertChainDHFile), fixBrokenPeers=True
         )
 
-        assert SSL.TLSv1_METHOD is ctxFactory.method
+        assert True is ctxFactory.fixBrokenPeers
 
     def test_catchesMissingKey(self, tmpdir):
         """
