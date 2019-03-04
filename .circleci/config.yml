@@ -9,8 +9,5 @@ jobs:
     steps:
       - checkout
       - run:
-          name: recon
-          command: ls -al
-      - run:
           name: run tests
           command: tox
