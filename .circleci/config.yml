@@ -1,0 +1,16 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: themattrix/tox
+
+    working_directory: ~
+
+    steps:
+      - checkout
+      - run:
+          name: recon
+          command: ls -al
+      - run:
+          name: run tests
+          command: tox
