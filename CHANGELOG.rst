@@ -27,6 +27,7 @@ Changes:
 ^^^^^^^^
 
 - You can now load encrypted PKCS#8 PEM key as ``pem.Key``.
+- Added support for ``pem.RSAPublicKey``.
 
 
 ----

@@ -122,7 +122,7 @@ class CertificateRevocationList(AbstractPEMObject):
 
 class Key(AbstractPEMObject):
     """
-    A secret key of unknown type.
+    A key of unknown type.
     """
 
 
