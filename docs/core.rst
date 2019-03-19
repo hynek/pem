@@ -1,12 +1,16 @@
 Core API
 ========
 
-The core API call is the function :func:`pem.parse`::
+The core API call are the function :func:`pem.parse` and the its convenience helper :func:`pem.parse_file`::
 
    import pem
 
    with open("cert.pem", "rb") as f:
       certs = pem.parse(f.read())
+
+   # or:
+
+   certs = pem.parse_file("cert.pem")
 
 The function returns a list of valid :ref:`PEM objects <pem-objects>` found in the string supplied.
 
