@@ -126,15 +126,33 @@ class Key(AbstractPEMObject):
     """
 
 
-class RSAPrivateKey(Key):
+class PrivateKey(Key):
     """
-    A secret RSA key.
+    A private key of unknown type.
+
+    .. versionadded:: 19.1.0
     """
 
 
-class RSAPublicKey(Key):
+class PublicKey(Key):
+    """
+    A public key of unknown type.
+
+    .. versionadded:: 19.1.0
+    """
+
+
+class RSAPrivateKey(PrivateKey):
+    """
+    A private RSA key.
+    """
+
+
+class RSAPublicKey(PublicKey):
     """
     A public RSA key.
+
+    .. versionadded:: 19.1.0
     """
 
 
@@ -146,8 +164,9 @@ class DHParameters(AbstractPEMObject):
 
 _PEM_TO_CLASS = {
     b"CERTIFICATE": Certificate,
-    b"PRIVATE KEY": Key,
-    b"ENCRYPTED PRIVATE KEY": Key,
+    b"PRIVATE KEY": PrivateKey,
+    b"PUBLIC KEY": PublicKey,
+    b"ENCRYPTED PRIVATE KEY": PrivateKey,
     b"RSA PRIVATE KEY": RSAPrivateKey,
     b"RSA PUBLIC KEY": RSAPublicKey,
     b"DH PARAMETERS": DHParameters,

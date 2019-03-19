@@ -24,7 +24,8 @@ from .data import (
     KEY_PEM_PKCS5_UNENCRYPTED,
     KEY_PEM_PKCS8_ENCRYPTED,
     KEY_PEM_PKCS8_UNENCRYPTED,
-    RSA_PUBLIC_KEY,
+    KEY_PEM_PUBLIC,
+    KEY_PEM_RSA_PUBLIC,
 )
 
 
@@ -513,6 +514,15 @@ class TestParse(object):
         """
         Detects and loads RSA public keys.
         """
-        key = pem.parse(RSA_PUBLIC_KEY)[0]
+        key = pem.parse(KEY_PEM_RSA_PUBLIC)[0]
 
+        assert isinstance(key, pem.PublicKey)
         assert isinstance(key, pem.RSAPublicKey)
+
+    def test_generic_public_key(self):
+        """
+        Detects and loads generic public keys.
+        """
+        key = pem.parse(KEY_PEM_PUBLIC)[0]
+
+        assert isinstance(key, pem.PublicKey)

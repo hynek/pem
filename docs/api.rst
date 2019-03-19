@@ -26,13 +26,15 @@ PEM Objects
 
 The following objects can be returned by the parsing functions.
 
-.. autoclass:: Certificate()
-.. autoclass:: Key()
-.. autoclass:: RSAPrivateKey(Key)
-.. autoclass:: RSAPublicKey(Key)
-.. autoclass:: DHParameters()
-.. autoclass:: CertificateRequest()
-.. autoclass:: CertificateRevocationList()
+.. autoclass:: Certificate(AbstractPEMObject)
+.. autoclass:: Key(AbstractPEMObject)
+.. autoclass:: PrivateKey(Key)
+.. autoclass:: PublicKey(Key)
+.. autoclass:: RSAPrivateKey(PrivateKey)
+.. autoclass:: RSAPublicKey(PublicKey)
+.. autoclass:: DHParameters(AbstractPEMObject)
+.. autoclass:: CertificateRequest(AbstractPEMObject)
+.. autoclass:: CertificateRevocationList(AbstractPEMObject)
 
 Their shared provided API is minimal:
 
