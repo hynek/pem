@@ -8,6 +8,7 @@ from ._core import (
     DHParameters,
     Key,
     RSAPrivateKey,
+    RSAPublicKey,
     parse,
     parse_file,
 )
@@ -36,6 +37,7 @@ __all__ = [
     "DHParameters",
     "Key",
     "RSAPrivateKey",
+    "RSAPublicKey",
     "parse",
     "parse_file",
     "twisted",

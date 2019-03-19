@@ -132,6 +132,12 @@ class RSAPrivateKey(Key):
     """
 
 
+class RSAPublicKey(Key):
+    """
+    A public RSA key.
+    """
+
+
 class DHParameters(AbstractPEMObject):
     """
     Diffie-Hellman parameters for DHE.
@@ -143,6 +149,7 @@ _PEM_TO_CLASS = {
     b"PRIVATE KEY": Key,
     b"ENCRYPTED PRIVATE KEY": Key,
     b"RSA PRIVATE KEY": RSAPrivateKey,
+    b"RSA PUBLIC KEY": RSAPublicKey,
     b"DH PARAMETERS": DHParameters,
     b"NEW CERTIFICATE REQUEST": CertificateRequest,
     b"CERTIFICATE REQUEST": CertificateRequest,

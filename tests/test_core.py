@@ -24,6 +24,7 @@ from .data import (
     KEY_PEM_PKCS5_UNENCRYPTED,
     KEY_PEM_PKCS8_ENCRYPTED,
     KEY_PEM_PKCS8_UNENCRYPTED,
+    RSA_PUBLIC_KEY,
 )
 
 
@@ -107,13 +108,21 @@ class TestPEMObjects(object):
 
         assert str(key) == "test"
 
-    def test_rsa_key_has_correct_repr(self):
+    def test_rsa_private_key_has_correct_repr(self):
         """
         Calling repr on a RSAPrivateKey instance returns the proper string.
         """
         key = pem.RSAPrivateKey(b"test")
 
         assert "<RSAPrivateKey({0})>".format(TEST_DIGEST) == repr(key)
+
+    def test_rsa_public_key_has_correct_repr(self):
+        """
+        Calling repr on a RSAPublicKey instance returns the proper string.
+        """
+        key = pem.RSAPublicKey(b"test")
+
+        assert "<RSAPublicKey({0})>".format(TEST_DIGEST) == repr(key)
 
     def test_rsa_key_has_correct_str(self):
         """
@@ -499,3 +508,11 @@ class TestParse(object):
         rv, = pem.parse(lf_pem)
 
         assert rv.as_bytes() == lf_pem
+
+    def test_rsa_public_key(self):
+        """
+        Detects and loads RSA public keys.
+        """
+        key = pem.parse(RSA_PUBLIC_KEY)[0]
+
+        assert isinstance(key, pem.RSAPublicKey)
