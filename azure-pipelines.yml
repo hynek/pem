@@ -69,7 +69,7 @@ jobs:
         pypy3-twisted:
           python.version: pypy3
           TOXENV: pypy3-twisted
-        
+
     steps:
       - task: UsePythonVersion@0
         inputs:
