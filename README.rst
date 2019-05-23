@@ -5,9 +5,9 @@ pem: Easy PEM file parsing
   :target: https://pem.readthedocs.io/en/stable/?badge=stable
   :alt: Documentation Status
 
-.. image:: https://travis-ci.org/hynek/pem.svg?branch=master
-   :target: https://travis-ci.org/hynek/pem
-   :alt: CI status
+.. image:: https://dev.azure.com/the-hynek/pem/_apis/build/status/hynek.pem?branchName=master
+   :target: https://dev.azure.com/the-hynek/pem/_build?definitionId=1
+   :alt: CI Status
 
 .. image:: https://codecov.io/gh/hynek/pem/branch/master/graph/badge.svg
    :target: https://codecov.io/github/hynek/pem
