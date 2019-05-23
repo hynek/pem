@@ -12,40 +12,13 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import codecs
-import datetime
-import os
-import re
+import pem
 
 
 try:
     import sphinx_rtd_theme
 except ImportError:
     sphinx_rtd_theme = None
-
-
-def read(*parts):
-    """
-    Build an absolute path from *parts* and and return the contents of the
-    resulting file.  Assume UTF-8 encoding.
-    """
-    here = os.path.abspath(os.path.dirname(__file__))
-    with codecs.open(os.path.join(here, *parts), "rb", "utf-8") as f:
-        return f.read()
-
-
-def find_version(*file_paths):
-    """
-    Build a path from *file_paths* and search for a ``__version__``
-    string inside.
-    """
-    version_file = read(*file_paths)
-    version_match = re.search(
-        r"^__version__ = ['\"]([^'\"]*)['\"]", version_file, re.M
-    )
-    if version_match:
-        return version_match.group(1)
-    raise RuntimeError("Unable to find version string.")
 
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -82,16 +55,15 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = u"pem"
-author = u"Hynek Schlawack"
-year = datetime.date.today().year
-copyright = u"2013{0}, {1}".format(u"-{0}".format(year), author)
+project = "pem"
+author = "Hynek Schlawack"
+copyright = "2013, " + author
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = find_version("../src/pem/__init__.py")
+version = pem.__version__
 # The full version, including alpha/beta/rc tags.
 release = version
 
@@ -261,7 +233,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "pem.tex", u"pem Documentation", author, "manual")
+    (master_doc, "pem.tex", "pem Documentation", author, "manual")
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -289,7 +261,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "pem", u"pem Documentation", [author], 1)]
+man_pages = [(master_doc, "pem", "pem Documentation", [author], 1)]
 
 # If true, show URL addresses after external links.
 # man_show_urls = False
@@ -304,7 +276,7 @@ texinfo_documents = [
     (
         master_doc,
         "pem",
-        u"pem Documentation",
+        "pem Documentation",
         author,
         "pem",
         "One line description of project.",

@@ -15,8 +15,8 @@ from ._core import Certificate, DHParameters, Key, parse_file
 # mypy hack: Import typing information without actually importing anything.
 MYPY = False
 if MYPY:  # pragma: nocover
-    from ._core import AbstractPEMObject  # noqa
-    from typing import List, Any  # noqa
+    from ._core import AbstractPEMObject
+    from typing import List, Any
 
 
 def certificateOptionsFromPEMs(pemObjects, **kw):
