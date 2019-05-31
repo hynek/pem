@@ -13,62 +13,62 @@ jobs:
       matrix:
         lint:
           python.version: '3.7'
-          TOXENV: lint
+          tox.env: lint
         mypy:
           python.version: '3.7'
-          TOXENV: mypy
+          tox.env: mypy
         manifest:
           python.version: '3.7'
-          TOXENV: manifest
+          tox.env: manifest
         docs:
           python.version: '3.7'
-          TOXENV: docs
+          tox.env: docs
         pypi-description:
           python.version: '3.7'
-          TOXENV: pypi-description
+          tox.env: pypi-description
 
         py27-twisted:
           python.version: '2.7'
-          TOXENV: py27-twisted
+          tox.env: py27-twisted
         py27:
           python.version: '2.7'
-          TOXENV: py27
+          tox.env: py27
         py34-twisted:
           python.version: '3.4'
-          TOXENV: py34-twisted
+          tox.env: py34-twisted
         py34:
           python.version: '3.4'
-          TOXENV: py34
+          tox.env: py34
         py35-twisted:
           python.version: '3.5'
-          TOXENV: py35-twisted
+          tox.env: py35-twisted
         py35:
           python.version: '3.5'
-          TOXENV: py35
+          tox.env: py35
         py36-twisted:
           python.version: '3.6'
-          TOXENV: py36-twisted
+          tox.env: py36-twisted
         py36:
           python.version: '3.6'
-          TOXENV: py36
+          tox.env: py36
         py37:
           python.version: '3.7'
-          TOXENV: py37
+          tox.env: py37
         py37-twisted:
           python.version: '3.7'
-          TOXENV: py37-twisted
+          tox.env: py37-twisted
         pypy-twisted:
           python.version: pypy2
-          TOXENV: pypy-twisted
+          tox.env: pypy-twisted
         pypy:
           python.version: pypy2
-          TOXENV: pypy
+          tox.env: pypy
         pypy3:
           python.version: pypy3
-          TOXENV: pypy3
+          tox.env: pypy3
         pypy3-twisted:
           python.version: pypy3
-          TOXENV: pypy3-twisted
+          tox.env: pypy3-twisted
 
     steps:
       - task: UsePythonVersion@0
@@ -78,8 +78,10 @@ jobs:
 
       - script: python -m pip install --upgrade tox codecov
         displayName: install tox & codecov
-      - script: env TOX_TEST_EXTRAS=azure-pipelines tox
+      - script: tox -e '$(tox.env)'
         displayName: run tox
+        env:
+          TOX_TEST_EXTRAS: azure-pipelines
       - script: |
           coverage combine
           codecov
