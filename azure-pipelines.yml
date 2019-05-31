@@ -1,9 +1,6 @@
 ---
-
-# Don't have two build jobs for each pull request.
 trigger:
   - master
-
 
 jobs:
   - job: 'Test'
@@ -78,10 +75,12 @@ jobs:
 
       - script: python -m pip install --upgrade tox codecov
         displayName: install tox & codecov
+
       - script: tox -e $(tox.env)
-        displayName: run tox
+        displayName: run tox -e $(tox.env)
         env:
           TOX_TEST_EXTRAS: azure-pipelines
+
       - script: |
           coverage combine
           codecov
