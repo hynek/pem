@@ -2,8 +2,8 @@ pem: Easy PEM file parsing
 ==========================
 
 .. image:: https://readthedocs.org/projects/pem/badge/?version=stable
-  :target: https://pem.readthedocs.io/en/stable/?badge=stable
-  :alt: Documentation Status
+   :target: https://pem.readthedocs.io/en/stable/?badge=stable
+   :alt: Documentation Status
 
 .. image:: https://dev.azure.com/the-hynek/pem/_apis/build/status/hynek.pem?branchName=master
    :target: https://dev.azure.com/the-hynek/pem/_build?definitionId=1

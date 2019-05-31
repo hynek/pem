@@ -60,7 +60,7 @@ Tests
      assert "foo" == x._a_private_attribute
 
 - To run the test suite, all you need is a recent tox_.
-  It will ensure the test suite runs with all dependencies against all Python versions just as it will on Travis CI.
+  It will ensure the test suite runs with all dependencies against all Python versions just as it will in our CI.
   If you lack some Python versions, you can can always limit the environments like ``tox -e py27,py35`` (in that case you may want to look into pyenv_, which makes it very easy to install many different Python versions in parallel).
 - Write `good test docstrings`_.
 
@@ -179,7 +179,7 @@ Thank you for considering contributing to ``pem``!
 .. _pyenv: https://github.com/pyenv/pyenv
 .. _reStructuredText: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
 .. _semantic newlines: https://rhodesmill.org/brandon/2012/one-sentence-per-line/
-.. _CI: https://travis-ci.org/hynek/pem/
+.. _CI: https://dev.azure.com/the-hynek/pem/_build?definitionId=1
 .. _black: https://github.com/ambv/black
 .. _pre-commit: https://pre-commit.com/
 .. _isort: https://github.com/timothycrosley/isort
