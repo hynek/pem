@@ -82,6 +82,8 @@ jobs:
         displayName: run tox
       - script: |
           coverage combine
-          codecov -t $(CODECOV_TOKEN)
+          codecov
+        env:
+          CODECOV_TOKEN: $(CODECOV_TOKEN)
         displayName: Report Coverage
         condition: succeeded()
