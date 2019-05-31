@@ -78,7 +78,7 @@ jobs:
 
       - script: python -m pip install --upgrade tox codecov
         displayName: install tox & codecov
-      - script: tox -e '$(tox.env)'
+      - script: tox -e $(tox.env)
         displayName: run tox
         env:
           TOX_TEST_EXTRAS: azure-pipelines
