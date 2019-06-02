@@ -69,7 +69,7 @@ jobs:
 
     steps:
       - task: UsePythonVersion@0
-        displayName: Get Python for Python tools.
+        displayName: Get Python for Python utils.
         inputs:
           versionSpec: '3.7'
           addToPath: false
@@ -82,15 +82,24 @@ jobs:
         inputs:
           versionSpec: '$(python.version)'
           architecture: 'x64'
+        condition: ne(variables['python.version'], '3.8')
         displayName: Get Python for tests.
 
-      - script: $(pyTools.pythonLocation)/bin/tox -e $(tox.env)
+      - script: |
+          sudo add-apt-repository ppa:deadsnakes
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends python3.8-dev python3.8-distutils
+        condition: eq(variables['python.version'], '3.8')
+        displayName: Install Python 3.8 from the deadsnakes PPA.
+
+      - script: '$(pyTools.pythonLocation)/bin/tox -e $(tox.env)'
         env:
           TOX_AP_TEST_EXTRAS: azure-pipelines
         displayName: run tox -e $(tox.env)
 
       - script: |
-          $(pyTools.pythonLocation)/bin/coverage combine
+          python -m pip install coverage
+          coverage combine
           $(pyTools.pythonLocation)/bin/codecov
         env:
           CODECOV_TOKEN: $(codecov.token)
