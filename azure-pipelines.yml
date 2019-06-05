@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         lint:
-          python.version: '3.7'
+          python.version: '3.7.2'
           tox.env: lint
         mypy:
           python.version: '3.7'
@@ -18,7 +18,7 @@ jobs:
           python.version: '3.7'
           tox.env: manifest
         docs:
-          python.version: '3.7'
+          python.version: '3.7.2'
           tox.env: docs
         pypi-description:
           python.version: '3.7'
@@ -54,6 +54,7 @@ jobs:
         py37-twisted:
           python.version: '3.7'
           tox.env: py37-twisted
+
         pypy-twisted:
           python.version: pypy2
           tox.env: pypy-twisted
