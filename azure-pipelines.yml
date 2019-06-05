@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         lint:
-          python.version: '3.7.2'
+          python.version: '3.7'
           tox.env: lint
         mypy:
           python.version: '3.7'
@@ -18,7 +18,7 @@ jobs:
           python.version: '3.7'
           tox.env: manifest
         docs:
-          python.version: '3.7.2'
+          python.version: '3.7'
           tox.env: docs
         pypi-description:
           python.version: '3.7'
