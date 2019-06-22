@@ -28,7 +28,7 @@ class AbstractPEMObject(ABC):
         if isinstance(pem_bytes, text_type):
             self._pem_bytes = pem_bytes.encode("ascii")  # type: bytes
         else:
-            self._pem_bytes = pem_bytes  # type: bytes
+            self._pem_bytes = pem_bytes
         self._sha1_hexdigest = None  # type: Optional[str]
 
     def __str__(self):
