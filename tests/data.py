@@ -223,3 +223,12 @@ Tl25XucMcG/ALE/KNY6pqC2AQ6R2ERlVgPiUWOPatVkt7+Bs3h5Ramxh7XjBOXeu
 lmCpGSynXNcpZ/06+vofGi/2MlpQZNhHAo8eayMp6FcvNucIpUndo1X8dKMv3Y26
 ZQIDAQAB
 -----END PUBLIC KEY-----"""
+
+# generated with:
+# openssl ecparam -name secp256k1 -genkey -noout -out key.pem
+KEY_PEM_EC_PRIVATE = b"""\
+-----BEGIN EC PRIVATE KEY-----
+MHQCAQEEIGTpm0NjJRU5dYDrRPh+C9agdudJvCGSBd1hah5jnMYPoAcGBSuBBAAK
+oUQDQgAEyEVc22cgFbf0Ey4W7tNawHEW4o+4xNVznhP4et9g53Puw1KSVD/GOfl1
+95dwvaIyx2XZG8tn9DRsVyjy8fjgFA==
+-----END EC PRIVATE KEY-----"""
