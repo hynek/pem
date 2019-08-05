@@ -156,6 +156,14 @@ class RSAPublicKey(PublicKey):
     """
 
 
+class ECPrivateKey(PrivateKey):
+    """
+    A private EC key.
+
+    .. versionadded:: 19.2.0
+    """
+
+
 class DHParameters(AbstractPEMObject):
     """
     Diffie-Hellman parameters for DHE.
@@ -169,6 +177,7 @@ _PEM_TO_CLASS = {
     b"ENCRYPTED PRIVATE KEY": PrivateKey,
     b"RSA PRIVATE KEY": RSAPrivateKey,
     b"RSA PUBLIC KEY": RSAPublicKey,
+    b"EC PRIVATE KEY": ECPrivateKey,
     b"DH PARAMETERS": DHParameters,
     b"NEW CERTIFICATE REQUEST": CertificateRequest,
     b"CERTIFICATE REQUEST": CertificateRequest,

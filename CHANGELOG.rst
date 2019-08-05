@@ -26,7 +26,7 @@ Deprecations:
 Changes:
 ^^^^^^^^
 
-*none*
+- Added support for ``pem.ECPrivateKey`` (``EC PRIVATE KEY``).
 
 
 ----

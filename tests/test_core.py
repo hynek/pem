@@ -20,6 +20,7 @@ from .data import (
     CERT_PEMS_NO_NEW_LINE,
     CRL_PEMS,
     DH_PEM,
+    KEY_PEM_EC_PRIVATE,
     KEY_PEM_PKCS5_ENCRYPTED,
     KEY_PEM_PKCS5_UNENCRYPTED,
     KEY_PEM_PKCS8_ENCRYPTED,
@@ -526,3 +527,11 @@ class TestParse(object):
         key = pem.parse(KEY_PEM_PUBLIC)[0]
 
         assert isinstance(key, pem.PublicKey)
+
+    def test_ec_private_key(self):
+        """
+        Detects and loads EC private keys.
+        """
+        key = pem.parse(KEY_PEM_EC_PRIVATE)[0]
+
+        assert isinstance(key, pem.ECPrivateKey)

@@ -32,6 +32,7 @@ The following objects can be returned by the parsing functions.
 .. autoclass:: PublicKey(Key)
 .. autoclass:: RSAPrivateKey(PrivateKey)
 .. autoclass:: RSAPublicKey(PublicKey)
+.. autoclass:: ECPrivateKey(PrivateKey)
 .. autoclass:: DHParameters(AbstractPEMObject)
 .. autoclass:: CertificateRequest(AbstractPEMObject)
 .. autoclass:: CertificateRevocationList(AbstractPEMObject)
