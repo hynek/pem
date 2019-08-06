@@ -180,6 +180,6 @@ Thank you for considering contributing to ``pem``!
 .. _reStructuredText: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
 .. _semantic newlines: https://rhodesmill.org/brandon/2012/one-sentence-per-line/
 .. _CI: https://dev.azure.com/the-hynek/pem/_build?definitionId=1
-.. _black: https://github.com/ambv/black
+.. _black: https://github.com/psf/black
 .. _pre-commit: https://pre-commit.com/
 .. _isort: https://github.com/timothycrosley/isort
