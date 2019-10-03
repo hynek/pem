@@ -175,6 +175,7 @@ _PEM_TO_CLASS = {
     b"PRIVATE KEY": PrivateKey,
     b"PUBLIC KEY": PublicKey,
     b"ENCRYPTED PRIVATE KEY": PrivateKey,
+    b"OPENSSH PRIVATE KEY": PrivateKey,
     b"RSA PRIVATE KEY": RSAPrivateKey,
     b"RSA PUBLIC KEY": RSAPublicKey,
     b"EC PRIVATE KEY": ECPrivateKey,
