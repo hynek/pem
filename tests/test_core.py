@@ -544,4 +544,4 @@ class TestParse(object):
         """
         key = pem.parse(KEY_PEM_OPENSSH)[0]
 
-        assert isinstance(key, pem.PrivateKey)
+        assert isinstance(key, pem.OpenSSHPrivateKey)
