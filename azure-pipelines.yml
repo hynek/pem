@@ -48,6 +48,12 @@ jobs:
         py37-twisted:
           python.version: '3.7'
           tox.env: py37-twisted
+        py38:
+          python.version: '3.8'
+          tox.env: py38
+        py38-twisted:
+          python.version: '3.8'
+          tox.env: py38-twisted
 
         pypy-twisted:
           python.version: pypy2
