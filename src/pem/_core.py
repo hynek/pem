@@ -170,11 +170,20 @@ class DHParameters(AbstractPEMObject):
     """
 
 
+class OpenSSHPrivateKey(PrivateKey):
+    """
+    OpenSSH private key format
+
+    .. versionadded:: 19.3.0
+    """
+
+
 _PEM_TO_CLASS = {
     b"CERTIFICATE": Certificate,
     b"PRIVATE KEY": PrivateKey,
     b"PUBLIC KEY": PublicKey,
     b"ENCRYPTED PRIVATE KEY": PrivateKey,
+    b"OPENSSH PRIVATE KEY": OpenSSHPrivateKey,
     b"RSA PRIVATE KEY": RSAPrivateKey,
     b"RSA PUBLIC KEY": RSAPublicKey,
     b"EC PRIVATE KEY": ECPrivateKey,

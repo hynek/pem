@@ -21,6 +21,7 @@ from .data import (
     CRL_PEMS,
     DH_PEM,
     KEY_PEM_EC_PRIVATE,
+    KEY_PEM_OPENSSH,
     KEY_PEM_PKCS5_ENCRYPTED,
     KEY_PEM_PKCS5_UNENCRYPTED,
     KEY_PEM_PKCS8_ENCRYPTED,
@@ -535,3 +536,12 @@ class TestParse(object):
         key = pem.parse(KEY_PEM_EC_PRIVATE)[0]
 
         assert isinstance(key, pem.ECPrivateKey)
+
+    def test_openshh_private_key(self):
+        """
+        Detects and loads private keys in the new OpenSSH private key format
+        (https://coolaj86.com/articles/the-openssh-private-key-format/)
+        """
+        key, = pem.parse(KEY_PEM_OPENSSH)
+
+        assert isinstance(key, pem.OpenSSHPrivateKey)

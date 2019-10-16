@@ -29,7 +29,9 @@ Deprecations:
 Changes:
 ^^^^^^^^
 
-*none*
+- Added support for ``pem.OpenSSHPrivateKey`` (``OPENSSH PRIVATE KEY``). OpenSSH added a new BEGIN label when it
+  switched to a `proprietary key encoding <https://coolaj86.com/articles/the-openssh-private-key-format/>`_.
+  `#39 <https://github.com/hynek/pem/pull/39>`_
 
 
 ----
