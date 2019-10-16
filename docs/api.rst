@@ -33,6 +33,7 @@ The following objects can be returned by the parsing functions.
 .. autoclass:: RSAPrivateKey(PrivateKey)
 .. autoclass:: RSAPublicKey(PublicKey)
 .. autoclass:: ECPrivateKey(PrivateKey)
+.. autoclass:: OpenSSHPrivateKey(PrivateKey)
 .. autoclass:: DHParameters(AbstractPEMObject)
 .. autoclass:: CertificateRequest(AbstractPEMObject)
 .. autoclass:: CertificateRevocationList(AbstractPEMObject)

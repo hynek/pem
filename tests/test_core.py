@@ -542,6 +542,6 @@ class TestParse(object):
         Detects and loads private keys in the new OpenSSH private key format
         (https://coolaj86.com/articles/the-openssh-private-key-format/)
         """
-        key = pem.parse(KEY_PEM_OPENSSH)[0]
+        key, = pem.parse(KEY_PEM_OPENSSH)
 
         assert isinstance(key, pem.OpenSSHPrivateKey)
