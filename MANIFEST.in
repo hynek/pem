@@ -1,4 +1,4 @@
-include *.rst LICENSE tox.ini dev-requirements.txt docs-requirements.txt .coveragerc pyproject.toml conftest.py *.yml *.yaml mypy.ini
+include *.rst *.yml *.yaml *.ini LICENSE .coveragerc pyproject.toml conftest.py
 recursive-include src *.typed
 recursive-include docs *.bat
 recursive-include docs *.py
