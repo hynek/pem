@@ -53,9 +53,15 @@ class AbstractPEMObject(ABC):
         A SHA-1 digest of the whole object for easy differentiation.
 
         .. versionadded:: 18.1.0
-        """
+        .. versionchanged:: 20.1.0
+
+           Carriage returns are removed before hashing to give the same hashes
+           on Windows and UNIX-like operating systems.
+         """
         if self._sha1_hexdigest is None:
-            self._sha1_hexdigest = hashlib.sha1(self._pem_bytes).hexdigest()
+            self._sha1_hexdigest = hashlib.sha1(
+                self._pem_bytes.replace(b"\r", b"")
+            ).hexdigest()
 
         return self._sha1_hexdigest
 

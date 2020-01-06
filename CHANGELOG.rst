@@ -7,7 +7,7 @@ Versions are year-based with a strict backward compatibility policy.
 The third digit is only for regressions.
 
 
-19.4.0 (UNRELEASED)
+20.1.0 (UNRELEASED)
 -------------------
 
 
@@ -26,7 +26,8 @@ Deprecations:
 Changes:
 ^^^^^^^^
 
-*none*
+- Carriage returns (``\r``) are now stripped before hashing ``pem`` objects to provide consistent hashes across platforms.
+  `#40 <https://github.com/hynek/pem/issues/40>`_
 
 
 ----

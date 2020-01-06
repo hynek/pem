@@ -5,6 +5,7 @@ from __future__ import absolute_import, division, print_function
 from itertools import combinations
 
 import certifi
+import pytest
 
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
@@ -66,11 +67,14 @@ class TestPEMObjects(object):
             cert_req
         )
 
-    def test_sha1_hexdigest(self):
+    @pytest.mark.parametrize("pem_bytes", (b"test", b"test\r"))
+    def test_sha1_hexdigest(self, pem_bytes):
         """
         obj.sha1_digest contains the correct digest and caches it properly.
+
+        CRs are ignored.
         """
-        cert = pem.Certificate(b"test")
+        cert = pem.Certificate(pem_bytes)
 
         assert (
             "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3"
