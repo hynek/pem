@@ -374,7 +374,7 @@ class TestParse(object):
         as an RSAPrivateKey.
         """
         rv = pem.parse(KEY_PEM_PKCS5_UNENCRYPTED)
-        key, = rv
+        (key,) = rv
 
         assert isinstance(key, pem.RSAPrivateKey)
         assert KEY_PEM_PKCS5_UNENCRYPTED == key.as_bytes()
@@ -391,7 +391,7 @@ class TestParse(object):
         """
 
         rv = pem.parse(KEY_PEM_PKCS5_ENCRYPTED)
-        key, = rv
+        (key,) = rv
 
         assert isinstance(key, pem.RSAPrivateKey)
         assert KEY_PEM_PKCS5_ENCRYPTED == key.as_bytes()
@@ -407,7 +407,7 @@ class TestParse(object):
         as an Key.
         """
         rv = pem.parse(KEY_PEM_PKCS8_UNENCRYPTED)
-        key, = rv
+        (key,) = rv
 
         assert isinstance(key, pem.Key)
         assert KEY_PEM_PKCS8_UNENCRYPTED == key.as_bytes()
@@ -423,7 +423,7 @@ class TestParse(object):
         as an Key.
         """
         rv = pem.parse(KEY_PEM_PKCS8_ENCRYPTED)
-        key, = rv
+        (key,) = rv
 
         assert isinstance(key, pem.Key)
         assert KEY_PEM_PKCS8_ENCRYPTED == key.as_bytes()
@@ -447,7 +447,7 @@ class TestParse(object):
         """
         Parses a PEM string without a new line at the end
         """
-        cert, = pem.parse(CERT_NO_NEW_LINE)
+        (cert,) = pem.parse(CERT_NO_NEW_LINE)
 
         assert isinstance(cert, pem.Certificate)
         assert CERT_NO_NEW_LINE == cert.as_bytes()
@@ -467,7 +467,7 @@ class TestParse(object):
         Parses a PEM string with with DH parameters into a DHParameters.
         """
         rv = pem.parse(DH_PEM)
-        dh, = rv
+        (dh,) = rv
 
         assert isinstance(dh, pem.DHParameters)
         assert DH_PEM == dh.as_bytes()
@@ -508,7 +508,7 @@ class TestParse(object):
         \n and \r\n are treated equal.
         """
         lf_pem = KEY_PEM_PKCS5_UNENCRYPTED.replace(b"\n", b"\r\n")
-        rv, = pem.parse(lf_pem)
+        (rv,) = pem.parse(lf_pem)
 
         assert rv.as_bytes() == lf_pem
 
@@ -542,6 +542,6 @@ class TestParse(object):
         Detects and loads private keys in the new OpenSSH private key format
         (https://coolaj86.com/articles/the-openssh-private-key-format/)
         """
-        key, = pem.parse(KEY_PEM_OPENSSH)
+        (key,) = pem.parse(KEY_PEM_OPENSSH)
 
         assert isinstance(key, pem.OpenSSHPrivateKey)
