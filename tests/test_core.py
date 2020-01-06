@@ -543,8 +543,7 @@ class TestParse(object):
 
     def test_openshh_private_key(self):
         """
-        Detects and loads private keys in the new OpenSSH private key format
-        (https://coolaj86.com/articles/the-openssh-private-key-format/)
+        Detects and loads private keys in the new OpenSSH private key format.
         """
         (key,) = pem.parse(KEY_PEM_OPENSSH)
 
