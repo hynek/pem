@@ -1,4 +1,4 @@
-include *.rst *.yml *.yaml *.ini LICENSE .coveragerc pyproject.toml conftest.py
+include *.rst *.yml *.yaml *.ini LICENSE pyproject.toml conftest.py
 recursive-include src *.typed
 recursive-include docs *.bat
 recursive-include docs *.py
