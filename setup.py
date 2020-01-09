@@ -35,7 +35,13 @@ CLASSIFIERS = [
 INSTALL_REQUIRES = []
 EXTRAS_REQUIRE = {
     "docs": ["sphinx"],
-    "tests": ["coverage[toml]", "pytest", "certifi", "pretend", "pyopenssl"],
+    "tests": [
+        "coverage[toml]>=5.0.2",
+        "pytest",
+        "certifi",
+        "pretend",
+        "pyopenssl",
+    ],
 }
 EXTRAS_REQUIRE["dev"] = (
     EXTRAS_REQUIRE["tests"]
