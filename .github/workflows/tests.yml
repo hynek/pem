@@ -35,5 +35,5 @@ jobs:
             python -m coverage combine
             python -m coverage xml
           fi
-      - name: Upload coverage to Codecov  
+      - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
