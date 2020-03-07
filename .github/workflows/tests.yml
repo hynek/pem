@@ -18,15 +18,13 @@ jobs:
 
     steps:
       - uses: "actions/checkout@v2"
-      - name: "test"
-        run: "echo `which python3`"
       - uses: "actions/setup-python@v1"
         with:
           python-version: "${{ matrix.python-version }}"
       - name: "Install dependencies"
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install --upgrade tox tox-gh-actions virtualenv codecov coverage[toml]
+          /usr/bin/python3 -m pip install --upgrade pip
+          /usr/bin/python3 -m pip install --upgrade tox tox-gh-actions virtualenv codecov coverage[toml]
       - name: "Run tox targets for ${{ matrix.python-version }}"
         run: "tox"
       - name: "Get coverage"
@@ -34,8 +32,8 @@ jobs:
           set -xe
 
           if compgen -G ".coverage.*" >/dev/null; then
-            python -m coverage combine
-            python -m coverage xml
+            /usr/bin/python3 -m coverage combine
+            /usr/bin/python3 -m coverage xml
           fi
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
