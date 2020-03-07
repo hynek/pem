@@ -179,7 +179,7 @@ Thank you for considering contributing to ``pem``!
 .. _pyenv: https://github.com/pyenv/pyenv
 .. _reStructuredText: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
 .. _semantic newlines: https://rhodesmill.org/brandon/2012/one-sentence-per-line/
-.. _CI: https://dev.azure.com/the-hynek/pem/_build?definitionId=1
+.. _CI: https://github.com/hynek/pem/actions?workflow=CI
 .. _black: https://github.com/psf/black
 .. _pre-commit: https://pre-commit.com/
 .. _isort: https://github.com/timothycrosley/isort
