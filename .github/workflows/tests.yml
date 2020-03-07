@@ -23,8 +23,7 @@ jobs:
           python-version: "${{ matrix.python-version }}"
       - name: "Install dependencies"
         run: |
-          /usr/bin/python3 -m pip install --upgrade pip
-          /usr/bin/python3 -m pip install --upgrade tox tox-gh-actions virtualenv codecov coverage[toml]
+          /usr/bin/python3 -m pip install --user --upgrade tox tox-gh-actions virtualenv codecov coverage[toml]
       - name: "Run tox targets for ${{ matrix.python-version }}"
         run: "tox"
       - name: "Get coverage"
