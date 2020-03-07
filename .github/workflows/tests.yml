@@ -13,7 +13,10 @@ jobs:
 
     strategy:
       matrix:
-        python-version: ["2.7", "3.5", "3.6", "3.7", "3.8", "pypy2", "pypy3"]
+        # tox-gh-actions doesn't support PyPy
+        # C.f. https://github.com/ymyzk/tox-gh-actions/issues/16
+        # python-version: ["2.7", "3.5", "3.6", "3.7", "3.8", "pypy2", "pypy3"]
+        python-version: ["2.7", "3.5", "3.6", "3.7", "3.8"]
     name: "Python ${{ matrix.python-version }}"
 
     steps:
@@ -42,7 +45,7 @@ jobs:
   install-dev:
     strategy:
       matrix:
-        os: ["ubuntu-latest", "windows-latest", "macos-latest"]
+        os: ["windows-latest", "macos-latest"]
 
     name: "Verify `pip install -e .[dev]` works on ${{ matrix.os }}."
     runs-on: "${{ matrix.os }}"
