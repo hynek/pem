@@ -9,8 +9,8 @@ pem: Easy PEM file parsing
    :target: https://pem.readthedocs.io/en/stable/?badge=stable
    :alt: Documentation Status
 
-.. image:: https://github.com/hynek/pem/workflows/Tests/badge.svg
-   :target: https://github.com/hynek/pem/actions?workflow=Tests
+.. image:: https://github.com/hynek/pem/workflows/CI/badge.svg?branch=master
+   :target: https://github.com/hynek/pem/actions?workflow=CI
    :alt: CI Status
 
 .. image:: https://codecov.io/gh/hynek/pem/branch/master/graph/badge.svg
