@@ -31,7 +31,7 @@ jobs:
         run: |
           set -xe
 
-          if test -f ".coverage.*"; then
+          if compgen -G ".coverage.*" >/dev/null; then
             python -m coverage combine
             python -m coverage xml
 
