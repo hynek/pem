@@ -34,8 +34,8 @@ jobs:
           if test -f ".coverage.*"; then
             python -m coverage combine
             python -m coverage xml
-            
+
             export UPLOAD_COVERAGE=1
           fi
-      - name: Upload coverage to Codecov  
+      - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
