@@ -41,7 +41,7 @@ jobs:
           fi
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
-        
+
   install-dev:
     strategy:
       matrix:
@@ -49,7 +49,7 @@ jobs:
 
     name: "Verify `pip install -e .[dev]` works on ${{ matrix.os }}."
     runs-on: "${{ matrix.os }}"
-    
+
     steps:
       - uses: "actions/checkout@v2"
       - uses: "actions/setup-python@v1"

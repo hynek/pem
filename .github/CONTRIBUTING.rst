@@ -172,7 +172,7 @@ Thank you for considering contributing to ``pem``!
 .. _`PEP 8`: https://www.python.org/dev/peps/pep-0008/
 .. _`PEP 257`: https://www.python.org/dev/peps/pep-0257/
 .. _`good test docstrings`: https://jml.io/pages/test-docstrings.html
-.. _`Code of Conduct`: https://github.com/hynek/pem/blob/master/CODE_OF_CONDUCT.rst
+.. _`Code of Conduct`: https://github.com/hynek/pem/blob/master/.github/CODE_OF_CONDUCT.rst
 .. _changelog: https://github.com/hynek/pem/blob/master/CHANGELOG.rst
 .. _`backward compatibility`: https://pem.readthedocs.io/en/latest/backward-compatibility.html
 .. _tox: https://tox.readthedocs.io/
