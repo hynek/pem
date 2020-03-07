@@ -26,7 +26,7 @@ jobs:
           /usr/bin/python3 -m pip install --user --upgrade pip setuptools
           /usr/bin/python3 -m pip install --user --upgrade tox tox-gh-actions virtualenv codecov coverage[toml]
       - name: "Run tox targets for ${{ matrix.python-version }}"
-        run: "tox"
+        run: "/usr/bin/python3 -m tox"
       - name: "Get coverage"
         run: |
           set -xe
