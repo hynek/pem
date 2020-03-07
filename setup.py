@@ -48,9 +48,6 @@ EXTRAS_REQUIRE["dev"] = (
     + EXTRAS_REQUIRE["docs"]
     + ["twisted[tls]", "pre-commit"]
 )
-EXTRAS_REQUIRE["azure-pipelines"] = EXTRAS_REQUIRE["tests"] + [
-    "pytest-azurepipelines"
-]
 PACKAGE_DATA = {"pem": ["py.typed"]}
 
 

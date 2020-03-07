@@ -13,6 +13,9 @@ jobs:
 
     strategy:
       matrix:
+        # tox-gh-actions doesn't support PyPy
+        # C.f. https://github.com/ymyzk/tox-gh-actions/issues/16
+        # python-version: ["2.7", "3.5", "3.6", "3.7", "3.8", "pypy2", "pypy3"]
         python-version: ["2.7", "3.5", "3.6", "3.7", "3.8"]
     name: "Python ${{ matrix.python-version }}"
 
@@ -23,17 +26,36 @@ jobs:
           python-version: "${{ matrix.python-version }}"
       - name: "Install dependencies"
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install --upgrade tox tox-gh-actions virtualenv codecov coverage[toml]
+          /usr/bin/python3 --version
+          /usr/bin/python3 -m pip install --user --upgrade pip setuptools
+          /usr/bin/python3 -m pip install --user --upgrade tox tox-gh-actions virtualenv codecov coverage[toml]
       - name: "Run tox targets for ${{ matrix.python-version }}"
-        run: "tox"
+        run: "/usr/bin/python3 -m tox"
       - name: "Get coverage"
         run: |
           set -xe
 
           if compgen -G ".coverage.*" >/dev/null; then
-            python -m coverage combine
-            python -m coverage xml
+            /usr/bin/python3 -m coverage combine
+            /usr/bin/python3 -m coverage xml
           fi
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
+        
+  install-dev:
+    strategy:
+      matrix:
+        os: ["windows-latest", "macos-latest"]
+
+    name: "Verify `pip install -e .[dev]` works on ${{ matrix.os }}."
+    runs-on: "${{ matrix.os }}"
+    
+    steps:
+      - uses: "actions/checkout@v2"
+      - uses: "actions/setup-python@v1"
+        with:
+          python-version: "3.8"
+      - name: Run `pip install -e .[dev]`
+        run: |
+          python -m pip install -e .[dev]
+          python -c 'import pem; print(pem.__version__)'
