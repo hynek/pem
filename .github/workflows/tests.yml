@@ -38,3 +38,19 @@ jobs:
           fi
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
+        
+  install-dev:
+    strategy:
+      matrix:
+        os: ["ubuntu-latest", "windows-latest", "macos-latest"]
+
+    name: "Verify `pip install -e .[dev]` works on ${{ os }}."
+    runs-on: "${{ os }}"
+    
+    steps:
+      - uses: "actions/checkout@v2"
+      - uses: "actions/setup-python@v1"
+        with:
+          python-version: "3.8"
+      - name: Run `pip install -e .[dev]`
+        run: "python -m pip install -e .[dev]"
