@@ -28,8 +28,8 @@ jobs:
       - name: "Run tox targets for ${{ matrix.python-version }}"
         run: "tox"
       - name: "Get coverage"
-        run: "python -m coverage combine"
-      - name: "Upload coverage to codecov"
-        run: "codecov"
-        env:
-          CODECOV_TOKEN: "${{ secrets.CODECOV_TOKEN }}"
+        run: "python -m coverage xml"
+      - name: Upload coverage to Codecov  
+        uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: true
