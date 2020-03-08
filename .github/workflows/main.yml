@@ -80,4 +80,4 @@ jobs:
       - name: "Install in dev mode"
         run: "python -m pip install -e .[dev]"
       - name: "Import package"
-        run: "python -c 'import structlog; print(structlog.__version__)'"
+        run: "python -c 'import pem; print(pem.__version__)'"
