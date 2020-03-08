@@ -10,11 +10,13 @@ on:
 jobs:
   tests:
     runs-on: "ubuntu-latest"
+    name: "Python ${{ matrix.python-version }}"
+    env:
+      USING_COVERAGE: '2.7,3.8'
 
     strategy:
       matrix:
         python-version: ["2.7", "3.5", "3.6", "3.7", "3.8", "pypy2", "pypy3"]
-    name: "Python ${{ matrix.python-version }}"
 
     steps:
       - uses: "actions/checkout@v2"
@@ -35,12 +37,11 @@ jobs:
       - name: "Get coverage"
         run: |
           set -xe
-          if compgen -G ".coverage.*" >/dev/null; then
-            python -m coverage combine
-            python -m coverage xml
-          fi
+          python -m coverage combine
+          python -m coverage xml
+        if: "contains(env.USING_COVERAGE, matrix.python-version)"
       - name: Upload coverage to Codecov
-        if: "matrix.python-version == '2.7' || matrix.python-version == '3.8'"
+        if: "contains(env.USING_COVERAGE, matrix.python-version)"
         uses: "codecov/codecov-action@v1"
         with:
           fail_ci_if_error: true
