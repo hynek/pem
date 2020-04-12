@@ -242,11 +242,11 @@ def parse(pem_str):
         for match in _PEM_RE.finditer(pem_str)
     ]
 
-    rfc_4716 = [
+    pems.extend([
         SSHPublicKey(match.group(0)) for match in _RFC4716_RE.finditer(pem_str)
-    ]
+    ])
 
-    return pems + rfc_4716
+    return pems
 
 
 def parse_file(file_name):
