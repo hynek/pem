@@ -26,7 +26,10 @@ Deprecations:
 Changes:
 ^^^^^^^^
 
-*none*
+- Added support for ``pem.SSHPublicKey``
+  (``---- BEGIN SSH2 PUBLIC KEY ----``).
+  as defined in `RFC4716 <https://tools.ietf.org/html/rfc4716>`_.
+  `#46 <https://github.com/hynek/pem/pull/46>`_
 
 
 ----

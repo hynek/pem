@@ -245,3 +245,14 @@ mRSIKsW9s9t7Xy6InaCZL7SaZ3CV52lSHyD1VZ4IZSlrnQxhYfzdj5xPRNj2ONFSGQ0JyH
 MAAAAhAMP/HkDnx5kbDXrh2EMYhj5FFAB2jbwXRVvJqeM6jD09AAAAHmJ1ZGR5QEJ1ZGR5
 cy1NYWNCb29rLVByby5sb2NhbAE=
 -----END OPENSSH PRIVATE KEY-----"""
+
+# Take from https://tools.ietf.org/html/rfc4716#section-3.6.
+PUBLIC_PEM_SSH = br"""---- BEGIN SSH2 PUBLIC KEY ----
+Subject: me
+Comment: 1024-bit rsa, created by me@example.com Mon Jan 15 \
+08:31:24 2001
+AAAAB3NzaC1yc2EAAAABJQAAAIEAiPWx6WM4lhHNedGfBpPJNPpZ7yKu+dnn1SJejgt4
+596k6YjzGGphH2TUxwKzxcKDKKezwkpfnxPkSMkuEspGRt/aZZ9wa++Oi7Qkr8prgHc4
+soW6NUlfDzpvZK2H5E7eQaSeP3SAwGmQKUFHCddNaP0L+hM7zhFNzjFvpaMgJw0=
+---- END SSH2 PUBLIC KEY ----
+"""

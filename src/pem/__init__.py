@@ -15,6 +15,7 @@ from ._core import (
     RSAPublicKey,
     parse,
     parse_file,
+    SSHPublicKey,
 )
 
 

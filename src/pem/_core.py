@@ -184,6 +184,16 @@ class OpenSSHPrivateKey(PrivateKey):
     """
 
 
+class SSHPublicKey(PublicKey):
+    """
+    A public key in SSH RFC47716 format .
+
+    The Secure Shell (SSH) Public Key File Format.
+
+    .. versionadded:: 20.2.0
+    """
+
+
 _PEM_TO_CLASS = {
     b"CERTIFICATE": Certificate,
     b"PRIVATE KEY": PrivateKey,
@@ -199,6 +209,7 @@ _PEM_TO_CLASS = {
     b"X509 CRL": CertificateRevocationList,
 }  # type: Dict[bytes, Type[AbstractPEMObject]]
 
+# See https://tools.ietf.org/html/rfc1421
 _PEM_RE = re.compile(
     b"-----BEGIN ("
     + b"|".join(_PEM_TO_CLASS.keys())
@@ -208,20 +219,34 @@ _PEM_RE = re.compile(
     re.DOTALL,
 )
 
+# See https://tools.ietf.org/html/rfc4716
+_RFC4716_RE = re.compile(
+    b"---- BEGIN SSH2 PUBLIC KEY ----\r?\n"
+    b".+?\r?"
+    b"---- END SSH2 PUBLIC KEY ----\r?\n?",
+    re.DOTALL,
+)
+
 
 def parse(pem_str):
     # type: (bytes) -> List[AbstractPEMObject]
     """
-    Extract PEM objects from *pem_str*.
+    Extract PEM like objects from *pem_str*.
 
     :param pem_str: String to parse.
     :type pem_str: bytes
     :return: list of :ref:`pem-objects`
     """
-    return [
+    pems = [
         _PEM_TO_CLASS[match.group(1)](match.group(0))
         for match in _PEM_RE.finditer(pem_str)
     ]
+
+    rfc_4716 = [
+        SSHPublicKey(match.group(0)) for match in _RFC4716_RE.finditer(pem_str)
+    ]
+
+    return pems + rfc_4716
 
 
 def parse_file(file_name):
