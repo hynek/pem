@@ -28,4 +28,4 @@ multi_line_output=3
 not_skip="__init__.py"
 
 known_first_party="pem"
-known_third_party=["OpenSSL", "certifi", "cryptography", "pem", "pretend", "pytest", "setuptools", "twisted"]
+known_third_party=["OpenSSL", "certifi", "cryptography", "pretend", "pytest", "setuptools", "twisted"]

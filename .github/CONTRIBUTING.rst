@@ -132,8 +132,10 @@ At this point,
    $ coverage erase
    $ coverage run -m pytest
    $ coverage combine; coverage xml; diff-cover coverage.xml
+   $ flake8 setup.py src/
    $ mypy src/
    $ black src/
+   $ isort
    $ check-manifest
 
 should work and pass, as should:
