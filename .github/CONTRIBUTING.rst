@@ -129,7 +129,12 @@ At this point,
 
 .. code-block:: bash
 
-   $ python -m pytest
+   $ coverage erase
+   $ coverage run -m pytest
+   $ coverage combine; coverage xml; diff-cover coverage.xml
+   $ mypy src/
+   $ black src/
+   $ check-manifest
 
 should work and pass, as should:
 
