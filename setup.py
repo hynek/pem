@@ -50,7 +50,7 @@ EXTRAS_REQUIRE = {
 
 if sys.version_info.major == 3:
     # MyPy is only available on Python 3.
-    EXTRAS_REQUIRE['tests'].append('mypy')
+    EXTRAS_REQUIRE["tests"].append("mypy")
 
 
 EXTRAS_REQUIRE["dev"] = (

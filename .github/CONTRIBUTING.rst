@@ -133,8 +133,10 @@ At this point,
    $ coverage run -m pytest
    $ coverage combine; coverage xml; diff-cover coverage.xml
    $ flake8 setup.py src/
+   # mypy exected only on the source code, without tests and build system.
    $ mypy src/
-   $ black src/
+   # Run automatic code formating on any python file from the repo.
+   $ black .
    $ isort
    $ check-manifest
 
