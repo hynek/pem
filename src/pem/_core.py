@@ -15,7 +15,7 @@ from ._compat import ABC, PY2, text_type
 # mypy hack: Import typing information without actually importing anything.
 MYPY = False
 if MYPY:  # pragma: nocover
-    from typing import List, Any, Union, AnyStr, Optional, Dict, Type  # noqa
+    from typing import Any, AnyStr, Dict, List, Optional, Type, Union  # noqa
 
 
 class AbstractPEMObject(ABC):
@@ -57,7 +57,7 @@ class AbstractPEMObject(ABC):
 
            Carriage returns are removed before hashing to give the same hashes
            on Windows and UNIX-like operating systems.
-         """
+        """
         if self._sha1_hexdigest is None:
             self._sha1_hexdigest = hashlib.sha1(
                 self._pem_bytes.replace(b"\r", b"")
