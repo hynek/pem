@@ -84,7 +84,7 @@ class AbstractPEMObject(ABC):
         return self._pem_bytes.decode("utf-8")
 
     def __eq__(self, other):
-        # type: (object) -> Union[NotImplemented, bool]
+        # type: (object) -> bool
         if not isinstance(other, type(self)):
             return NotImplemented
 
@@ -93,7 +93,7 @@ class AbstractPEMObject(ABC):
         )
 
     def __ne__(self, other):
-        # type: (object) -> Union[NotImplemented, bool]
+        # type: (object) -> bool
         if not isinstance(other, type(self)):
             return NotImplemented
 
