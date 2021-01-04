@@ -182,4 +182,4 @@ Thank you for considering contributing to ``pem``!
 .. _CI: https://github.com/hynek/pem/actions?workflow=CI
 .. _black: https://github.com/psf/black
 .. _pre-commit: https://pre-commit.com/
-.. _isort: https://github.com/timothycrosley/isort
+.. _isort: https://github.com/PyCQA/isort
