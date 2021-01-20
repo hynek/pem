@@ -190,7 +190,7 @@ class SSHPublicKey(PublicKey):
 
     The Secure Shell (SSH) Public Key File Format.
 
-    .. versionadded:: 20.2.0
+    .. versionadded:: 21.1.0
     """
 
 

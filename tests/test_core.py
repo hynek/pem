@@ -29,7 +29,7 @@ from .data import (
     KEY_PEM_PKCS8_UNENCRYPTED,
     KEY_PEM_PUBLIC,
     KEY_PEM_RSA_PUBLIC,
-    PUBLIC_PEM_SSH,
+    KEY_PEM_RFC4716_PUBLIC,
 )
 
 
@@ -558,18 +558,23 @@ class TestParse(object):
         """
         Detects and loads public SSH keys in RFC4716 format.
         """
-        (key,) = pem.parse(b"PREAMBLE \n" + PUBLIC_PEM_SSH + b"\n TRAILING")
+        (key,) = pem.parse(
+            b"PREAMBLE \n" + KEY_PEM_RFC4716_PUBLIC + b"\n TRAILING")
 
         assert isinstance(key, pem.SSHPublicKey)
-        assert PUBLIC_PEM_SSH == key.as_bytes()
+        assert KEY_PEM_RFC4716_PUBLIC == key.as_bytes()
 
     def test_ssh_public_key_mixed(self):
         """
         SSH keys in RFC4716 format can be loaded from a sourced which contain
-        mixed PEM objects, but result will have a different order to the
-        one found in the source.
+        mixed PEM objects.
+
+        The result will have a different order to the one found in the source.
+        For now, SSH RFC4716 are added to the end of the returned list,
+        but this might change.
         """
-        keys = pem.parse(KEY_PEM_PUBLIC + PUBLIC_PEM_SSH + KEY_PEM_OPENSSH)
+        keys = pem.parse(
+            KEY_PEM_PUBLIC + KEY_PEM_RFC4716_PUBLIC + KEY_PEM_OPENSSH)
 
         assert isinstance(keys[2], pem.SSHPublicKey)
-        assert PUBLIC_PEM_SSH == keys[2].as_bytes()
+        assert KEY_PEM_RFC4716_PUBLIC == keys[2].as_bytes()

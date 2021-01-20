@@ -247,7 +247,7 @@ cy1NYWNCb29rLVByby5sb2NhbAE=
 -----END OPENSSH PRIVATE KEY-----"""
 
 # Take from https://tools.ietf.org/html/rfc4716#section-3.6.
-PUBLIC_PEM_SSH = br"""---- BEGIN SSH2 PUBLIC KEY ----
+KEY_PEM_RFC4716_PUBLIC = br"""---- BEGIN SSH2 PUBLIC KEY ----
 Subject: me
 Comment: 1024-bit rsa, created by me@example.com Mon Jan 15 \
 08:31:24 2001
