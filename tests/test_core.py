@@ -559,7 +559,8 @@ class TestParse(object):
         Detects and loads public SSH keys in RFC4716 format.
         """
         (key,) = pem.parse(
-            b"PREAMBLE \n" + KEY_PEM_RFC4716_PUBLIC + b"\n TRAILING")
+            b"PREAMBLE \n" + KEY_PEM_RFC4716_PUBLIC + b"\n TRAILING"
+        )
 
         assert isinstance(key, pem.SSHPublicKey)
         assert KEY_PEM_RFC4716_PUBLIC == key.as_bytes()
@@ -574,7 +575,8 @@ class TestParse(object):
         but this might change.
         """
         keys = pem.parse(
-            KEY_PEM_PUBLIC + KEY_PEM_RFC4716_PUBLIC + KEY_PEM_OPENSSH)
+            KEY_PEM_PUBLIC + KEY_PEM_RFC4716_PUBLIC + KEY_PEM_OPENSSH
+        )
 
         assert isinstance(keys[2], pem.SSHPublicKey)
         assert KEY_PEM_RFC4716_PUBLIC == keys[2].as_bytes()
