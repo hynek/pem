@@ -247,9 +247,11 @@ MAAAAhAMP/HkDnx5kbDXrh2EMYhj5FFAB2jbwXRVvJqeM6jD09AAAAHmJ1ZGR5QEJ1ZGR5
 cy1NYWNCb29rLVByby5sb2NhbAE=
 -----END OPENSSH PRIVATE KEY-----"""
 
-# OpenSSN legacy PEM private key format.
+# OpenSSN legacy PEM private key format:
 # ssh-keygen -t dsa -m PEM
-KEY_PEM_OPENSSH_DSA_LEGACY_PRIVATE = b"""\
+# OpenSSL DSA key.
+# openssl dsaparam -out key.pem -genkey 1024:
+KEY_PEM_DSA_PRIVATE = b"""\
 -----BEGIN DSA PRIVATE KEY-----
 MIIBugIBAAKBgQCMaLmHH3HlQwVVp2mJq2Peblj+rjeLfN20fFHNm5LecTP0XIO9
 48chkzea4Ma2lv/hGTkYLlA0dQwYoAFO9rwrZo9HU+CXpx3A9BYVk3IWif7rSXZP
