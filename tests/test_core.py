@@ -23,6 +23,7 @@ from .data import (
     DH_PEM,
     KEY_PEM_EC_PRIVATE,
     KEY_PEM_OPENSSH,
+    KEY_PEM_OPENSSH_DSA_LEGACY_PRIVATE,
     KEY_PEM_PKCS5_ENCRYPTED,
     KEY_PEM_PKCS5_UNENCRYPTED,
     KEY_PEM_PKCS8_ENCRYPTED,
@@ -548,3 +549,12 @@ class TestParse(object):
         (key,) = pem.parse(KEY_PEM_OPENSSH)
 
         assert isinstance(key, pem.OpenSSHPrivateKey)
+
+    def test_openshh_dsa_legacy_private_key(self):
+        """
+        Detects and loads private DSA keys in the legacy OpenSSH private key
+        format.
+        """
+        (key,) = pem.parse(KEY_PEM_OPENSSH_DSA_LEGACY_PRIVATE)
+
+        assert isinstance(key, pem.OpenSSHDSAPrivateKey)

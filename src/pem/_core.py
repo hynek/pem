@@ -184,12 +184,21 @@ class OpenSSHPrivateKey(PrivateKey):
     """
 
 
+class OpenSSHDSAPrivateKey(PrivateKey):
+    """
+    A private DSA key in OpenSSH legacy PEM format.
+
+    .. versionadded:: 21.1.0
+    """
+
+
 _PEM_TO_CLASS = {
     b"CERTIFICATE": Certificate,
     b"PRIVATE KEY": PrivateKey,
     b"PUBLIC KEY": PublicKey,
     b"ENCRYPTED PRIVATE KEY": PrivateKey,
     b"OPENSSH PRIVATE KEY": OpenSSHPrivateKey,
+    b"DSA PRIVATE KEY": OpenSSHDSAPrivateKey,
     b"RSA PRIVATE KEY": RSAPrivateKey,
     b"RSA PUBLIC KEY": RSAPublicKey,
     b"EC PRIVATE KEY": ECPrivateKey,
