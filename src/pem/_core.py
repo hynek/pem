@@ -194,6 +194,14 @@ class SSHPublicKey(PublicKey):
     """
 
 
+class SSHCOMPrivateKey(PrivateKey):
+    """
+    A private key in SSH.COM / Tectia format.
+
+    .. versionadded:: 21.1.0
+    """
+
+
 _PEM_TO_CLASS = {
     b"CERTIFICATE": Certificate,
     b"PRIVATE KEY": PrivateKey,
@@ -227,6 +235,13 @@ _RFC4716_RE = re.compile(
     re.DOTALL,
 )
 
+_SSHCOM_PRIVATE_RE = re.compile(
+    b"---- BEGIN SSH2 ENCRYPTED PRIVATE KEY ----\r?\n"
+    b".+?\r?"
+    b"---- END SSH2 ENCRYPTED PRIVATE KEY ----\r?\n?",
+    re.DOTALL,
+)
+
 
 def parse(pem_str):
     # type: (bytes) -> List[AbstractPEMObject]
@@ -246,6 +261,13 @@ def parse(pem_str):
         [
             SSHPublicKey(match.group(0))
             for match in _RFC4716_RE.finditer(pem_str)
+        ]
+    )
+
+    pems.extend(
+        [
+            SSHCOMPrivateKey(match.group(0))
+            for match in _SSHCOM_PRIVATE_RE.finditer(pem_str)
         ]
     )
 
