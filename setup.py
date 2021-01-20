@@ -58,7 +58,6 @@ EXTRAS_REQUIRE["dev"] = (
     EXTRAS_REQUIRE["tests"]
     + EXTRAS_REQUIRE["docs"]
     + ["twisted[tls]", "pre-commit"]
-    + ["black"]
 )
 PACKAGE_DATA = {"pem": ["py.typed"]}
 
