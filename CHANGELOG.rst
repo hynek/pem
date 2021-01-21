@@ -28,6 +28,7 @@ Changes:
 
 - Added support for DSA private keys (``BEGIN DSA PRIVATE``).
   This is also the OpenSSH legacy PEM format.
+    `#49 <https://github.com/hynek/pem/issues/49>`_
 
 
 ----
