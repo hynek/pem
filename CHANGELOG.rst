@@ -26,7 +26,9 @@ Deprecations:
 Changes:
 ^^^^^^^^
 
-*none*
+- Add support for DSA private keys.
+  This is also the OpenSSH legacy PEM format
+  (BEGIN DSA PRIVATE).
 
 
 ----
