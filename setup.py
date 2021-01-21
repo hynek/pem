@@ -1,7 +1,6 @@
 import codecs
 import os
 import re
-import sys
 
 from setuptools import find_packages, setup
 
@@ -42,18 +41,8 @@ EXTRAS_REQUIRE = {
         "certifi",
         "pretend",
         "pyopenssl",
-        "check-manifest",
-        "diff-cover",
-        "flake8",
-        "isort",
     ],
 }
-
-if sys.version_info.major == 3:
-    # MyPy is only available on Python 3.
-    EXTRAS_REQUIRE["tests"].append("mypy")
-
-
 EXTRAS_REQUIRE["dev"] = (
     EXTRAS_REQUIRE["tests"]
     + EXTRAS_REQUIRE["docs"]

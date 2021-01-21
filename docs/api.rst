@@ -36,6 +36,7 @@ The following objects can be returned by the parsing functions.
 .. autoclass:: DSAPrivateKey(PrivateKey)
 .. autoclass:: OpenSSHPrivateKey(PrivateKey)
 .. autoclass:: SSHPublicKey(Key)
+.. autoclass:: SSHCOMPrivateKey(PrivateKey)
 .. autoclass:: DHParameters(AbstractPEMObject)
 .. autoclass:: CertificateRequest(AbstractPEMObject)
 .. autoclass:: CertificateRevocationList(AbstractPEMObject)

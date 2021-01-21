@@ -240,17 +240,17 @@ _PEM_RE = re.compile(
 )
 
 # See https://tools.ietf.org/html/rfc4716
-_RFC4716_RE = re.compile(
-    b"---- BEGIN SSH2 PUBLIC KEY ----\r?\n"
-    b".+?\r?"
-    b"---- END SSH2 PUBLIC KEY ----\r?\n?",
-    re.DOTALL,
-)
+_SSH_PEM_TO_CLASS = {
+    b"SSH2 PUBLIC KEY": SSHPublicKey,
+    b"SSH2 ENCRYPTED PRIVATE KEY": SSHCOMPrivateKey,
+}  # type: Dict[bytes, Type[AbstractPEMObject]]
 
-_SSHCOM_PRIVATE_RE = re.compile(
-    b"---- BEGIN SSH2 ENCRYPTED PRIVATE KEY ----\r?\n"
-    b".+?\r?"
-    b"---- END SSH2 ENCRYPTED PRIVATE KEY ----\r?\n?",
+_SSH_PEM_RE = re.compile(
+    b"---- BEGIN ("
+    + b"|".join(_SSH_PEM_TO_CLASS.keys())
+    + b""") ----\r?
+.+?\r?
+---- END \\1 ----\r?\n?""",
     re.DOTALL,
 )
 
@@ -271,15 +271,8 @@ def parse(pem_str):
 
     pems.extend(
         [
-            SSHPublicKey(match.group(0))
-            for match in _RFC4716_RE.finditer(pem_str)
-        ]
-    )
-
-    pems.extend(
-        [
-            SSHCOMPrivateKey(match.group(0))
-            for match in _SSHCOM_PRIVATE_RE.finditer(pem_str)
+            _SSH_PEM_TO_CLASS[match.group(1)](match.group(0))
+            for match in _SSH_PEM_RE.finditer(pem_str)
         ]
     )
 
