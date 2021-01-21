@@ -566,7 +566,7 @@ class TestParse(object):
         assert isinstance(key, pem.DSAPrivateKey)
         assert KEY_PEM_DSA_PRIVATE == key.as_bytes()
 
-    def test_ssh_public_key_single(self):
+    def test_rfc4716_public_key_(self):
         """
         Detects and loads public SSH keys in RFC4716 format.
         """
@@ -576,27 +576,6 @@ class TestParse(object):
 
         assert isinstance(key, pem.SSHPublicKey)
         assert KEY_PEM_RFC4716_PUBLIC == key.as_bytes()
-
-    def test_ssh_keys_mixed(self):
-        """
-        SSH keys in RFC 4716 format or SSH.com can be loaded from a source
-        which contain mixed PEM objects.
-
-        The result will have a different order to the one found in the source,
-        they are added at the end.
-        """
-        keys = pem.parse(
-            KEY_PEM_PUBLIC
-            + KEY_PEM_SSHCOM_PRIVATE
-            + KEY_PEM_RFC4716_PUBLIC
-            + KEY_PEM_OPENSSH
-        )
-
-        assert isinstance(keys[2], pem.SSHCOMPrivateKey)
-        assert KEY_PEM_SSHCOM_PRIVATE == keys[2].as_bytes()
-
-        assert isinstance(keys[3], pem.SSHPublicKey)
-        assert KEY_PEM_RFC4716_PUBLIC == keys[3].as_bytes()
 
     def test_sshcom_private(self):
         """

@@ -226,31 +226,19 @@ _PEM_TO_CLASS = {
     b"DH PARAMETERS": DHParameters,
     b"NEW CERTIFICATE REQUEST": CertificateRequest,
     b"CERTIFICATE REQUEST": CertificateRequest,
+    b"SSH2 PUBLIC KEY": SSHPublicKey,
+    b"SSH2 ENCRYPTED PRIVATE KEY": SSHCOMPrivateKey,
     b"X509 CRL": CertificateRevocationList,
 }  # type: Dict[bytes, Type[AbstractPEMObject]]
 
 # See https://tools.ietf.org/html/rfc1421
+# and https://tools.ietf.org/html/rfc4716 for space instead of fifth dash.
 _PEM_RE = re.compile(
-    b"-----BEGIN ("
+    b"----[- ]BEGIN ("
     + b"|".join(_PEM_TO_CLASS.keys())
-    + b""")-----\r?
+    + b""")[- ]----\r?
 .+?\r?
------END \\1-----\r?\n?""",
-    re.DOTALL,
-)
-
-# See https://tools.ietf.org/html/rfc4716
-_SSH_PEM_TO_CLASS = {
-    b"SSH2 PUBLIC KEY": SSHPublicKey,
-    b"SSH2 ENCRYPTED PRIVATE KEY": SSHCOMPrivateKey,
-}  # type: Dict[bytes, Type[AbstractPEMObject]]
-
-_SSH_PEM_RE = re.compile(
-    b"---- BEGIN ("
-    + b"|".join(_SSH_PEM_TO_CLASS.keys())
-    + b""") ----\r?
-.+?\r?
----- END \\1 ----\r?\n?""",
+----[- ]END \\1[- ]----\r?\n?""",
     re.DOTALL,
 )
 
@@ -264,19 +252,10 @@ def parse(pem_str):
     :type pem_str: bytes
     :return: list of :ref:`pem-objects`
     """
-    pems = [
+    return [
         _PEM_TO_CLASS[match.group(1)](match.group(0))
         for match in _PEM_RE.finditer(pem_str)
     ]
-
-    pems.extend(
-        [
-            _SSH_PEM_TO_CLASS[match.group(1)](match.group(0))
-            for match in _SSH_PEM_RE.finditer(pem_str)
-        ]
-    )
-
-    return pems
 
 
 def parse_file(file_name):
