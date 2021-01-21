@@ -226,6 +226,7 @@ ZQIDAQAB
 
 # generated with:
 # openssl ecparam -name secp256k1 -genkey -noout -out key.pem
+# Documented at https://tools.ietf.org/html/rfc5915
 KEY_PEM_EC_PRIVATE = b"""\
 -----BEGIN EC PRIVATE KEY-----
 MHQCAQEEIGTpm0NjJRU5dYDrRPh+C9agdudJvCGSBd1hah5jnMYPoAcGBSuBBAAK
@@ -245,6 +246,24 @@ mRSIKsW9s9t7Xy6InaCZL7SaZ3CV52lSHyD1VZ4IZSlrnQxhYfzdj5xPRNj2ONFSGQ0JyH
 MAAAAhAMP/HkDnx5kbDXrh2EMYhj5FFAB2jbwXRVvJqeM6jD09AAAAHmJ1ZGR5QEJ1ZGR5
 cy1NYWNCb29rLVByby5sb2NhbAE=
 -----END OPENSSH PRIVATE KEY-----"""
+
+# OpenSSH legacy PEM private key format:
+# ssh-keygen -t dsa -m PEM
+# OpenSSL DSA key.
+# openssl dsaparam -out key.pem -genkey 1024:
+KEY_PEM_DSA_PRIVATE = b"""\
+-----BEGIN DSA PRIVATE KEY-----
+MIIBugIBAAKBgQCMaLmHH3HlQwVVp2mJq2Peblj+rjeLfN20fFHNm5LecTP0XIO9
+48chkzea4Ma2lv/hGTkYLlA0dQwYoAFO9rwrZo9HU+CXpx3A9BYVk3IWif7rSXZP
+3HCmQ0vN7nZhzW32Us6LM8MW5ZW1tJYQLPsDpGKgNVdKLZt+nhzJ3MxF3QIVAJKB
+6g66zmFYO+SN6zFYkco0wrNHAoGABZ0tQnYYj6uQoTK0mE90jsnUA3WpXenZDKBt
+TcryHe0ijwr4hzqGRJNmxBKgCX7mhYP2j5Kyd91BQDDNc9K41xeH3ikTal6O2b4J
+ckkxAyjhZccxwkvBKJVXC/g9I5ePbWGDheq3TO76sJNOcHHt0/KTGKb0Zy5rtgOn
+CSJ5eD0CgYBX0u5FjDreCn+4vqIwQyPgIvIIsq4S2WNWMEp1JvxA5OB+2BZh83Ua
+Qrb0riZLOXc966m9uXkBJE+Eimh+Jed/qfbwNuTZbxVz9rmsnbGHj8kvJT4c3J27
+NRrjPxY+c3X65vSaThscOQ0SHm5bRhX2YNRhgnZPznUnMXfE8yRLdgIUUS6kFIid
+HhSy7IHLTHWGoNdmwLo=
+-----END DSA PRIVATE KEY-----"""
 
 # Taken from https://tools.ietf.org/html/rfc4716#section-3.6.
 KEY_PEM_RFC4716_PUBLIC = br"""---- BEGIN SSH2 PUBLIC KEY ----

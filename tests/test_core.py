@@ -21,6 +21,7 @@ from .data import (
     CERT_PEMS_NO_NEW_LINE,
     CRL_PEMS,
     DH_PEM,
+    KEY_PEM_DSA_PRIVATE,
     KEY_PEM_EC_PRIVATE,
     KEY_PEM_OPENSSH,
     KEY_PEM_PKCS5_ENCRYPTED,
@@ -554,6 +555,16 @@ class TestParse(object):
 
         assert isinstance(key, pem.OpenSSHPrivateKey)
         assert KEY_PEM_OPENSSH == key.as_bytes()
+
+    def test_dsa_private_key(self):
+        """
+        Detects and loads private DSA keys.
+        This is also the legacy OpenSSH private key format.
+        """
+        (key,) = pem.parse(KEY_PEM_DSA_PRIVATE)
+
+        assert isinstance(key, pem.DSAPrivateKey)
+        assert KEY_PEM_DSA_PRIVATE == key.as_bytes()
 
     def test_ssh_public_key_single(self):
         """

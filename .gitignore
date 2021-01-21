@@ -2,7 +2,6 @@ pem.egg-info
 .tox
 .coverage
 .coverage.*
-coverage.xml
 tests/certs
 dist
 *.pyc
@@ -11,4 +10,4 @@ _build
 .cache
 .pytest_cache/
 pip-wheel-metadata/
-.mypy_cache/
+.envrc
