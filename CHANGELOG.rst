@@ -7,7 +7,7 @@ Versions are year-based with a strict backward compatibility policy.
 The third digit is only for regressions.
 
 
-20.2.0 (UNRELEASED)
+21.1.0 (UNRELEASED)
 -------------------
 
 
@@ -26,9 +26,8 @@ Deprecations:
 Changes:
 ^^^^^^^^
 
-- Add support for DSA private keys.
-  This is also the OpenSSH legacy PEM format
-  (BEGIN DSA PRIVATE).
+- Added support for DSA private keys (``BEGIN DSA PRIVATE``).
+  This is also the OpenSSH legacy PEM format.
 
 
 ----
