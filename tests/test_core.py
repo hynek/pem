@@ -568,7 +568,7 @@ class TestParse(object):
 
     def test_ssh_keys_mixed(self):
         """
-        SSH keys in RFC4716 format or SSH.com can be loaded from a sourced
+        SSH keys in RFC 4716 format or SSH.com can be loaded from a source
         which contain mixed PEM objects.
 
         The result will have a different order to the one found in the source.

@@ -186,7 +186,8 @@ class OpenSSHPrivateKey(PrivateKey):
 
 class SSHPublicKey(PublicKey):
     """
-    A public key in SSH RFC47716 format .
+    A public key in SSH
+    `RFC 4716 <https://tools.ietf.org/html/rfc4716>`_ format.
 
     The Secure Shell (SSH) Public Key File Format.
 
@@ -246,7 +247,7 @@ _SSHCOM_PRIVATE_RE = re.compile(
 def parse(pem_str):
     # type: (bytes) -> List[AbstractPEMObject]
     """
-    Extract PEM like objects from *pem_str*.
+    Extract PEM-like objects from *pem_str*.
 
     :param pem_str: String to parse.
     :type pem_str: bytes
