@@ -264,3 +264,30 @@ Qrb0riZLOXc966m9uXkBJE+Eimh+Jed/qfbwNuTZbxVz9rmsnbGHj8kvJT4c3J27
 NRrjPxY+c3X65vSaThscOQ0SHm5bRhX2YNRhgnZPznUnMXfE8yRLdgIUUS6kFIid
 HhSy7IHLTHWGoNdmwLo=
 -----END DSA PRIVATE KEY-----"""
+
+# Taken from https://tools.ietf.org/html/rfc4716#section-3.6.
+KEY_PEM_RFC4716_PUBLIC = br"""---- BEGIN SSH2 PUBLIC KEY ----
+Subject: me
+Comment: 1024-bit rsa, created by me@example.com Mon Jan 15 \
+08:31:24 2001
+AAAAB3NzaC1yc2EAAAABJQAAAIEAiPWx6WM4lhHNedGfBpPJNPpZ7yKu+dnn1SJejgt4
+596k6YjzGGphH2TUxwKzxcKDKKezwkpfnxPkSMkuEspGRt/aZZ9wa++Oi7Qkr8prgHc4
+soW6NUlfDzpvZK2H5E7eQaSeP3SAwGmQKUFHCddNaP0L+hM7zhFNzjFvpaMgJw0=
+---- END SSH2 PUBLIC KEY ----
+"""
+
+# SSH.COM / Tectia private (encrypted or plain) key.
+# The non-encrypted key has the same armor.
+# puttygen -t rsa -O private-sshcom
+KEY_PEM_SSHCOM_PRIVATE = b"""\
+---- BEGIN SSH2 ENCRYPTED PRIVATE KEY ----
+Comment: "rsa-key-20210120"
+P2/56wAAAUwAAAA3aWYtbW9kbntzaWdue3JzYS1wa2NzMS1zaGExfSxlbmNyeXB0e3JzYS
+1wa2NzMXYyLW9hZXB9fQAAAARub25lAAAA/QAAAPkAAAAGJQAAAf0VIAK0MvdpUXEG6obL
+3F5n0UimJWvwhJIb5AGyd++EdYvimCOg9iM2E75dDj89Ap7S5l4IS40fZO/5UjzYQxitAA
+ACAMNoGQLXcI4xVX/5Xt22aUBP4ADaJnDKR4H9D7LVZ4lBDUP8RBTmowCv9p3Hz7KvVw3R
+TX8BNF72gEuSOvruUAUAAAD9Hs7Zn1KbFR29ujFEv+d50/7rjMU7Ox4tzDeTSE6PBhsAAA
+EA3m/0JWkf61807iZ7AV8umYJMmNQ35HadG53n9nitpFEAAAEA4OQI1Rrh8e1EZ5qJBV8o
+gGyxzt4OdoXzuOtxkbHUB3U=
+---- END SSH2 ENCRYPTED PRIVATE KEY ----
+"""

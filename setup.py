@@ -6,7 +6,6 @@ from setuptools import find_packages, setup
 
 
 ###############################################################################
-
 NAME = "pem"
 KEYWORDS = ["pyopenssl", "ssl", "tls", "pem", "cryptography", "twisted"]
 PROJECT_URLS = {

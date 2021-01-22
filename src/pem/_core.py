@@ -194,6 +194,25 @@ class OpenSSHPrivateKey(PrivateKey):
     """
 
 
+class SSHPublicKey(PublicKey):
+    """
+    A public key in SSH
+    `RFC 4716 <https://tools.ietf.org/html/rfc4716>`_ format.
+
+    The Secure Shell (SSH) Public Key File Format.
+
+    .. versionadded:: 21.1.0
+    """
+
+
+class SSHCOMPrivateKey(PrivateKey):
+    """
+    A private key in SSH.COM / Tectia format.
+
+    .. versionadded:: 21.1.0
+    """
+
+
 _PEM_TO_CLASS = {
     b"CERTIFICATE": Certificate,
     b"PRIVATE KEY": PrivateKey,
@@ -207,15 +226,19 @@ _PEM_TO_CLASS = {
     b"DH PARAMETERS": DHParameters,
     b"NEW CERTIFICATE REQUEST": CertificateRequest,
     b"CERTIFICATE REQUEST": CertificateRequest,
+    b"SSH2 PUBLIC KEY": SSHPublicKey,
+    b"SSH2 ENCRYPTED PRIVATE KEY": SSHCOMPrivateKey,
     b"X509 CRL": CertificateRevocationList,
 }  # type: Dict[bytes, Type[AbstractPEMObject]]
 
+# See https://tools.ietf.org/html/rfc1421
+# and https://tools.ietf.org/html/rfc4716 for space instead of fifth dash.
 _PEM_RE = re.compile(
-    b"-----BEGIN ("
+    b"----[- ]BEGIN ("
     + b"|".join(_PEM_TO_CLASS.keys())
-    + b""")-----\r?
+    + b""")[- ]----\r?
 .+?\r?
------END \\1-----\r?\n?""",
+----[- ]END \\1[- ]----\r?\n?""",
     re.DOTALL,
 )
 
@@ -223,7 +246,7 @@ _PEM_RE = re.compile(
 def parse(pem_str):
     # type: (bytes) -> List[AbstractPEMObject]
     """
-    Extract PEM objects from *pem_str*.
+    Extract PEM-like objects from *pem_str*.
 
     :param pem_str: String to parse.
     :type pem_str: bytes

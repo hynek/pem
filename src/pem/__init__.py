@@ -14,6 +14,8 @@ from ._core import (
     PublicKey,
     RSAPrivateKey,
     RSAPublicKey,
+    SSHCOMPrivateKey,
+    SSHPublicKey,
     parse,
     parse_file,
 )
@@ -50,5 +52,7 @@ __all__ = [
     "RSAPublicKey",
     "parse",
     "parse_file",
+    "SSHCOMPrivateKey",
+    "SSHPublicKey",
     "twisted",
 ]

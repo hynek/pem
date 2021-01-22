@@ -29,7 +29,9 @@ from .data import (
     KEY_PEM_PKCS8_ENCRYPTED,
     KEY_PEM_PKCS8_UNENCRYPTED,
     KEY_PEM_PUBLIC,
+    KEY_PEM_RFC4716_PUBLIC,
     KEY_PEM_RSA_PUBLIC,
+    KEY_PEM_SSHCOM_PRIVATE,
 )
 
 
@@ -525,6 +527,7 @@ class TestParse(object):
 
         assert isinstance(key, pem.PublicKey)
         assert isinstance(key, pem.RSAPublicKey)
+        assert KEY_PEM_RSA_PUBLIC == key.as_bytes()
 
     def test_generic_public_key(self):
         """
@@ -533,6 +536,7 @@ class TestParse(object):
         key = pem.parse(KEY_PEM_PUBLIC)[0]
 
         assert isinstance(key, pem.PublicKey)
+        assert KEY_PEM_PUBLIC == key.as_bytes()
 
     def test_ec_private_key(self):
         """
@@ -541,6 +545,7 @@ class TestParse(object):
         key = pem.parse(KEY_PEM_EC_PRIVATE)[0]
 
         assert isinstance(key, pem.ECPrivateKey)
+        assert KEY_PEM_EC_PRIVATE == key.as_bytes()
 
     def test_openshh_private_key(self):
         """
@@ -549,6 +554,7 @@ class TestParse(object):
         (key,) = pem.parse(KEY_PEM_OPENSSH)
 
         assert isinstance(key, pem.OpenSSHPrivateKey)
+        assert KEY_PEM_OPENSSH == key.as_bytes()
 
     def test_dsa_private_key(self):
         """
@@ -558,3 +564,26 @@ class TestParse(object):
         (key,) = pem.parse(KEY_PEM_DSA_PRIVATE)
 
         assert isinstance(key, pem.DSAPrivateKey)
+        assert KEY_PEM_DSA_PRIVATE == key.as_bytes()
+
+    def test_rfc4716_public_key_(self):
+        """
+        Detects and loads public SSH keys in RFC4716 format.
+        """
+        (key,) = pem.parse(
+            b"PREAMBLE \n" + KEY_PEM_RFC4716_PUBLIC + b"\n TRAILING"
+        )
+
+        assert isinstance(key, pem.SSHPublicKey)
+        assert KEY_PEM_RFC4716_PUBLIC == key.as_bytes()
+
+    def test_sshcom_private(self):
+        """
+        Detects and loads public SSH keys in RFC4716 format.
+        """
+        (key,) = pem.parse(
+            b"PREAMBLE \n" + KEY_PEM_SSHCOM_PRIVATE + b"\n TRAILING"
+        )
+
+        assert isinstance(key, pem.SSHCOMPrivateKey)
+        assert KEY_PEM_SSHCOM_PRIVATE == key.as_bytes()

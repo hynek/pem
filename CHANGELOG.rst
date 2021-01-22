@@ -29,6 +29,14 @@ Changes:
 - Added support for DSA private keys (``BEGIN DSA PRIVATE``).
   This is also the OpenSSH legacy PEM format.
   `#49 <https://github.com/hynek/pem/issues/49>`_
+- Added support for ``pem.SSHPublicKey``
+  (``---- BEGIN SSH2 PUBLIC KEY ----``).
+  as defined in `RFC4716 <https://tools.ietf.org/html/rfc4716>`_.
+  `#46 <https://github.com/hynek/pem/pull/46>`_
+- Added support for ``pem.SSHCOMPrivateKey``
+  (``---- BEGIN SSH2 ENCRYPTED PRIVATE KEY ----``).
+  which is the SSH.com / Tectia private key format (plain or encrypted).
+  `#46 <https://github.com/hynek/pem/pull/46>`_
 
 
 ----
