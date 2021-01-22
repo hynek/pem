@@ -27,7 +27,7 @@ except ImportError:
     twisted = None  # type: ignore
 
 
-__version__ = "21.1.0.dev0"
+__version__ = "21.1.0"
 __author__ = "Hynek Schlawack"
 __license__ = "MIT"
 __description__ = "Easy PEM file parsing in Python."
