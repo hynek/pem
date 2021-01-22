@@ -177,10 +177,10 @@ Thank you for considering contributing to *pem*!
 .. _`backward compatibility`: https://pem.readthedocs.io/en/latest/backward-compatibility.html
 .. _tox: https://tox.readthedocs.io/
 .. _pyenv: https://github.com/pyenv/pyenv
+.. _asdf: https://asdf-vm.com/
 .. _reStructuredText: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
 .. _semantic newlines: https://rhodesmill.org/brandon/2012/one-sentence-per-line/
-.. _CI: https://github.com/hynek/pem/actions?workflow=CI
+.. _CI: https://github.com/hynek/pem/actions
 .. _black: https://github.com/psf/black
 .. _pre-commit: https://pre-commit.com/
 .. _isort: https://github.com/PyCQA/isort
-.. _asdf: https://asdf-vm.com/

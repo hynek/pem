@@ -1,7 +1,7 @@
 Credits
 =======
 
-``pem`` is written and maintained by Hynek Schlawack.
+*pem* is written and maintained by Hynek Schlawack.
 
 The development is kindly supported by `Variomedia AG <https://www.variomedia.de/>`_.
 
