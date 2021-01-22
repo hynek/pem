@@ -6,12 +6,15 @@ from setuptools import find_packages, setup
 
 
 ###############################################################################
+
 NAME = "pem"
 KEYWORDS = ["pyopenssl", "ssl", "tls", "pem", "cryptography", "twisted"]
 PROJECT_URLS = {
     "Documentation": "https://pem.readthedocs.io/",
     "Bug Tracker": "https://github.com/hynek/pem/issues",
     "Source Code": "https://github.com/hynek/pem",
+    "Funding": "https://github.com/sponsors/hynek",
+    "Ko-fi": "https://ko-fi.com/the_hynek",
 }
 CLASSIFIERS = [
     "Development Status :: 5 - Production/Stable",
