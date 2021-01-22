@@ -1,7 +1,7 @@
 How To Contribute
 =================
 
-First off, thank you for considering contributing to ``pem``!
+First off, thank you for considering contributing to *pem*!
 It's people like *you* who make it is such a great tool for everyone.
 
 This document is mainly to help you to get started by codifying tribal knowledge and expectations and make it more accessible to everyone.
@@ -50,7 +50,7 @@ Code
 Tests
 -----
 
-- Write your asserts as ``expected == actual`` to line them up nicely:
+- Write your asserts as ``expected == actual`` to line them up nicely and leave an empty line before them::
 
   .. code-block:: python
 
@@ -61,7 +61,7 @@ Tests
 
 - To run the test suite, all you need is a recent tox_.
   It will ensure the test suite runs with all dependencies against all Python versions just as it will in our CI.
-  If you lack some Python versions, you can can always limit the environments like ``tox -e py27,py35`` (in that case you may want to look into pyenv_, which makes it very easy to install many different Python versions in parallel).
+  If you lack some Python versions, you can can make it a non-failure using ``tox --skip-missing-interpreters`` (in that case you may want to look into asdf_ or pyenv_ that make it very easy to install many different Python versions in parallel).
 - Write `good test docstrings`_.
 
 
@@ -96,10 +96,10 @@ Documentation
 
      - Added ``pem.func()`` that does foo.
        It's pretty cool.
-       [`#1 <https://github.com/hynek/pem/pull/1>`_]
+       `#1 <https://github.com/hynek/pem/pull/1>`_
      - ``pem.func()`` now doesn't crash the Large Hadron Collider anymore.
        That was a nasty bug!
-       [`#2 <https://github.com/hynek/pem/pull/2>`_]
+       `#2 <https://github.com/hynek/pem/pull/2>`_
 
 
 Local Development Environment
@@ -110,15 +110,15 @@ However, you’ll probably want a more traditional environment as well.
 We highly recommend to develop using the latest Python 3 release because you're more likely to catch certain bugs earlier.
 
 First create a `virtual environment <https://virtualenv.pypa.io/>`_.
-It’s out of scope for this document to list all the ways to manage virtual environments in Python, but if you don’t already have a pet way, take some time to look at tools like `pew <https://github.com/berdario/pew>`_, `virtualfish <https://virtualfish.readthedocs.io/>`_, and `virtualenvwrapper <https://virtualenvwrapper.readthedocs.io/>`_.
+It’s out of scope for this document to list all the ways to manage virtual environments in Python, but if you don’t already have a pet way, take some time to look at tools like `pew <https://github.com/berdario/pew>`_, `virtualfish <https://virtualfish.readthedocs.io/>`_, `virtualenvwrapper <https://virtualenvwrapper.readthedocs.io/>`_, and direnv's `Python support <https://github.com/direnv/direnv/wiki/Python>`_.
 
-Next get an up to date checkout of the ``pem`` repository:
+Next get an up to date checkout of the *pem* repository:
 
 .. code-block:: bash
 
     git clone git@github.com:hynek/pem.git
 
-Change into the newly created directory and **after activating your virtual environment** install an editable version of ``pem`` along with its tests and docs requirements:
+Change into the newly created directory and **after activating your virtual environment** install an editable version of *pem* along with its tests and docs requirements:
 
 .. code-block:: bash
 
@@ -165,13 +165,13 @@ Please note that this project is released with a Contributor `Code of Conduct`_.
 By participating in this project you agree to abide by its terms.
 Please report any harm to `Hynek Schlawack`_ in any way you find appropriate.
 
-Thank you for considering contributing to ``pem``!
+Thank you for considering contributing to *pem*!
 
 
 .. _`Hynek Schlawack`: https://hynek.me/about/
 .. _`PEP 8`: https://www.python.org/dev/peps/pep-0008/
 .. _`PEP 257`: https://www.python.org/dev/peps/pep-0257/
-.. _`good test docstrings`: https://jml.io/pages/test-docstrings.html
+.. _`good test docstrings`: https://jml.io/test-docstrings/
 .. _`Code of Conduct`: https://github.com/hynek/pem/blob/master/.github/CODE_OF_CONDUCT.rst
 .. _changelog: https://github.com/hynek/pem/blob/master/CHANGELOG.rst
 .. _`backward compatibility`: https://pem.readthedocs.io/en/latest/backward-compatibility.html
@@ -183,3 +183,4 @@ Thank you for considering contributing to ``pem``!
 .. _black: https://github.com/psf/black
 .. _pre-commit: https://pre-commit.com/
 .. _isort: https://github.com/PyCQA/isort
+.. _asdf: https://asdf-vm.com/

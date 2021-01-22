@@ -29,13 +29,9 @@ Changes:
 - Added support for DSA private keys (``BEGIN DSA PRIVATE``).
   This is also the OpenSSH legacy PEM format.
   `#49 <https://github.com/hynek/pem/issues/49>`_
-- Added support for ``pem.SSHPublicKey``
-  (``---- BEGIN SSH2 PUBLIC KEY ----``).
-  as defined in `RFC4716 <https://tools.ietf.org/html/rfc4716>`_.
+- Added support for ``pem.SSHPublicKey`` (``---- BEGIN SSH2 PUBLIC KEY ----``), as defined in `RFC 4716 <https://tools.ietf.org/html/rfc4716>`_.
   `#46 <https://github.com/hynek/pem/pull/46>`_
-- Added support for ``pem.SSHCOMPrivateKey``
-  (``---- BEGIN SSH2 ENCRYPTED PRIVATE KEY ----``).
-  which is the SSH.com / Tectia private key format (plain or encrypted).
+- Added support for ``pem.SSHCOMPrivateKey`` (``---- BEGIN SSH2 ENCRYPTED PRIVATE KEY ----``), the SSH.com / Tectia private key format (plain or encrypted).
   `#46 <https://github.com/hynek/pem/pull/46>`_
 
 
@@ -61,7 +57,7 @@ Deprecations:
 Changes:
 ^^^^^^^^
 
-- Carriage returns (``\r``) are now stripped before hashing ``pem`` objects to provide consistent hashes across platforms.
+- Carriage returns (``\r``) are now stripped before hashing *pem* objects to provide consistent hashes across platforms.
   `#40 <https://github.com/hynek/pem/issues/40>`_
 
 
@@ -78,7 +74,7 @@ Backward-incompatible changes:
 - Python 3.4 is not supported anymore.
   It has been unsupported by the Python core team for a while now and its PyPI downloads are negligible.
 
-  It's very unlikely that ``pem`` will break under 3.4 anytime soon, but we don't test it anymore.
+  It's very unlikely that *pem* will break under 3.4 anytime soon, but we don't test it anymore.
 
 
 Deprecations:
@@ -197,7 +193,7 @@ Deprecations:
 Changes:
 ^^^^^^^^
 
-- ``pem`` now ships with typing information that can be used by type checkers like `mypy <http://mypy-lang.org>`_.
+- *pem* now ships with typing information that can be used by type checkers like `mypy <http://mypy-lang.org>`_.
 - PEM objects now have an ``obj.sha1_hexdigest`` property with the SHA-1 digest of the stored bytes  as a native string.
   This is the same digest as the one that is used by the PEM objects' ``__repr__``\ s.
 - PEM objects now have an ``obj.as_text()`` method that returns the PEM-encoded content as unicode, always.
@@ -267,7 +263,7 @@ Changes:
 
 - PKCS #8 keys are now supported.
   `#14 <https://github.com/hynek/pem/pull/14>`_
-- ``pem`` is now fully functional without installing Twisted.
+- *pem* is now fully functional without installing Twisted.
   `#16 <https://github.com/hynek/pem/pull/16>`_
 
 

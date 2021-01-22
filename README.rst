@@ -1,16 +1,12 @@
 pem: Easy PEM file parsing
 ==========================
 
-.. image:: https://img.shields.io/pypi/v/pem.svg
-   :target: https://pypi.org/project/pem/
-   :alt: PyPI
-
 .. image:: https://readthedocs.org/projects/pem/badge/?version=stable
    :target: https://pem.readthedocs.io/en/stable/?badge=stable
    :alt: Documentation Status
 
 .. image:: https://github.com/hynek/pem/workflows/CI/badge.svg?branch=master
-   :target: https://github.com/hynek/pem/actions?workflow=CI
+   :target: https://github.com/hynek/pem/actions
    :alt: CI Status
 
 .. image:: https://codecov.io/gh/hynek/pem/branch/master/graph/badge.svg
@@ -30,12 +26,12 @@ pem: Easy PEM file parsing
 
 .. teaser-begin
 
-``pem`` is an MIT_-licensed Python module for parsing and splitting of `PEM files`_, i.e. Base64 encoded DER keys and certificates.
+*pem* is an MIT_-licensed Python module for parsing and splitting of `PEM files`_, i.e. Base64-encoded DER keys and certificates.
 
 It runs on Python 2.7, and 3.5+, has no dependencies, and does not attempt to interpret the certificate data in any way.
 
 It’s born from the need to load keys, certificates, trust chains, and DH parameters from various certificate deployments: some servers (like Apache_) expect them to be a separate file, others (like nginx_) expect them concatenated to the server certificate and finally some (like HAProxy_) expect key, certificate, and chain to be in one file.
-With ``pem``, your Python application can cope with all of those scenarios:
+With *pem*, your Python application can cope with all of those scenarios:
 
 .. code-block:: pycon
 
@@ -46,9 +42,9 @@ With ``pem``, your Python application can cope with all of those scenarios:
    >>> str(certs[0])
    '-----BEGIN CERTIFICATE-----\n...'
 
-Additionally to the vanilla parsing code, ``pem`` also contains helpers for Twisted_ that save a lot of boilerplate code.
+Additionally to the vanilla parsing code, *pem* also contains helpers for Twisted_ that save a lot of boilerplate code.
 
-``pem``\ ’s documentation lives at `Read the Docs <https://pem.readthedocs.io/>`_, the code on `GitHub <https://github.com/hynek/pem>`_.
+*pem* is available from `PyPI <https://pypi.org/project/pem/>`_, its documentation lives at `Read the Docs <https://pem.readthedocs.io/>`_, the code on `GitHub <https://github.com/hynek/pem>`_.
 
 
 .. _MIT: https://choosealicense.com/licenses/mit/

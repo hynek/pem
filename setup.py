@@ -37,7 +37,7 @@ CLASSIFIERS = [
 ]
 INSTALL_REQUIRES = []
 EXTRAS_REQUIRE = {
-    "docs": ["sphinx"],
+    "docs": ["sphinx", "furo"],
     "tests": [
         "coverage[toml]>=5.0.2",
         "pytest",
