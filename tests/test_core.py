@@ -568,7 +568,7 @@ class TestParse(object):
 
     def test_rfc4716_public_key_(self):
         """
-        Detects and loads public SSH keys in RFC4716 format.
+        Detects and loads public SSH keys in RFC 4716 format.
         """
         (key,) = pem.parse(
             b"PREAMBLE \n" + KEY_PEM_RFC4716_PUBLIC + b"\n TRAILING"
@@ -579,7 +579,7 @@ class TestParse(object):
 
     def test_sshcom_private(self):
         """
-        Detects and loads public SSH keys in RFC4716 format.
+        Detects and loads public SSH keys in RFC 4716 format.
         """
         (key,) = pem.parse(
             b"PREAMBLE \n" + KEY_PEM_SSHCOM_PRIVATE + b"\n TRAILING"
