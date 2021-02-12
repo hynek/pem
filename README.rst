@@ -5,11 +5,11 @@ pem: Easy PEM file parsing
    :target: https://pem.readthedocs.io/en/stable/?badge=stable
    :alt: Documentation Status
 
-.. image:: https://github.com/hynek/pem/workflows/CI/badge.svg?branch=master
+.. image:: https://github.com/hynek/pem/workflows/CI/badge.svg?branch=main
    :target: https://github.com/hynek/pem/actions
    :alt: CI Status
 
-.. image:: https://codecov.io/gh/hynek/pem/branch/master/graph/badge.svg
+.. image:: https://codecov.io/gh/hynek/pem/branch/main/graph/badge.svg
    :target: https://codecov.io/github/hynek/pem
    :alt: Coverage
 
