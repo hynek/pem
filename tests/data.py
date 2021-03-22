@@ -37,7 +37,7 @@ i3qou3qkVXNKuiAFe9dBvz0nhcpAZpXrpwc9R4Qk+rirEqkdCZI1feQKBz4J3ikm
 # This is the first certificate from CERT_PEMS on which the
 # trusted certificate extesion was applied using:
 # openssl x509 -in cert.pem -trustout -addtrust emailProtection
-CERT_PEM_TRUSTED = b"""-----BEGIN TRUSTED CERTIFICATE-----
+CERT_PEM_OPENSSL_TRUSTED = b"""-----BEGIN TRUSTED CERTIFICATE-----
 MIIBfDCCATagAwIBAgIJAK94OSlzVBsWMA0GCSqGSIb3DQEBBQUAMBYxFDASBgNV
 BAMTC3BlbS5pbnZhbGlkMB4XDTEzMDcxNzE0NDAyMFoXDTIzMDcxNTE0NDAyMFow
 FjEUMBIGA1UEAxMLcGVtLmludmFsaWQwTDANBgkqhkiG9w0BAQEFAAM7ADA4AjEA

@@ -17,7 +17,7 @@ from pem._compat import text_type
 
 from .data import (
     CERT_NO_NEW_LINE,
-    CERT_PEM_TRUSTED,
+    CERT_PEM_OPENSSL_TRUSTED,
     CERT_PEMS,
     CERT_PEMS_NO_NEW_LINE,
     CRL_PEMS,
@@ -474,10 +474,10 @@ class TestParse(object):
         """
         Parses a PEM string with with an OpenSSL trusted certificate.
         """
-        (cert,) = pem.parse(CERT_PEM_TRUSTED)
+        (cert,) = pem.parse(CERT_PEM_OPENSSL_TRUSTED)
 
-        assert isinstance(cert, pem.TrustedCertificate)
-        assert CERT_PEM_TRUSTED == cert.as_bytes()
+        assert isinstance(cert, pem.OpenSSLTrustedCertificate)
+        assert CERT_PEM_OPENSSL_TRUSTED == cert.as_bytes()
 
     def test_dh(self):
         """
