@@ -27,6 +27,7 @@ PEM Objects
 The following objects can be returned by the parsing functions.
 
 .. autoclass:: Certificate(AbstractPEMObject)
+.. autoclass:: TrustedCertificate(Certificate)
 .. autoclass:: Key(AbstractPEMObject)
 .. autoclass:: PrivateKey(Key)
 .. autoclass:: PublicKey(Key)

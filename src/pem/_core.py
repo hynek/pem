@@ -113,6 +113,8 @@ class Certificate(AbstractPEMObject):
 class TrustedCertificate(Certificate):
     """
     An OpenSSL "trusted certificate".
+
+    .. versionadded:: 21.2.0
     """
 
 
