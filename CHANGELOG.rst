@@ -25,7 +25,8 @@ Deprecations:
 Changes:
 ^^^^^^^^
 
-*none*
+- Added support for ``pem.TrustedCertificate`` (``-----BEGIN TRUSTED CERTIFICATE-----``), as defined in `openssl x509 manual <https://www.openssl.org/docs/man1.1.1/man1/x509.html>`_.
+  `#28 <https://github.com/hynek/pem/issues/28>`_
 
 
 ----

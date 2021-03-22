@@ -110,6 +110,12 @@ class Certificate(AbstractPEMObject):
     """
 
 
+class TrustedCertificate(Certificate):
+    """
+    An OpenSSL "trusted certificate".
+    """
+
+
 class CertificateRequest(AbstractPEMObject):
     """
     A certificate signing request.
@@ -215,6 +221,7 @@ class SSHCOMPrivateKey(PrivateKey):
 
 _PEM_TO_CLASS = {
     b"CERTIFICATE": Certificate,
+    b"TRUSTED CERTIFICATE": TrustedCertificate,
     b"PRIVATE KEY": PrivateKey,
     b"PUBLIC KEY": PublicKey,
     b"ENCRYPTED PRIVATE KEY": PrivateKey,
