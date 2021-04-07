@@ -7,8 +7,9 @@ Versions are year-based with a strict backward compatibility policy.
 The third digit is only for regressions.
 
 
-21.2.0 (UNRELEASED)
+21.3.0 (UNRELEASED)
 -------------------
+
 
 Backward-incompatible changes:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -26,6 +27,31 @@ Changes:
 ^^^^^^^^
 
 *none*
+
+
+----
+
+
+21.2.0 (2021-04-07)
+-------------------
+
+Backward-incompatible changes:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+*none*
+
+
+Deprecations:
+^^^^^^^^^^^^^
+
+*none*
+
+
+Changes:
+^^^^^^^^
+
+- Added support for ``pem.OpenSSLTrustedCertificate`` (``-----BEGIN TRUSTED CERTIFICATE-----``), as defined in `openssl x509 manual <https://www.openssl.org/docs/man1.1.1/man1/x509.html>`_.
+  `#28 <https://github.com/hynek/pem/issues/28>`_
 
 
 ----

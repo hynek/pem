@@ -10,6 +10,7 @@ from ._core import (
     ECPrivateKey,
     Key,
     OpenSSHPrivateKey,
+    OpenSSLTrustedCertificate,
     PrivateKey,
     PublicKey,
     RSAPrivateKey,
@@ -27,7 +28,7 @@ except ImportError:
     twisted = None  # type: ignore
 
 
-__version__ = "21.2.0.dev0"
+__version__ = "21.3.0.dev0"
 __author__ = "Hynek Schlawack"
 __license__ = "MIT"
 __description__ = "Easy PEM file parsing in Python."
@@ -46,6 +47,7 @@ __all__ = [
     "ECPrivateKey",
     "Key",
     "OpenSSHPrivateKey",
+    "OpenSSLTrustedCertificate",
     "PrivateKey",
     "PublicKey",
     "RSAPrivateKey",
