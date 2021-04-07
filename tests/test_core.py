@@ -470,7 +470,7 @@ class TestParse(object):
         assert all(isinstance(c, pem.Certificate) for c in certs)
         assert CERT_PEMS_NO_NEW_LINE == [cert.as_bytes() for cert in certs]
 
-    def test_certificate_openss_trusted(self):
+    def test_certificate_openssl_trusted(self):
         """
         Parses a PEM string with with an OpenSSL trusted certificate.
         """
