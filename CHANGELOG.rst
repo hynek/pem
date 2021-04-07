@@ -7,7 +7,7 @@ Versions are year-based with a strict backward compatibility policy.
 The third digit is only for regressions.
 
 
-21.2.0 (UNRELEASED)
+21.2.0 (2021-04-07)
 -------------------
 
 Backward-incompatible changes:
