@@ -1,28 +1,21 @@
 pem: Easy PEM file parsing
 ==========================
 
-.. image:: https://readthedocs.org/projects/pem/badge/?version=stable
-   :target: https://pem.readthedocs.io/en/stable/?badge=stable
-   :alt: Documentation Status
+.. image:: https://img.shields.io/badge/Docs-Read%20The%20Docs-black
+   :target: https://pem.readthedocs.io/en/stable/
+   :alt: Documentation
 
-.. image:: https://github.com/hynek/pem/workflows/CI/badge.svg?branch=main
-   :target: https://github.com/hynek/pem/actions
-   :alt: CI Status
+.. image:: https://img.shields.io/badge/license-MIT-C06524
+   :target: https://github.com/hynek/pem/blob/main/LICENSE
+   :alt: License: MIT
 
-.. image:: https://codecov.io/gh/hynek/pem/branch/main/graph/badge.svg
-   :target: https://codecov.io/github/hynek/pem
-   :alt: Coverage
+.. image:: https://img.shields.io/pypi/v/pem
+   :target: https://pypi.org/project/pem/
+   :alt: PyPI version
 
-.. image:: http://www.mypy-lang.org/static/mypy_badge.svg
-   :target: http://mypy-lang.org
-   :alt: Checked with mypy
-
-.. image:: https://www.irccloud.com/invite-svg?channel=%23cryptography-dev&amp;hostname=irc.freenode.net&amp;port=6697&amp;ssl=1
-   :target: https://www.irccloud.com/invite?channel=%23cryptography-dev&amp;hostname=irc.freenode.net&amp;port=6697&amp;ssl=1
-
-.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
-   :target: https://github.com/psf/black
-   :alt: Code style: black
+.. image:: https://static.pepy.tech/personalized-badge/pem?period=month&units=international_system&left_color=grey&right_color=blue&left_text=Downloads%20/%20Month
+   :target: https://pepy.tech/project/pem
+   :alt: Downloads / Month
 
 .. teaser-begin
 
