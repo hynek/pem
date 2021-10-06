@@ -6,7 +6,7 @@ Twisted-specific convenience helpers.
 
 from __future__ import absolute_import, division, print_function
 
-from OpenSSL.SSL import FILETYPE_PEM
+from OpenSSL.crypto import FILETYPE_PEM
 from twisted.internet import ssl
 
 from ._core import Certificate, DHParameters, Key, parse_file
