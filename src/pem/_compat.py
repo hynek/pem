@@ -16,7 +16,6 @@ if PY2:
     class ABC(object):
         __metaclass__ = abc.ABCMeta
 
-
 else:
     from abc import ABC
 
