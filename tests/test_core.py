@@ -183,7 +183,7 @@ class TestPEMObjects(object):
         """
         Passing unicode to Certificate encodes the string as ASCII.
         """
-        cert = pem.Certificate(u"a string")
+        cert = pem.Certificate("a string")
 
         assert cert.as_bytes() == b"a string"
         assert str(cert) == "a string"
@@ -192,7 +192,7 @@ class TestPEMObjects(object):
         """
         Passing unicode to CertificateRequest encodes the string as ASCII.
         """
-        cert_req = pem.CertificateRequest(u"a string")
+        cert_req = pem.CertificateRequest("a string")
 
         assert cert_req.as_bytes() == b"a string"
         assert str(cert_req) == "a string"
@@ -201,7 +201,7 @@ class TestPEMObjects(object):
         """
         Passing unicode to Key encodes the string as ASCII.
         """
-        key = pem.Key(u"a string")
+        key = pem.Key("a string")
 
         assert key.as_bytes() == b"a string"
         assert str(key) == "a string"
@@ -210,7 +210,7 @@ class TestPEMObjects(object):
         """
         Passing unicode to RSAPrivateKey encodes the string as ASCII.
         """
-        key = pem.RSAPrivateKey(u"a string")
+        key = pem.RSAPrivateKey("a string")
 
         assert key.as_bytes() == b"a string"
         assert str(key) == "a string"
@@ -219,7 +219,7 @@ class TestPEMObjects(object):
         """
         Passing unicode to DHParameters encodes the string as ASCII.
         """
-        params = pem.DHParameters(u"a string")
+        params = pem.DHParameters("a string")
 
         assert params.as_bytes() == b"a string"
         assert str(params) == "a string"
@@ -229,7 +229,7 @@ class TestPEMObjects(object):
         Passing unicode to CertificateRevocationList encodes the string as
         ASCII.
         """
-        crl = pem.CertificateRevocationList(u"a string")
+        crl = pem.CertificateRevocationList("a string")
 
         assert crl.as_bytes() == b"a string"
         assert str(crl) == "a string"
