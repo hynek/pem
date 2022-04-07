@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import, division, print_function
-
 from itertools import combinations
 
 import certifi
@@ -12,8 +8,6 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 
 import pem
-
-from pem._compat import text_type
 
 from .data import (
     CERT_NO_NEW_LINE,
@@ -43,14 +37,14 @@ TEST_DIGEST = (
 )
 
 
-class TestPEMObjects(object):
+class TestPEMObjects:
     def test_cert_has_correct_repr(self):
         """
         Calling repr on a Certificate instance returns the proper string.
         """
         cert = pem.Certificate(b"test")
 
-        assert "<Certificate({0})>".format(TEST_DIGEST) == repr(cert)
+        assert f"<Certificate({TEST_DIGEST})>" == repr(cert)
 
     def test_cert_has_correct_str(self):
         """
@@ -67,9 +61,7 @@ class TestPEMObjects(object):
         """
         cert_req = pem.CertificateRequest(b"test")
 
-        assert "<CertificateRequest({0})>".format(TEST_DIGEST) == repr(
-            cert_req
-        )
+        assert f"<CertificateRequest({TEST_DIGEST})>" == repr(cert_req)
 
     @pytest.mark.parametrize("pem_bytes", (b"test", b"test\r"))
     def test_sha1_hexdigest(self, pem_bytes):
@@ -93,7 +85,7 @@ class TestPEMObjects(object):
         cert_text = pem.Certificate(b"test").as_text()
 
         assert "test" == cert_text
-        assert isinstance(cert_text, text_type)
+        assert isinstance(cert_text, str)
 
     def test_cert_req_has_correct_str(self):
         """
@@ -109,7 +101,7 @@ class TestPEMObjects(object):
         """
         key = pem.Key(b"test")
 
-        assert "<Key({0})>".format(TEST_DIGEST) == repr(key)
+        assert f"<Key({TEST_DIGEST})>" == repr(key)
 
     def test_key_has_correct_str(self):
         """
@@ -125,7 +117,7 @@ class TestPEMObjects(object):
         """
         key = pem.RSAPrivateKey(b"test")
 
-        assert "<RSAPrivateKey({0})>".format(TEST_DIGEST) == repr(key)
+        assert f"<RSAPrivateKey({TEST_DIGEST})>" == repr(key)
 
     def test_rsa_public_key_has_correct_repr(self):
         """
@@ -133,7 +125,7 @@ class TestPEMObjects(object):
         """
         key = pem.RSAPublicKey(b"test")
 
-        assert "<RSAPublicKey({0})>".format(TEST_DIGEST) == repr(key)
+        assert f"<RSAPublicKey({TEST_DIGEST})>" == repr(key)
 
     def test_rsa_key_has_correct_str(self):
         """
@@ -149,7 +141,7 @@ class TestPEMObjects(object):
         """
         params = pem.DHParameters(b"test")
 
-        assert "<DHParameters({0})>".format(TEST_DIGEST) == repr(params)
+        assert f"<DHParameters({TEST_DIGEST})>" == repr(params)
 
     def test_dh_params_has_correct_str(self):
         """
@@ -166,9 +158,7 @@ class TestPEMObjects(object):
         """
         crl = pem.CertificateRevocationList(b"test")
 
-        assert "<CertificateRevocationList({0})>".format(TEST_DIGEST) == repr(
-            crl
-        )
+        assert f"<CertificateRevocationList({TEST_DIGEST})>" == repr(crl)
 
     def test_crl_has_correct_str(self):
         """
@@ -183,7 +173,7 @@ class TestPEMObjects(object):
         """
         Passing unicode to Certificate encodes the string as ASCII.
         """
-        cert = pem.Certificate(u"a string")
+        cert = pem.Certificate("a string")
 
         assert cert.as_bytes() == b"a string"
         assert str(cert) == "a string"
@@ -192,7 +182,7 @@ class TestPEMObjects(object):
         """
         Passing unicode to CertificateRequest encodes the string as ASCII.
         """
-        cert_req = pem.CertificateRequest(u"a string")
+        cert_req = pem.CertificateRequest("a string")
 
         assert cert_req.as_bytes() == b"a string"
         assert str(cert_req) == "a string"
@@ -201,7 +191,7 @@ class TestPEMObjects(object):
         """
         Passing unicode to Key encodes the string as ASCII.
         """
-        key = pem.Key(u"a string")
+        key = pem.Key("a string")
 
         assert key.as_bytes() == b"a string"
         assert str(key) == "a string"
@@ -210,7 +200,7 @@ class TestPEMObjects(object):
         """
         Passing unicode to RSAPrivateKey encodes the string as ASCII.
         """
-        key = pem.RSAPrivateKey(u"a string")
+        key = pem.RSAPrivateKey("a string")
 
         assert key.as_bytes() == b"a string"
         assert str(key) == "a string"
@@ -219,7 +209,7 @@ class TestPEMObjects(object):
         """
         Passing unicode to DHParameters encodes the string as ASCII.
         """
-        params = pem.DHParameters(u"a string")
+        params = pem.DHParameters("a string")
 
         assert params.as_bytes() == b"a string"
         assert str(params) == "a string"
@@ -229,7 +219,7 @@ class TestPEMObjects(object):
         Passing unicode to CertificateRevocationList encodes the string as
         ASCII.
         """
-        crl = pem.CertificateRevocationList(u"a string")
+        crl = pem.CertificateRevocationList("a string")
 
         assert crl.as_bytes() == b"a string"
         assert str(crl) == "a string"
@@ -371,7 +361,7 @@ def load_rsa_key(key, password=None):
     )
 
 
-class TestParse(object):
+class TestParse:
     """
     Tests for parsing input with one or multiple PEM objects.
     """

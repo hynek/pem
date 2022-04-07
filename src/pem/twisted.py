@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
-
 """
 Twisted-specific convenience helpers.
 """
 
-from __future__ import absolute_import, division, print_function
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from OpenSSL.crypto import FILETYPE_PEM
 from twisted.internet import ssl
@@ -12,16 +12,15 @@ from twisted.internet import ssl
 from ._core import Certificate, DHParameters, Key, parse_file
 
 
-# mypy hack: Import typing information without actually importing anything.
-MYPY = False
-if MYPY:  # pragma: nocover
-    from typing import Any, List
+if TYPE_CHECKING:
+    from typing import Any
 
     from ._core import AbstractPEMObject
 
 
-def certificateOptionsFromPEMs(pemObjects, **kw):
-    # type: (List[AbstractPEMObject], **Any) -> ssl.CerticateOptions
+def certificateOptionsFromPEMs(
+    pemObjects: list[AbstractPEMObject], **kw: Any
+) -> ssl.CertificateOptions:
     """
     Load a CertificateOptions from the given collection of PEM objects
     (already-loaded private keys and certificates).
@@ -44,19 +43,20 @@ def certificateOptionsFromPEMs(pemObjects, **kw):
     if len(keys) > 1:
         raise ValueError("Supplied PEM file(s) contains *more* than one key.")
 
-    privateKey = ssl.KeyPair.load(str(keys[0]), FILETYPE_PEM)
+    privateKey = ssl.KeyPair.load(str(keys[0]), FILETYPE_PEM)  # type: ignore
 
     certs = [cert for cert in pemObjects if isinstance(cert, Certificate)]
     if not len(certs):
         raise ValueError("*At least one* certificate is required.")
-    certificates = [ssl.Certificate.loadPEM(str(certPEM)) for certPEM in certs]
+    certificates = [
+        ssl.Certificate.loadPEM(str(certPEM))  # type: ignore
+        for certPEM in certs
+    ]
 
-    certificatesByFingerprint = dict(
-        [
-            (certificate.getPublicKey().keyHash(), certificate)
-            for certificate in certificates
-        ]
-    )
+    certificatesByFingerprint = {
+        certificate.getPublicKey().keyHash(): certificate
+        for certificate in certificates
+    }
 
     if privateKey.keyHash() not in certificatesByFingerprint:
         raise ValueError(
@@ -80,7 +80,9 @@ def certificateOptionsFromPEMs(pemObjects, **kw):
             "parameters."
         )
     elif len(dhparams) == 1:
-        kw["dhParameters"] = ssl.DiffieHellmanParameters(str(dhparams[0]))
+        kw["dhParameters"] = ssl.DiffieHellmanParameters(  # type: ignore
+            str(dhparams[0])
+        )
 
     ctxFactory = ssl.CertificateOptions(
         privateKey=privateKey.original,
@@ -88,19 +90,20 @@ def certificateOptionsFromPEMs(pemObjects, **kw):
         extraCertChain=[
             chain.original for chain in certificatesByFingerprint.values()
         ],
-        **kw
+        **kw,
     )
 
     return ctxFactory
 
 
-def certificateOptionsFromFiles(*pemFiles, **kw):
-    # type: (*str, **Any) -> ssl.CertificateOptions
+def certificateOptionsFromFiles(
+    *pemFiles: str, **kw: Any
+) -> ssl.CertificateOptions:
     """
     Read all files named by *pemFiles*, and parse them using
     :func:`certificateOptionsFromPEMs`.
     """
-    pems = []  # type: List[AbstractPEMObject]
+    pems: list[AbstractPEMObject] = []
     for pemFile in pemFiles:
         pems += parse_file(pemFile)
 

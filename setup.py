@@ -25,17 +25,14 @@ CLASSIFIERS = [
     "Programming Language :: Python",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
-    "Programming Language :: Python :: 2",
-    "Programming Language :: Python :: 2.7",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.5",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
+REQUIRES_PYTHON = ">=3.7"
 INSTALL_REQUIRES = []
 EXTRAS_REQUIRE = {
     "docs": ["sphinx", "furo"],
@@ -46,11 +43,17 @@ EXTRAS_REQUIRE = {
         "pretend",
         "pyopenssl",
     ],
+    "types": [
+        "mypy",
+        "twisted",
+        "types-pyOpenSSL",
+    ],
 }
 EXTRAS_REQUIRE["dev"] = (
     EXTRAS_REQUIRE["tests"]
     + EXTRAS_REQUIRE["docs"]
-    + ["twisted[tls]", "pre-commit"]
+    + EXTRAS_REQUIRE["types"]
+    + ["twisted[tls]", "pre-commit"],
 )
 PACKAGE_DATA = {"pem": ["py.typed"]}
 
@@ -87,11 +90,11 @@ def find_meta(meta):
     Extract __*meta*__ from META_FILE.
     """
     meta_match = re.search(
-        r"^__{meta}__ = ['\"]([^'\"]*)['\"]".format(meta=meta), META_FILE, re.M
+        rf"^__{meta}__ = ['\"]([^'\"]*)['\"]", META_FILE, re.M
     )
     if meta_match:
         return meta_match.group(1)
-    raise RuntimeError("Unable to find __{meta}__ string.".format(meta=meta))
+    raise RuntimeError(f"Unable to find __{meta}__ string.")
 
 
 URL = find_meta("url")
@@ -106,7 +109,7 @@ LONG = (
         re.S,
     ).group(1)
     + "\n\n`Full changelog "
-    + "<{url}en/stable/changelog.html>`_.\n\n".format(url=URL)
+    + f"<{URL}en/stable/changelog.html>`_.\n\n"
     + read("AUTHORS.rst")
 )
 
@@ -131,6 +134,7 @@ if __name__ == "__main__":
         include_package_data=True,
         zip_safe=False,
         classifiers=CLASSIFIERS,
+        requires_python=REQUIRES_PYTHON,
         install_requires=INSTALL_REQUIRES,
         extras_require=EXTRAS_REQUIRE,
         options={"bdist_wheel": {"universal": "1"}},
