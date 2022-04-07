@@ -43,12 +43,15 @@ def certificateOptionsFromPEMs(
     if len(keys) > 1:
         raise ValueError("Supplied PEM file(s) contains *more* than one key.")
 
-    privateKey = ssl.KeyPair.load(str(keys[0]), FILETYPE_PEM)
+    privateKey = ssl.KeyPair.load(str(keys[0]), FILETYPE_PEM)  # type: ignore
 
     certs = [cert for cert in pemObjects if isinstance(cert, Certificate)]
     if not len(certs):
         raise ValueError("*At least one* certificate is required.")
-    certificates = [ssl.Certificate.loadPEM(str(certPEM)) for certPEM in certs]
+    certificates = [
+        ssl.Certificate.loadPEM(str(certPEM))  # type: ignore
+        for certPEM in certs
+    ]
 
     certificatesByFingerprint = {
         certificate.getPublicKey().keyHash(): certificate
@@ -77,7 +80,9 @@ def certificateOptionsFromPEMs(
             "parameters."
         )
     elif len(dhparams) == 1:
-        kw["dhParameters"] = ssl.DiffieHellmanParameters(str(dhparams[0]))
+        kw["dhParameters"] = ssl.DiffieHellmanParameters(  # type: ignore
+            str(dhparams[0])
+        )
 
     ctxFactory = ssl.CertificateOptions(
         privateKey=privateKey.original,
