@@ -45,6 +45,7 @@ EXTRAS_REQUIRE = {
     ],
     "types": [
         "mypy",
+        "twisted",
         "types-pyOpenSSL",
     ],
 }
