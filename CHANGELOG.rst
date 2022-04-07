@@ -7,14 +7,14 @@ Versions are year-based with a strict backward compatibility policy.
 The third digit is only for regressions.
 
 
-21.3.0 (UNRELEASED)
+XX.Y.Z (UNRELEASED)
 -------------------
 
 
-Backward-incompatible changes:
+Backwards-incompatible changes:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-*none*
+- Support for Python 2.7, 3.5, and 3.6 has been dropped.
 
 
 Deprecations:
