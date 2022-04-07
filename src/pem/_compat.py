@@ -1,5 +1,3 @@
-from __future__ import absolute_import, division, print_function
-
 import sys
 
 
@@ -13,7 +11,7 @@ if PY2:
 
     text_type = unicode  # noqa
 
-    class ABC(object):
+    class ABC:
         __metaclass__ = abc.ABCMeta
 
 else:

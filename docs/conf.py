@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # pem documentation build configuration file, created by
 # sphinx-quickstart on Thu Jul  9 13:12:00 2015.

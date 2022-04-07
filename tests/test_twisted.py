@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import, division, print_function
-
 import pytest
 
 from OpenSSL import crypto
@@ -37,7 +33,7 @@ def keyCertChainFile(tmpdir):
     return pemFile
 
 
-class TestCertificateOptionsFromFiles(object):
+class TestCertificateOptionsFromFiles:
     def test_worksWithoutChain(self, tmpdir):
         """
         Creating CO without chain certificates works.
@@ -198,7 +194,7 @@ class TestCertificateOptionsFromFiles(object):
             )
 
 
-class _TestForwardCompatibleDHE(object):
+class _TestForwardCompatibleDHE:
     def test_realDHParameterFileSupport(self, monkeypatch, keyCertChainDHFile):
         """
         Pass DH parameters loaded from a file directly to CertificateOptions if

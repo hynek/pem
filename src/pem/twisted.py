@@ -1,10 +1,7 @@
-# -*- coding: utf-8 -*-
-
 """
 Twisted-specific convenience helpers.
 """
 
-from __future__ import absolute_import, division, print_function
 
 from OpenSSL.crypto import FILETYPE_PEM
 from twisted.internet import ssl
@@ -51,12 +48,10 @@ def certificateOptionsFromPEMs(pemObjects, **kw):
         raise ValueError("*At least one* certificate is required.")
     certificates = [ssl.Certificate.loadPEM(str(certPEM)) for certPEM in certs]
 
-    certificatesByFingerprint = dict(
-        [
-            (certificate.getPublicKey().keyHash(), certificate)
-            for certificate in certificates
-        ]
-    )
+    certificatesByFingerprint = {
+        certificate.getPublicKey().keyHash(): certificate
+        for certificate in certificates
+    }
 
     if privateKey.keyHash() not in certificatesByFingerprint:
         raise ValueError(

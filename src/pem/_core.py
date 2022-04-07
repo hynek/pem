@@ -1,10 +1,7 @@
-# -*- coding: utf-8 -*-
-
 """
 Framework agnostic PEM file parsing functions.
 """
 
-from __future__ import absolute_import, division, print_function
 
 import hashlib
 import re
@@ -42,7 +39,7 @@ class AbstractPEMObject(ABC):
 
     def __repr__(self):
         # type: () -> str
-        return "<{0}(PEM string with SHA-1 digest {1!r})>".format(
+        return "<{}(PEM string with SHA-1 digest {!r})>".format(
             self.__class__.__name__, self.sha1_hexdigest
         )
 
