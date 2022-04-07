@@ -9,8 +9,6 @@ from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 
 import pem
 
-from pem._compat import text_type
-
 from .data import (
     CERT_NO_NEW_LINE,
     CERT_PEM_OPENSSL_TRUSTED,
@@ -87,7 +85,7 @@ class TestPEMObjects:
         cert_text = pem.Certificate(b"test").as_text()
 
         assert "test" == cert_text
-        assert isinstance(cert_text, text_type)
+        assert isinstance(cert_text, str)
 
     def test_cert_req_has_correct_str(self):
         """

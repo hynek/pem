@@ -43,11 +43,16 @@ EXTRAS_REQUIRE = {
         "pretend",
         "pyopenssl",
     ],
+    "types": [
+        "mypy",
+        "types-pyOpenSSL",
+    ],
 }
 EXTRAS_REQUIRE["dev"] = (
     EXTRAS_REQUIRE["tests"]
     + EXTRAS_REQUIRE["docs"]
-    + ["twisted[tls]", "pre-commit"]
+    + EXTRAS_REQUIRE["types"]
+    + ["twisted[tls]", "pre-commit"],
 )
 PACKAGE_DATA = {"pem": ["py.typed"]}
 

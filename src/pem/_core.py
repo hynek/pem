@@ -2,50 +2,42 @@
 Framework agnostic PEM file parsing functions.
 """
 
+from __future__ import annotations
 
 import hashlib
 import re
 
-from ._compat import ABC, PY2, text_type
+from abc import ABCMeta
 
 
-# mypy hack: Import typing information without actually importing anything.
-MYPY = False
-if MYPY:  # pragma: nocover
-    from typing import Any, AnyStr, Dict, List, Optional, Type, Union  # noqa
-
-
-class AbstractPEMObject(ABC):
+class AbstractPEMObject(metaclass=ABCMeta):
     """
     Base class for parsed objects.
     """
 
-    def __init__(self, pem_bytes):
-        # type: (Union[text_type, bytes]) -> None
-        if isinstance(pem_bytes, text_type):
-            self._pem_bytes = pem_bytes.encode("ascii")  # type: bytes
+    _pem_bytes: bytes
+    _sha1_hexdigest: str | None
+
+    def __init__(self, pem_bytes: bytes | str):
+        if isinstance(pem_bytes, str):
+            self._pem_bytes = pem_bytes.encode("ascii")
         else:
             self._pem_bytes = pem_bytes
-        self._sha1_hexdigest = None  # type: Optional[str]
+        self._sha1_hexdigest = None
 
-    def __str__(self):
-        # type: () -> str
+    def __str__(self) -> str:
         """
         Return the PEM-encoded content as a native :obj:`str`.
         """
-        if not PY2:
-            return self._pem_bytes.decode("ascii")
-        return self._pem_bytes
+        return self._pem_bytes.decode("ascii")
 
-    def __repr__(self):
-        # type: () -> str
+    def __repr__(self) -> str:
         return "<{}(PEM string with SHA-1 digest {!r})>".format(
             self.__class__.__name__, self.sha1_hexdigest
         )
 
     @property
-    def sha1_hexdigest(self):
-        # type: () -> str
+    def sha1_hexdigest(self) -> str:
         """
         A SHA-1 digest of the whole object for easy differentiation.
 
@@ -62,8 +54,7 @@ class AbstractPEMObject(ABC):
 
         return self._sha1_hexdigest
 
-    def as_bytes(self):
-        # type: () -> bytes
+    def as_bytes(self) -> bytes:
         """
         Return the PEM-encoded content as :obj:`bytes`.
 
@@ -71,8 +62,7 @@ class AbstractPEMObject(ABC):
         """
         return self._pem_bytes
 
-    def as_text(self):
-        # type: () -> text_type
+    def as_text(self) -> str:
         """
         Return the PEM-encoded content as Unicode text.
 
@@ -80,8 +70,7 @@ class AbstractPEMObject(ABC):
         """
         return self._pem_bytes.decode("utf-8")
 
-    def __eq__(self, other):
-        # type: (object) -> bool
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, type(self)):
             return NotImplemented
 
@@ -89,15 +78,13 @@ class AbstractPEMObject(ABC):
             type(self) == type(other) and self._pem_bytes == other._pem_bytes
         )
 
-    def __ne__(self, other):
-        # type: (object) -> bool
+    def __ne__(self, other: object) -> bool:
         if not isinstance(other, type(self)):
             return NotImplemented
 
         return type(self) != type(other) or self._pem_bytes != other._pem_bytes
 
-    def __hash__(self):
-        # type: () -> int
+    def __hash__(self) -> int:
         return hash(self._pem_bytes)
 
 
@@ -218,7 +205,7 @@ class SSHCOMPrivateKey(PrivateKey):
     """
 
 
-_PEM_TO_CLASS = {
+_PEM_TO_CLASS: dict[bytes, type[AbstractPEMObject]] = {
     b"CERTIFICATE": Certificate,
     b"TRUSTED CERTIFICATE": OpenSSLTrustedCertificate,
     b"PRIVATE KEY": PrivateKey,
@@ -235,7 +222,7 @@ _PEM_TO_CLASS = {
     b"SSH2 PUBLIC KEY": SSHPublicKey,
     b"SSH2 ENCRYPTED PRIVATE KEY": SSHCOMPrivateKey,
     b"X509 CRL": CertificateRevocationList,
-}  # type: Dict[bytes, Type[AbstractPEMObject]]
+}
 
 # See https://tools.ietf.org/html/rfc1421
 # and https://tools.ietf.org/html/rfc4716 for space instead of fifth dash.
@@ -249,8 +236,7 @@ _PEM_RE = re.compile(
 )
 
 
-def parse(pem_str):
-    # type: (bytes) -> List[AbstractPEMObject]
+def parse(pem_str: bytes) -> list[AbstractPEMObject]:
     """
     Extract PEM-like objects from *pem_str*.
 
@@ -264,8 +250,7 @@ def parse(pem_str):
     ]
 
 
-def parse_file(file_name):
-    # type: (str) -> List[AbstractPEMObject]
+def parse_file(file_name: str) -> list[AbstractPEMObject]:
     """
     Read *file_name* and parse PEM objects from it using :func:`parse`.
     """

@@ -2,6 +2,9 @@
 Twisted-specific convenience helpers.
 """
 
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 from OpenSSL.crypto import FILETYPE_PEM
 from twisted.internet import ssl
@@ -9,16 +12,15 @@ from twisted.internet import ssl
 from ._core import Certificate, DHParameters, Key, parse_file
 
 
-# mypy hack: Import typing information without actually importing anything.
-MYPY = False
-if MYPY:  # pragma: nocover
-    from typing import Any, List
+if TYPE_CHECKING:
+    from typing import Any
 
     from ._core import AbstractPEMObject
 
 
-def certificateOptionsFromPEMs(pemObjects, **kw):
-    # type: (List[AbstractPEMObject], **Any) -> ssl.CerticateOptions
+def certificateOptionsFromPEMs(
+    pemObjects: list[AbstractPEMObject], **kw: Any
+) -> ssl.CertificateOptions:
     """
     Load a CertificateOptions from the given collection of PEM objects
     (already-loaded private keys and certificates).
@@ -83,19 +85,20 @@ def certificateOptionsFromPEMs(pemObjects, **kw):
         extraCertChain=[
             chain.original for chain in certificatesByFingerprint.values()
         ],
-        **kw
+        **kw,
     )
 
     return ctxFactory
 
 
-def certificateOptionsFromFiles(*pemFiles, **kw):
-    # type: (*str, **Any) -> ssl.CertificateOptions
+def certificateOptionsFromFiles(
+    *pemFiles: str, **kw: Any
+) -> ssl.CertificateOptions:
     """
     Read all files named by *pemFiles*, and parse them using
     :func:`certificateOptionsFromPEMs`.
     """
-    pems = []  # type: List[AbstractPEMObject]
+    pems: list[AbstractPEMObject] = []
     for pemFile in pemFiles:
         pems += parse_file(pemFile)
 
