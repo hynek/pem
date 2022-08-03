@@ -25,12 +25,12 @@ repos:
         additional_dependencies: [toml]
 
   - repo: https://github.com/asottile/yesqa
-    rev: v1.3.0
+    rev: v1.4.0
     hooks:
       - id: yesqa
 
   - repo: https://github.com/PyCQA/flake8
-    rev: 5.0.1
+    rev: 5.0.3
     hooks:
     - id: flake8
 
