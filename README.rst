@@ -40,6 +40,15 @@ Additionally to the vanilla parsing code, *pem* also contains helpers for Twiste
 *pem* is available from `PyPI <https://pypi.org/project/pem/>`_, its documentation lives at `Read the Docs <https://pem.readthedocs.io/>`_, the code on `GitHub <https://github.com/hynek/pem>`_.
 
 
+*pem* for Enterprise
+--------------------
+
+Available as part of the Tidelift Subscription.
+
+The maintainers of *pem* and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications.
+Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use.
+`Learn more. <https://tidelift.com/subscription/pkg/pypi-pem?utm_source=pypi-pem&utm_medium=referral&utm_campaign=enterprise>`_
+
 .. _MIT: https://choosealicense.com/licenses/mit/
 .. _`PEM files`: https://en.wikipedia.org/wiki/X.509#Certificate_filename_extensions
 .. _Apache: https://httpd.apache.org/
