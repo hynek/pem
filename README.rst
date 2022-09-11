@@ -1,5 +1,5 @@
-pem: Easy PEM file parsing
-==========================
+pem: PEM file parsing
+=====================
 
 .. image:: https://img.shields.io/badge/Docs-Read%20The%20Docs-black
    :target: https://pem.readthedocs.io/en/stable/

@@ -2,7 +2,12 @@ import pytest
 
 from OpenSSL import crypto
 from pretend import call, call_recorder, stub
-from twisted.internet import ssl
+
+
+try:
+    from twisted.internet import ssl
+except ImportError:
+    pytest.skip("Missing Twisted", allow_module_level=True)
 
 import pem
 

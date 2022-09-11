@@ -29,7 +29,7 @@ except ImportError:
 __version__ = "22.1.0.dev0"
 __author__ = "Hynek Schlawack"
 __license__ = "MIT"
-__description__ = "Easy PEM file parsing in Python."
+__description__ = "PEM file parsing in Python."
 __url__ = "https://pem.readthedocs.io/"
 __uri__ = __url__
 __email__ = "hs@ox.cx"
