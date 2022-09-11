@@ -16,7 +16,6 @@ repos:
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
-        exclude: "tests/test_slots.py"
 
   - repo: https://github.com/PyCQA/isort
     rev: 5.10.1
@@ -28,11 +27,13 @@ repos:
     rev: v1.4.0
     hooks:
       - id: yesqa
+        additional_dependencies: [flake8-bugbear]
 
   - repo: https://github.com/PyCQA/flake8
     rev: 5.0.4
     hooks:
-    - id: flake8
+      - id: flake8
+        additional_dependencies: [flake8-bugbear]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.3.0
