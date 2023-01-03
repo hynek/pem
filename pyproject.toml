@@ -51,6 +51,13 @@ source = "vcs"
 raw-options = { version_scheme = "no-guess-dev" }
 
 
+[tool.pytest.ini_options]
+addopts = ["-ra", "--strict-markers", "--strict-config"]
+testpaths = "tests"
+xfail_strict = true
+filterwarnings = ["once::Warning"]
+
+
 [tool.coverage.run]
 parallel = true
 branch = true
