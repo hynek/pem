@@ -51,13 +51,20 @@ source = "vcs"
 raw-options = { version_scheme = "no-guess-dev" }
 
 
+[tool.pytest.ini_options]
+addopts = ["-ra", "--strict-markers", "--strict-config"]
+testpaths = "tests"
+xfail_strict = true
+filterwarnings = ["once::Warning"]
+
+
 [tool.coverage.run]
 parallel = true
 branch = true
 source = ["pem"]
 
 [tool.coverage.paths]
-source = ["src", ".tox/*/site-packages"]
+source = ["src", ".tox/py*/**/site-packages"]
 
 [tool.coverage.report]
 show_missing = true
@@ -99,10 +106,6 @@ check_untyped_defs = true
 
 [[tool.mypy.overrides]]
 module = "tests.*"
-ignore_errors = true
-
-[[tool.mypy.overrides]]
-module = "conftest.*"
 ignore_errors = true
 
 
