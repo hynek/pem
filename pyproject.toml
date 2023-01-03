@@ -101,10 +101,6 @@ check_untyped_defs = true
 module = "tests.*"
 ignore_errors = true
 
-[[tool.mypy.overrides]]
-module = "conftest.*"
-ignore_errors = true
-
 
 [tool.hatch.metadata.hooks.fancy-pypi-readme]
 content-type = "text/x-rst"
