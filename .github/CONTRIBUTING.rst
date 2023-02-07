@@ -107,7 +107,8 @@ Local Development Environment
 
 You can (and should) run our test suite using tox_.
 However, you’ll probably want a more traditional environment as well.
-We highly recommend to develop using the latest Python 3 release because you're more likely to catch certain bugs earlier.
+We highly recommend to develop using the version specified in the ``.python-version`` file in the project root.
+That's the version used in CI by default.
 
 First create a `virtual environment <https://virtualenv.pypa.io/>`_.
 It’s out of scope for this document to list all the ways to manage virtual environments in Python, but if you don’t already have a pet way, take some time to look at tools like `pew <https://github.com/berdario/pew>`_, `virtualfish <https://virtualfish.readthedocs.io/>`_, `virtualenvwrapper <https://virtualenvwrapper.readthedocs.io/>`_, and direnv's `Python support <https://github.com/direnv/direnv/wiki/Python>`_.
