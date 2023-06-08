@@ -13,14 +13,8 @@ license = { text = "MIT" }
 keywords = ["pyopenssl", "ssl", "tls", "pem", "cryptography", "twisted"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Developers",
-    "Natural Language :: English",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: Implementation :: CPython",
-    "Programming Language :: Python :: Implementation :: PyPy",
-    "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
@@ -96,14 +90,11 @@ profile = "attrs"
 
 
 [tool.mypy]
-warn_unused_ignores = true
-follow_imports = "normal"
+strict = true
+
+show_error_codes = true
+enable_error_code = ["ignore-without-code"]
 ignore_missing_imports = true
-disallow_untyped_calls = true
-warn_no_return = true
-warn_redundant_casts = true
-disallow_untyped_defs = true
-check_untyped_defs = true
 
 [[tool.mypy.overrides]]
 module = "tests.*"

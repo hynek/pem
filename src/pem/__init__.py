@@ -23,7 +23,7 @@ from ._core import (
 try:
     from . import twisted
 except ImportError:
-    twisted = None  # type: ignore
+    twisted = None  # type: ignore[assignment]
 
 
 __version__ = "22.1.0.dev0"

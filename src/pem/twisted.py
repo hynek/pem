@@ -43,13 +43,13 @@ def certificateOptionsFromPEMs(
     if len(keys) > 1:
         raise ValueError("Supplied PEM file(s) contains *more* than one key.")
 
-    privateKey = ssl.KeyPair.load(str(keys[0]), FILETYPE_PEM)  # type: ignore
+    privateKey = ssl.KeyPair.load(str(keys[0]), FILETYPE_PEM)  # type: ignore[no-untyped-call]
 
     certs = [cert for cert in pemObjects if isinstance(cert, Certificate)]
     if not len(certs):
         raise ValueError("*At least one* certificate is required.")
     certificates = [
-        ssl.Certificate.loadPEM(str(certPEM))  # type: ignore
+        ssl.Certificate.loadPEM(str(certPEM))  # type: ignore[no-untyped-call]
         for certPEM in certs
     ]
 
@@ -80,7 +80,7 @@ def certificateOptionsFromPEMs(
             "parameters."
         )
     elif len(dhparams) == 1:
-        kw["dhParameters"] = ssl.DiffieHellmanParameters(  # type: ignore
+        kw["dhParameters"] = ssl.DiffieHellmanParameters(  # type: ignore[no-untyped-call]
             str(dhparams[0])
         )
 
@@ -93,7 +93,7 @@ def certificateOptionsFromPEMs(
         **kw,
     )
 
-    return ctxFactory
+    return ctxFactory  # type: ignore[no-any-return]
 
 
 def certificateOptionsFromFiles(
