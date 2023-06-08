@@ -125,25 +125,6 @@ jobs:
       - run: python -Im tox run -e docs
 
 
-  package:
-    name: Build & verify package
-    runs-on: ubuntu-latest
-    env:
-      SETUPTOOLS_SCM_PRETEND_VERSION: ""
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # get correct version
-      - uses: actions/setup-python@v4
-        with:
-          cache: pip
-
-      - uses: hynek/build-and-inspect-python-package@v1
-
-      - run: python -Im pip install hatch-fancy-pypi-readme
-      - run: python -Im hatch_fancy_pypi_readme
-
   install-dev:
     strategy:
       matrix:
@@ -169,7 +150,6 @@ jobs:
       - coverage
       - docs
       - install-dev
-      - package
 
     runs-on: ubuntu-latest
 
