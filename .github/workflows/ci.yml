@@ -33,12 +33,16 @@ jobs:
           - "3.9"
           - "3.10"
           - "3.11"
+          - "3.12"
 
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+          allow-prereleases: true
+          cache: pip
+
       - run: python -Im pip install --upgrade wheel tox
 
       - run: python -Im tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
@@ -57,6 +61,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
+        with:
+          cache: pip
 
       - run: python -Im pip install --upgrade coverage[toml]
 
@@ -90,12 +96,15 @@ jobs:
           - "3.9"
           - "3.10"
           - "3.11"
+          - "3.12"
 
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+          allow-prereleases: true
+          cache: pip
 
       - run: python -Im pip install --upgrade wheel tox
       - run: python -Im tox run -e mypy
@@ -109,7 +118,8 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           # Keep in sync with tox.ini/docs & .readthedocs.yaml
-          python-version: "3.10"
+          python-version: "3.11"
+          cache: pip
       - run: python -Im pip install --upgrade wheel tox
 
       - run: python -Im tox run -e docs
@@ -126,6 +136,8 @@ jobs:
         with:
           fetch-depth: 0 # get correct version
       - uses: actions/setup-python@v4
+        with:
+          cache: pip
 
       - uses: hynek/build-and-inspect-python-package@v1
 
@@ -143,6 +155,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
+        with:
+          cache: pip
 
       - run: python -Im pip install -e .[dev]
       - run: python -Ic 'import pem; print(pem.__version__)'
@@ -160,11 +174,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@v2
-        with:
-          egress-policy: block
-
       - name: Decide whether the needed jobs succeeded or failed
         uses: re-actors/alls-green@release/v1
         with:
