@@ -79,12 +79,13 @@ def certificateOptionsFromPEMs(
             "Supplied PEM file(s) contain(s) *more* than one set of DH "
             "parameters."
         )
-    elif len(dhparams) == 1:
+
+    if len(dhparams) == 1:
         kw["dhParameters"] = ssl.DiffieHellmanParameters(  # type: ignore[no-untyped-call]
             str(dhparams[0])
         )
 
-    ctxFactory = ssl.CertificateOptions(
+    return ssl.CertificateOptions(  # type: ignore[no-any-return]
         privateKey=privateKey.original,
         certificate=primaryCertificate.original,
         extraCertChain=[
@@ -92,8 +93,6 @@ def certificateOptionsFromPEMs(
         ],
         **kw,
     )
-
-    return ctxFactory  # type: ignore[no-any-return]
 
 
 def certificateOptionsFromFiles(

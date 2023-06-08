@@ -48,7 +48,7 @@ class AbstractPEMObject(metaclass=ABCMeta):
            on Windows and UNIX-like operating systems.
         """
         if self._sha1_hexdigest is None:
-            self._sha1_hexdigest = hashlib.sha1(
+            self._sha1_hexdigest = hashlib.sha1(  # noqa[S324]
                 self._pem_bytes.replace(b"\r", b"")
             ).hexdigest()
 
