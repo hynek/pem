@@ -35,6 +35,14 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.doctest",
     "sphinx.ext.intersphinx",
+    "notfound.extension",
+    "myst_parser",
+]
+
+myst_enable_extensions = [
+    "colon_fence",
+    "smartquotes",
+    "deflist",
 ]
 
 # Add any paths that contain templates here, relative to this directory.

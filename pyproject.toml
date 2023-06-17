@@ -36,7 +36,7 @@ Ko-fi = "https://ko-fi.com/the_hynek"
 
 [project.optional-dependencies]
 tests = ["coverage[toml]>=5.0.2", "pytest", "certifi", "pretend", "pyopenssl"]
-docs = ["sphinx", "furo"]
+docs = ["sphinx", "furo", "myst-parser", "sphinx-notfound-page"]
 types = ["mypy", "twisted", "types-pyOpenSSL"]
 dev = ["pem[tests,docs,types]", "twisted[tls]"]
 
@@ -98,23 +98,32 @@ ignore_errors = true
 
 
 [tool.hatch.metadata.hooks.fancy-pypi-readme]
-content-type = "text/x-rst"
+content-type = "text/markdown"
 
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
-path = "README.rst"
+path = "README.md"
 
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
 text = """
 
 
-Release Information
-===================
+## Release Information
+
 
 """
 
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
-path = "CHANGELOG.rst"
-pattern = '(\d+.\d.\d \(.*?\)\r?\n.*?)\r?\n\r?\n\r?\n----\r?\n\r?\n\r?\n'
+path = "CHANGELOG.md"
+start-after = "<!-- changelog follows -->"
+pattern = "\n(###.+?\n)## "
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+text = """
+---
+
+[→ Full Changelog](https://pem.readthedocs.io/en/stable/changelog.html)
+"""
+
 
 
 [tool.ruff]
