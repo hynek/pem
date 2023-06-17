@@ -9,7 +9,7 @@ name = "pem"
 description = "PEM file parsing in Python."
 authors = [{ name = "Hynek Schlawack", email = "hs@ox.cx" }]
 requires-python = ">=3.7"
-license = { text = "MIT" }
+license = "MIT"
 keywords = ["pyopenssl", "ssl", "tls", "pem", "cryptography", "twisted"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
