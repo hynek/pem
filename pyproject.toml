@@ -36,7 +36,7 @@ Ko-fi = "https://ko-fi.com/the_hynek"
 
 [project.optional-dependencies]
 tests = ["coverage[toml]>=5.0.2", "pytest", "certifi", "pretend", "pyopenssl"]
-docs = ["sphinx", "furo", "myst-parser", "sphinx-notfound-page"]
+docs = ["sphinx", "furo", "myst-parser", "sphinx-notfound-page", "twisted[tls]"]
 types = ["mypy", "twisted", "types-pyOpenSSL"]
 dev = ["pem[tests,docs,types]", "twisted[tls]"]
 
@@ -123,7 +123,6 @@ text = """
 
 [→ Full Changelog](https://pem.readthedocs.io/en/stable/changelog.html)
 """
-
 
 
 [tool.ruff]

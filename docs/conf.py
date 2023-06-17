@@ -293,5 +293,10 @@ texinfo_documents = [
 # texinfo_no_detailmenu = False
 
 
-# Refer to the Python standard library.
-intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}
+intersphinx_mapping = {
+    "python": ("https://docs.python.org/3", None),
+    "twisted": (
+        "https://docs.twistedmatrix.com/en/stable/",
+        None,
+    ),
+}
