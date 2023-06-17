@@ -40,6 +40,14 @@ Additionally to the vanilla parsing code, *pem* also contains helpers for Twiste
 *pem* is available from `PyPI <https://pypi.org/project/pem/>`_, its documentation lives at `Read the Docs <https://pem.readthedocs.io/>`_, the code on `GitHub <https://github.com/hynek/pem>`_.
 
 
+Credits
+-------
+
+*pem* is written and maintained by `Hynek Schlawack <https://hynek.me>`_ and released under the `MIT license <https://github.com/hynek/pem/blob/main/LICENSE>`_.
+
+The development is kindly supported by my employer `Variomedia AG <https://www.variomedia.de/>`_ and all my amazing `GitHub Sponsors <https://github.com/sponsors/hynek>`_.
+
+
 *pem* for Enterprise
 --------------------
 

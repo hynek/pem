@@ -2,7 +2,7 @@
 pem: Easy PEM file parsing in Python.
 =====================================
 
-Release v\ |release| (:doc:`What's new? <changelog>`).
+Release |release| (:doc:`What's new? <changelog>`).
 
 
 .. include:: ../README.rst
@@ -20,14 +20,9 @@ User's Guide
    api
 
 
-Project Information
--------------------
-
 .. toctree::
-   :maxdepth: 1
+   :hidden:
 
-   license
-   contributing
    changelog
 
 
