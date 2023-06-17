@@ -45,6 +45,11 @@ myst_enable_extensions = [
     "deflist",
 ]
 
+# Move type hints into the description block, instead of the func definition.
+# XXX: somehow 'description' doesn't work with the twisted module
+autodoc_typehints = "both"
+autodoc_typehints_description_target = "documented"
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 
