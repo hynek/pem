@@ -8,6 +8,7 @@ import hashlib
 import re
 
 from abc import ABCMeta
+from pathlib import Path
 
 
 class AbstractPEMObject(metaclass=ABCMeta):
@@ -241,7 +242,6 @@ def parse(pem_str: bytes) -> list[AbstractPEMObject]:
     Extract PEM-like objects from *pem_str*.
 
     :param pem_str: String to parse.
-    :type pem_str: bytes
     :return: list of :ref:`pem-objects`
     """
     return [
@@ -250,9 +250,8 @@ def parse(pem_str: bytes) -> list[AbstractPEMObject]:
     ]
 
 
-def parse_file(file_name: str) -> list[AbstractPEMObject]:
+def parse_file(file_name: str | Path) -> list[AbstractPEMObject]:
     """
     Read *file_name* and parse PEM objects from it using :func:`parse`.
     """
-    with open(file_name, "rb") as f:
-        return parse(f.read())
+    return parse(Path(file_name).read_bytes())

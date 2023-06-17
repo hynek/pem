@@ -489,14 +489,18 @@ class TestParse:
         assert all(isinstance(c, pem.CertificateRevocationList) for c in crls)
         assert CRL_PEMS == [crl.as_bytes() for crl in crls]
 
-    def test_file(self, tmpdir):
+    @pytest.mark.parametrize("use_path", [True, False])
+    def test_file(self, tmp_path, use_path):
         """
         A file with multiple certificate PEMs is parsed into a list of
         corresponding Certificates.
         """
-        certs_file = tmpdir.join("certs.pem")
-        certs_file.write(b"".join(CERT_PEMS))
-        certs = pem.parse_file(str(certs_file))
+        certs_file = tmp_path / "certs.pem"
+        certs_file.write_bytes(b"".join(CERT_PEMS))
+        if not use_path:
+            certs_file = str(certs_file)
+
+        certs = pem.parse_file(certs_file)
 
         assert all(isinstance(c, pem.Certificate) for c in certs)
         assert CERT_PEMS == [cert.as_bytes() for cert in certs]

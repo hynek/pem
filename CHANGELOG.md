@@ -22,7 +22,7 @@ You can find out backwards-compatibility policy [here](https://github.com/hynek/
 
 ### Changes:
 
-*none*
+- `pem.parse_file()` now accepts [`pathlib.Path`](https://docs.python.org/3/library/pathlib.html#pathlib.Path) objects.
 
 
 ## 21.2.0 - 2021-04-07
