@@ -7,18 +7,12 @@ on:
     tags: ["*"]
   pull_request:
     branches: [main]
-  repository_dispatch:
-    types: rebuild
-    workflow_dispatch:
 
 env:
   FORCE_COLOR: "1" # Make tools pretty.
-  TOX_TESTENV_PASSENV: FORCE_COLOR
   PIP_DISABLE_PIP_VERSION_CHECK: "1"
   PIP_NO_PYTHON_VERSION_WARNING: "1"
   SETUPTOOLS_SCM_PRETEND_VERSION: "1.0" # avoid warnings about shallow checkout
-  # N.B. default Python version for setup-python comes from the .python-version
-  # file at the root of the project.
 
 jobs:
   tests:
