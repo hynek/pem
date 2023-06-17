@@ -13,13 +13,11 @@ from ._core import Certificate, DHParameters, Key, parse_file
 
 
 if TYPE_CHECKING:
-    from typing import Any
-
     from ._core import AbstractPEMObject
 
 
 def certificateOptionsFromPEMs(
-    pemObjects: list[AbstractPEMObject], **kw: Any
+    pemObjects: list[AbstractPEMObject], **kw: object
 ) -> ssl.CertificateOptions:
     """
     Load a CertificateOptions from the given collection of PEM objects
@@ -96,7 +94,7 @@ def certificateOptionsFromPEMs(
 
 
 def certificateOptionsFromFiles(
-    *pemFiles: str, **kw: Any
+    *pemFiles: str, **kw: object
 ) -> ssl.CertificateOptions:
     """
     Read all files named by *pemFiles*, and parse them using
