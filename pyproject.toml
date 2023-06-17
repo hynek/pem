@@ -117,13 +117,6 @@ path = "CHANGELOG.rst"
 pattern = '(\d+.\d.\d \(.*?\)\r?\n.*?)\r?\n\r?\n\r?\n----\r?\n\r?\n\r?\n'
 
 
-[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
-text = "\n\n\n"
-
-[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
-path = "AUTHORS.rst"
-
-
 [tool.ruff]
 src = ["src", "tests", "docs/conf.py"]
 select = [
@@ -153,7 +146,7 @@ ignore = [
 ]
 
 [tool.ruff.per-file-ignores]
-"*/*twisted.py" = ["N"]  # lol Twisted & PEP 8 names
+"*/*twisted.py" = ["N"] # lol Twisted & PEP 8 names
 "tests/*" = [
     "S101",   # assert
     "SIM300", # Yoda rocks in asserts
