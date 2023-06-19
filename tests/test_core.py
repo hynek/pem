@@ -18,6 +18,8 @@ from .data import (
     DH_PEM,
     KEY_PEM_DSA_PRIVATE,
     KEY_PEM_EC_PRIVATE,
+    KEY_PEM_OPENPGP_PRIVATE,
+    KEY_PEM_OPENPGP_PUBLIC,
     KEY_PEM_OPENSSH,
     KEY_PEM_PKCS5_ENCRYPTED,
     KEY_PEM_PKCS5_UNENCRYPTED,
@@ -591,3 +593,21 @@ class TestParse:
 
         assert isinstance(key, pem.SSHCOMPrivateKey)
         assert KEY_PEM_SSHCOM_PRIVATE == key.as_bytes()
+
+    def test_openpgp_public_key(self):
+        """
+        Detects and loads OpenPGP public keys.
+        """
+        (key,) = pem.parse(KEY_PEM_OPENPGP_PUBLIC)
+
+        assert isinstance(key, pem.OpenPGPPublicKey)
+        assert KEY_PEM_OPENPGP_PUBLIC == key.as_bytes()
+
+    def test_openpgp_private_key(self):
+        """
+        Detects and loads OpenPGP private keys.
+        """
+        (key,) = pem.parse(KEY_PEM_OPENPGP_PRIVATE)
+
+        assert isinstance(key, pem.OpenPGPPrivateKey)
+        assert KEY_PEM_OPENPGP_PRIVATE == key.as_bytes()

@@ -12,17 +12,16 @@ You can find out backwards-compatibility policy [here](https://github.com/hynek/
 
 ## [UNRELEASED](https://github.com/hynek/pem/compare/21.2.0...HEAD)
 
-### Backwards-incompatible changes:
+### Removed
 
 - Support for Python 2.7, 3.5, and 3.6 has been dropped.
 
-### Deprecations:
 
-*none*
+### Added
 
-### Changes:
+- Support for RFC 4880 OpenPGP private & public keys: `pem.OpenPGPPublicKey` and `pemOpenPGPPrivateKey`.
+- `pem.parse_file()` now accepts also [`pathlib.Path`](https://docs.python.org/3/library/pathlib.html#pathlib.Path) objects.
 
-- `pem.parse_file()` now accepts [`pathlib.Path`](https://docs.python.org/3/library/pathlib.html#pathlib.Path) objects.
 
 ## [21.2.0](https://github.com/hynek/pem/compare/21.1.0...21.2.0) - 2021-04-07
 
