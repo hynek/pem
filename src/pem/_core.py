@@ -87,9 +87,13 @@ class AbstractPEMObject(metaclass=ABCMeta):
         return self._pem_bytes.decode("utf-8")
 
     @cached_property
-    def _extracted_payload(self) -> bytes:
+    def bytes_payload(self) -> bytes:
         """
-        Lazily extract the payload from the stored PEM.
+        The payload of the PEM-encoded content.
+
+        Possible PEM headers are removed.
+
+        .. versionadded:: 23.1.0
         """
         return b"".join(
             line
@@ -97,35 +101,27 @@ class AbstractPEMObject(metaclass=ABCMeta):
             if b":" not in line  # remove headers
         )
 
-    def payload_as_bytes(self) -> bytes:
+    @cached_property
+    def text_payload(self) -> str:
         """
-        Return the payload of the PEM-encoded content as :obj:`bytes`.
+        The payload of the PEM-encoded content.
 
         Possible PEM headers are removed.
 
         .. versionadded:: 23.1.0
         """
-        return self._extracted_payload
+        return self.bytes_payload.decode("utf-8")
 
-    def payload_as_text(self) -> str:
+    @cached_property
+    def decoded_payload(self) -> bytes:
         """
-        Return the payload of the PEM-encoded content as Unicode text.
+        The base64-decoded payload of the PEM-encoded content.
 
         Possible PEM headers are removed.
 
         .. versionadded:: 23.1.0
         """
-        return self._extracted_payload.decode("utf-8")
-
-    def payload_decoded(self) -> bytes:
-        """
-        Return the decoded payload of the PEM-encoded content as :obj:`bytes`.
-
-        Possible PEM headers are removed.
-
-        .. versionadded:: 23.1.0
-        """
-        return b64decode(self._extracted_payload)
+        return b64decode(self.bytes_payload)
 
     @cached_property
     def meta_headers(self) -> dict[str, str]:

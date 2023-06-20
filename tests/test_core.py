@@ -94,17 +94,17 @@ class TestPEMObjects:
         assert "test" == cert_text
         assert isinstance(cert_text, str)
 
-    def test_payload_as_text(self):
+    def test_text_payload(self):
         """
-        obj.payload_as_text() returns the base64-encoded payload as text.
+        obj.text_payload is a base64-encoded payload as text.
         """
-        text = pem.parse(KEY_PEM_PKCS5_UNENCRYPTED)[0].payload_as_text()
+        payload = pem.parse(KEY_PEM_PKCS5_UNENCRYPTED)[0].text_payload
 
         assert (
             KEY_PEM_PKCS5_UNENCRYPTED_PAYLOAD.decode().replace("\n", "")
-            == text
+            == payload
         )
-        assert isinstance(text, str)
+        assert isinstance(payload, str)
 
     @pytest.mark.parametrize(
         "bs, forbidden",
@@ -123,19 +123,19 @@ class TestPEMObjects:
 
         (cert,) = pem.parse(bs)
 
-        assert forbidden.decode() not in cert.payload_as_text()
-        assert forbidden not in cert.payload_as_bytes()
+        assert forbidden.decode() not in cert.text_payload
+        assert forbidden not in cert.bytes_payload
 
-    def test_payload_decoded(self):
+    def test_decoded_payload(self):
         """
-        obj.payload_decoded() returns the base64-decoded payload as bytes.
+        obj.decoded_payload is a base64-decoded payload as bytes.
         """
         cert = """\
 -----BEGIN EC PRIVATE KEY-----
 cGF5bG9hZF9kYXRhMQ==
 -----END EC PRIVATE KEY-----"""
 
-        payload_bytes = pem.Certificate(cert).payload_decoded()
+        payload_bytes = pem.Certificate(cert).decoded_payload
 
         assert b"payload_data1" == payload_bytes
         assert isinstance(payload_bytes, bytes)
@@ -429,7 +429,7 @@ class TestParse:
 
         assert isinstance(key, pem.RSAPrivateKey)
         assert KEY_PEM_PKCS5_UNENCRYPTED == key.as_bytes()
-        assert KEY_PEM_PKCS5_UNENCRYPTED_PAYLOAD == key.payload_as_bytes()
+        assert KEY_PEM_PKCS5_UNENCRYPTED_PAYLOAD == key.bytes_payload
 
         crypto_key = load_rsa_key(key)
 
