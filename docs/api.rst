@@ -45,7 +45,7 @@ The following objects can be returned by the parsing functions.
 Their shared provided API is minimal:
 
 .. autoclass:: AbstractPEMObject
-   :members: __str__, as_bytes, as_text, sha1_hexdigest
+   :members: __str__, as_bytes, as_text, sha1_hexdigest, data_as_bytes, data_as_text
 
 
 Twisted
