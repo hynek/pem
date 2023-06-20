@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2013 Hynek Schlawack <hs@ox.cx>
+#
+# SPDX-License-Identifier: MIT
+
 import pytest
 
 from OpenSSL import crypto
