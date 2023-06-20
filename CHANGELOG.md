@@ -23,6 +23,8 @@ You can find out backwards-compatibility policy [here](https://github.com/hynek/
 - Support for RFC 4880 OpenPGP private & public keys: `pem.OpenPGPPublicKey` and `pem.OpenPGPPrivateKey`.
   [#72](https://github.com/hynek/pem/issues/72)
 - `pem.parse_file()` now accepts also [`pathlib.Path`](https://docs.python.org/3/library/pathlib.html#pathlib.Path) objects.
+- Added `payload_as_text` and `payload_as_bytes`
+  [#74](https://github.com/hynek/pem/pull/74)
 
 
 ## [21.2.0](https://github.com/hynek/pem/compare/21.1.0...21.2.0) - 2021-04-07
