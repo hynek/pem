@@ -94,7 +94,7 @@ class TestPEMObjects:
         assert "test" == cert_text
         assert isinstance(cert_text, str)
 
-    def test_data_as_text(self):
+    def test_payload_as_text(self):
         """
         obj.as_text() returns the contents as Unicode.
         """
@@ -102,6 +102,15 @@ class TestPEMObjects:
 
         assert "test_data" == text
         assert isinstance(text, str)
+
+    def test_payload_decoded(self):
+        """
+        obj.as_text() returns the contents as Unicode.
+        """
+        payload_bytes = pem.Certificate(b"test", b"cGF5bG9hZF9kYXRhMQ==").payload_decoded()
+
+        assert b"payload_data1" == payload_bytes
+        assert isinstance(payload_bytes, bytes)
 
     def test_cert_req_has_correct_str(self):
         """

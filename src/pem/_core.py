@@ -13,6 +13,7 @@ import re
 
 from abc import ABCMeta
 from pathlib import Path
+from base64 import b64decode
 
 
 class AbstractPEMObject(metaclass=ABCMeta):
@@ -73,14 +74,6 @@ class AbstractPEMObject(metaclass=ABCMeta):
         """
         return self._pem_bytes
 
-    def payload_as_bytes(self) -> bytes:
-        """
-        Return the data of the PEM-encoded content as :obj:`bytes`.
-
-        .. versionadded:: 23.1.0
-        """
-        return self._pem_payload
-
     def as_text(self) -> str:
         """
         Return the PEM-encoded content as Unicode text.
@@ -89,13 +82,29 @@ class AbstractPEMObject(metaclass=ABCMeta):
         """
         return self._pem_bytes.decode("utf-8")
 
+    def payload_as_bytes(self) -> bytes:
+        """
+        Return the payload of the PEM-encoded content as :obj:`bytes`.
+
+        .. versionadded:: 23.1.0
+        """
+        return self._pem_payload
+
     def payload_as_text(self) -> str:
         """
-        Return the data of the PEM-encoded content as Unicode text.
+        Return the payload of the PEM-encoded content as Unicode text.
 
         .. versionadded:: 23.1.0
         """
         return self._pem_payload.decode("utf-8")
+
+    def payload_decoded(self) -> bytes:
+        """
+        Return the decoded payload of the PEM-encoded content as :obj:`bytes`.
+
+        .. versionadded:: 23.1.0
+        """
+        return b64decode(self._pem_payload)
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, type(self)):
