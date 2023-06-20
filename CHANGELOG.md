@@ -21,6 +21,7 @@ You can find out backwards-compatibility policy [here](https://github.com/hynek/
 
 - Support for RFC 4880 OpenPGP private & public keys: `pem.OpenPGPPublicKey` and `pem.OpenPGPPrivateKey`.
   [#72](https://github.com/hynek/pem/issues/72)
+- Support for intra-payload headers like the ones used in OpenPGP keys using the `meta_headers` property.
 - `pem.parse_file()` now accepts also [`pathlib.Path`](https://docs.python.org/3/library/pathlib.html#pathlib.Path) objects.
 - Added `payload_as_text()`, `payload_as_bytes()` and `payload_decoded()` to all PEM objects that allow to directly access the payload without the envelope and possible headers.
   [#74](https://github.com/hynek/pem/pull/74)

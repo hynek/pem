@@ -120,6 +120,28 @@ class AbstractPEMObject(metaclass=ABCMeta):
         """
         return b64decode(self._extracted_payload)
 
+    @cached_property
+    def meta_headers(self) -> dict[str, str]:
+        """
+        Return a dictionary of payload headers.
+
+        .. versionadded:: 23.1.0
+        """
+        expl = {}
+        for line in self._pem_bytes.decode().splitlines()[1:-1]:
+            if ":" not in line:
+                break
+
+            key, val = line.split(": ", 1)
+
+            # Strip quotes if they're only at the beginning and end.
+            if val.count('"') == 2 and val[0] == '"' and val[-1] == '"':
+                val = val[1:-1]
+
+            expl[key] = val
+
+        return expl
+
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, type(self)):
             return NotImplemented
