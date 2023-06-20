@@ -112,7 +112,7 @@ class TestPEMObjects:
             (KEY_PEM_SSHCOM_PRIVATE, b"Comment:"),
             (KEY_PEM_OPENPGP_PUBLIC, b"Version:"),
             (KEY_PEM_OPENPGP_PRIVATE, b"Comment:"),
-            (KEY_PEM_PKCS5_ENCRYPTED, (b"Proc-Type:")),
+            (KEY_PEM_PKCS5_ENCRYPTED, b"Proc-Type:"),
         ],
     )
     def test_payload_with_headers(self, bs, forbidden):
@@ -663,3 +663,40 @@ class TestParse:
 
         assert isinstance(key, pem.OpenPGPPrivateKey)
         assert KEY_PEM_OPENPGP_PRIVATE == key.as_bytes()
+
+    @pytest.mark.parametrize(
+        "bs, hdrs",
+        [
+            (KEY_PEM_SSHCOM_PRIVATE, {"Comment": "rsa-key-20210120"}),
+            (
+                KEY_PEM_OPENPGP_PUBLIC,
+                {"Version": "Encryption Desktop 10.4.2 (Build 289)"},
+            ),
+            (
+                KEY_PEM_OPENPGP_PRIVATE,
+                {
+                    "Comment": "https://www.ietf.org/id/draft-bre-openpgp-samples-01.html"
+                },
+            ),
+            (
+                KEY_PEM_PKCS5_ENCRYPTED,
+                {
+                    "DEK-Info": "DES-EDE3-CBC,8A72BD2DC1C9092F",
+                    "Proc-Type": "4,ENCRYPTED",
+                },
+            ),
+        ],
+    )
+    def test_headers(self, bs, hdrs):
+        """
+        Headers are preserved.
+        """
+        assert hdrs == pem.parse(bs)[0].meta_headers
+
+    def test_no_headers(self):
+        """
+        No headers, no problem.
+        """
+        cert = pem.parse(CERT_PEM_OPENSSL_TRUSTED)[0]
+
+        assert {} == cert.meta_headers

@@ -120,6 +120,34 @@ class AbstractPEMObject(metaclass=ABCMeta):
         """
         return b64decode(self._extracted_payload)
 
+    @cached_property
+    def meta_headers(self) -> dict[str, str]:
+        """
+        Return a dictionary of payload headers.
+
+        If the value of a header is quoted, the quotes are removed.
+
+        .. versionadded:: 23.1.0
+        """
+        expl = {}
+        for line in self._pem_bytes.decode().splitlines()[1:-1]:
+            if ":" not in line:
+                break
+
+            key, val = line.split(": ", 1)
+
+            # Strip quotes if they're only at the beginning and end.
+            if val.count('"') == 2 and val[0] == '"' and val[-1] == '"':
+                val = val[1:-1]
+
+            expl[key] = val
+        else:
+            # XXX: necessary for Coverage.py!? This can't happen with non-empty
+            # PEM objects.
+            pass  # pragma: no cover
+
+        return expl
+
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, type(self)):
             return NotImplemented
