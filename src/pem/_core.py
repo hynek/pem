@@ -142,7 +142,9 @@ class AbstractPEMObject(metaclass=ABCMeta):
 
             expl[key] = val
         else:
-            pass  # pragma: no cover -- XXX: necessary for Coverage.py!?
+            # XXX: necessary for Coverage.py!? This can't happen with non-empty
+            # PEM objects.
+            pass  # pragma: no cover
 
         return expl
 
