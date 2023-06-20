@@ -12,6 +12,7 @@ import hashlib
 import re
 
 from abc import ABCMeta
+from base64 import b64decode
 from pathlib import Path
 
 
@@ -21,13 +22,19 @@ class AbstractPEMObject(metaclass=ABCMeta):
     """
 
     _pem_bytes: bytes
+    _pem_payload: bytes
     _sha1_hexdigest: str | None
 
-    def __init__(self, pem_bytes: bytes | str):
-        if isinstance(pem_bytes, str):
-            self._pem_bytes = pem_bytes.encode("ascii")
-        else:
-            self._pem_bytes = pem_bytes
+    def __init__(self, pem_bytes: bytes | str, pem_data: bytes | str):
+        self._pem_bytes = (
+            pem_bytes.encode("ascii")
+            if isinstance(pem_bytes, str)
+            else pem_bytes
+        )
+        self._pem_payload = (
+            pem_data.encode("ascii") if isinstance(pem_data, str) else pem_data
+        )
+
         self._sha1_hexdigest = None
 
     def __str__(self) -> str:
@@ -74,6 +81,30 @@ class AbstractPEMObject(metaclass=ABCMeta):
         .. versionadded:: 18.1.0
         """
         return self._pem_bytes.decode("utf-8")
+
+    def payload_as_bytes(self) -> bytes:
+        """
+        Return the payload of the PEM-encoded content as :obj:`bytes`.
+
+        .. versionadded:: 23.1.0
+        """
+        return self._pem_payload
+
+    def payload_as_text(self) -> str:
+        """
+        Return the payload of the PEM-encoded content as Unicode text.
+
+        .. versionadded:: 23.1.0
+        """
+        return self._pem_payload.decode("utf-8")
+
+    def payload_decoded(self) -> bytes:
+        """
+        Return the decoded payload of the PEM-encoded content as :obj:`bytes`.
+
+        .. versionadded:: 23.1.0
+        """
+        return b64decode(self._pem_payload)
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, type(self)):
@@ -252,7 +283,7 @@ _PEM_RE = re.compile(
     b"----[- ]BEGIN ("
     + b"|".join(_PEM_TO_CLASS.keys())
     + b""")[- ]----\r?
-.+?\r?
+(?P<data>.+?)\r?
 ----[- ]END \\1[- ]----\r?\n?""",
     re.DOTALL,
 )
@@ -266,7 +297,9 @@ def parse(pem_str: bytes) -> list[AbstractPEMObject]:
     :return: list of :ref:`pem-objects`
     """
     return [
-        _PEM_TO_CLASS[match.group(1)](match.group(0))
+        _PEM_TO_CLASS[match.group(1)](
+            match.group(0), b"".join(match.group("data").splitlines())
+        )
         for match in _PEM_RE.finditer(pem_str)
     ]
 
