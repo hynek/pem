@@ -15,7 +15,6 @@ You can find out backwards-compatibility policy [here](https://github.com/hynek/
 ### Removed
 
 - Support for Python 2.7, 3.5, and 3.6 has been dropped.
-- Added `data_as_text` and `data_as_bytes`
 
 
 ### Added
