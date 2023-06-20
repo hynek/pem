@@ -95,6 +95,10 @@ ignore_missing_imports = true
 module = "tests.*"
 ignore_errors = true
 
+[[tool.mypy.overrides]]
+module = "tests.typing.*"
+ignore_errors = false
+
 
 [tool.hatch.metadata.hooks.fancy-pypi-readme]
 content-type = "text/markdown"

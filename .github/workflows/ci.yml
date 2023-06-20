@@ -39,7 +39,7 @@ jobs:
       - run: python -Im pip install tox
 
       - run: tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
-      - run: tox run -e mypy
+      - run: tox run -e mypy-api
 
       - name: Upload coverage data
         uses: actions/upload-artifact@v3
@@ -82,6 +82,23 @@ jobs:
           name: html-report
           path: htmlcov
         if: ${{ failure() }}
+
+  mypy:
+    name: Type-check package
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          allow-prereleases: true
+          cache: pip
+
+      - name: Prepare & run tox
+        run: |
+          python -Im pip install tox
+          python -Im tox run -e mypy-pkg
 
   docs:
     name: Build docs & run doctests
