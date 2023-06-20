@@ -317,7 +317,7 @@ _PEM_RE = re.compile(
 )
 
 
-def parse(pem_str: bytes) -> list[AbstractPEMObject]:
+def parse(pem_str: bytes | str) -> list[AbstractPEMObject]:
     """
     Extract PEM-like objects from *pem_str*.
 
@@ -326,7 +326,9 @@ def parse(pem_str: bytes) -> list[AbstractPEMObject]:
     """
     return [
         _PEM_TO_CLASS[match.group(1)](match.group(0))
-        for match in _PEM_RE.finditer(pem_str)
+        for match in _PEM_RE.finditer(
+            pem_str if isinstance(pem_str, bytes) else pem_str.encode()
+        )
     ]
 
 

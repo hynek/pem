@@ -605,6 +605,14 @@ class TestParse:
         assert isinstance(key, pem.ECPrivateKey)
         assert KEY_PEM_EC_PRIVATE == key.as_bytes()
 
+    def test_parse_str(self):
+        """ "
+        parse() accepts str too.
+        """
+        assert pem.parse(KEY_PEM_EC_PRIVATE) == pem.parse(
+            KEY_PEM_EC_PRIVATE.decode()
+        )
+
     def test_openshh_private_key(self):
         """
         Detects and loads private keys in the new OpenSSH private key format.
