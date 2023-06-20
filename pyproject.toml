@@ -38,7 +38,7 @@ Ko-fi = "https://ko-fi.com/the_hynek"
 tests = ["coverage[toml]>=5.0.2", "pytest", "certifi", "pretend", "pyopenssl"]
 docs = ["sphinx", "furo", "myst-parser", "sphinx-notfound-page", "twisted[tls]"]
 types = ["mypy", "twisted", "types-pyOpenSSL"]
-dev = ["pem[tests,docs,types]", "twisted[tls]"]
+dev = ["pem[tests,types]", "twisted[tls]"]
 
 
 [tool.hatch.version]
