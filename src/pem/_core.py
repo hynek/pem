@@ -211,8 +211,7 @@ class OpenSSHPrivateKey(PrivateKey):
 
 class SSHPublicKey(PublicKey):
     """
-    A public key in SSH
-    `RFC 4716 <https://tools.ietf.org/html/rfc4716>`_ format.
+    A public key in SSH :rfc:`4716` format.
 
     The Secure Shell (SSH) Public Key File Format.
 
@@ -225,6 +224,22 @@ class SSHCOMPrivateKey(PrivateKey):
     A private key in SSH.COM / Tectia format.
 
     .. versionadded:: 21.1.0
+    """
+
+
+class OpenPGPPublicKey(PublicKey):
+    """
+    An :rfc:`4880` armored OpenPGP public key.
+
+    .. versionadded:: 23.1.0
+    """
+
+
+class OpenPGPPrivateKey(PrivateKey):
+    """
+    An :rfc:`4880` armored OpenPGP private key.
+
+    .. versionadded:: 23.1.0
     """
 
 
@@ -245,6 +260,8 @@ _PEM_TO_CLASS: dict[bytes, type[AbstractPEMObject]] = {
     b"SSH2 PUBLIC KEY": SSHPublicKey,
     b"SSH2 ENCRYPTED PRIVATE KEY": SSHCOMPrivateKey,
     b"X509 CRL": CertificateRevocationList,
+    b"PGP PUBLIC KEY BLOCK": OpenPGPPublicKey,
+    b"PGP PRIVATE KEY BLOCK": OpenPGPPrivateKey,
 }
 
 # See https://tools.ietf.org/html/rfc1421
