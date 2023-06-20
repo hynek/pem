@@ -13,6 +13,7 @@ import re
 
 from abc import ABCMeta
 from base64 import b64decode
+from functools import cached_property
 from pathlib import Path
 
 
@@ -22,17 +23,13 @@ class AbstractPEMObject(metaclass=ABCMeta):
     """
 
     _pem_bytes: bytes
-    _pem_payload: bytes
     _sha1_hexdigest: str | None
 
-    def __init__(self, pem_bytes: bytes | str, pem_data: bytes | str):
+    def __init__(self, pem_bytes: bytes | str):
         self._pem_bytes = (
             pem_bytes.encode("ascii")
             if isinstance(pem_bytes, str)
             else pem_bytes
-        )
-        self._pem_payload = (
-            pem_data.encode("ascii") if isinstance(pem_data, str) else pem_data
         )
 
         self._sha1_hexdigest = None
@@ -76,35 +73,52 @@ class AbstractPEMObject(metaclass=ABCMeta):
 
     def as_text(self) -> str:
         """
-        Return the PEM-encoded content as Unicode text.
+        Return the PEM-encoded content as text.
 
         .. versionadded:: 18.1.0
         """
         return self._pem_bytes.decode("utf-8")
 
+    @cached_property
+    def _extracted_payload(self) -> bytes:
+        """
+        Lazily extract the payload from the stored PEM.
+        """
+        return b"".join(
+            line
+            for line in self._pem_bytes.splitlines()[1:-1]
+            if b":" not in line  # remove headers
+        )
+
     def payload_as_bytes(self) -> bytes:
         """
         Return the payload of the PEM-encoded content as :obj:`bytes`.
 
+        Possible PEM headers are removed.
+
         .. versionadded:: 23.1.0
         """
-        return self._pem_payload
+        return self._extracted_payload
 
     def payload_as_text(self) -> str:
         """
         Return the payload of the PEM-encoded content as Unicode text.
 
+        Possible PEM headers are removed.
+
         .. versionadded:: 23.1.0
         """
-        return self._pem_payload.decode("utf-8")
+        return self._extracted_payload.decode("utf-8")
 
     def payload_decoded(self) -> bytes:
         """
         Return the decoded payload of the PEM-encoded content as :obj:`bytes`.
 
+        Possible PEM headers are removed.
+
         .. versionadded:: 23.1.0
         """
-        return b64decode(self._pem_payload)
+        return b64decode(self._extracted_payload)
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, type(self)):
@@ -113,12 +127,6 @@ class AbstractPEMObject(metaclass=ABCMeta):
         return (
             type(self) == type(other) and self._pem_bytes == other._pem_bytes
         )
-
-    def __ne__(self, other: object) -> bool:
-        if not isinstance(other, type(self)):
-            return NotImplemented
-
-        return type(self) != type(other) or self._pem_bytes != other._pem_bytes
 
     def __hash__(self) -> int:
         return hash(self._pem_bytes)
@@ -283,7 +291,7 @@ _PEM_RE = re.compile(
     b"----[- ]BEGIN ("
     + b"|".join(_PEM_TO_CLASS.keys())
     + b""")[- ]----\r?
-(?P<data>.+?)\r?
+(?P<payload>.+?)\r?
 ----[- ]END \\1[- ]----\r?\n?""",
     re.DOTALL,
 )
@@ -297,9 +305,7 @@ def parse(pem_str: bytes) -> list[AbstractPEMObject]:
     :return: list of :ref:`pem-objects`
     """
     return [
-        _PEM_TO_CLASS[match.group(1)](
-            match.group(0), b"".join(match.group("data").splitlines())
-        )
+        _PEM_TO_CLASS[match.group(1)](match.group(0))
         for match in _PEM_RE.finditer(pem_str)
     ]
 

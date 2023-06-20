@@ -49,7 +49,7 @@ class TestPEMObjects:
         """
         Calling repr on a Certificate instance returns the proper string.
         """
-        cert = pem.Certificate(b"test", b"test_data")
+        cert = pem.Certificate(b"test")
 
         assert f"<Certificate({TEST_DIGEST})>" == repr(cert)
 
@@ -57,7 +57,7 @@ class TestPEMObjects:
         """
         Calling str on a Certificate instance returns the proper string.
         """
-        cert = pem.Certificate(b"test", b"test_data")
+        cert = pem.Certificate(b"test")
 
         assert str(cert) == "test"
 
@@ -66,7 +66,7 @@ class TestPEMObjects:
         Calling repr on a CertificateRequest instance returns the proper
         string.
         """
-        cert_req = pem.CertificateRequest(b"test", b"test_data")
+        cert_req = pem.CertificateRequest(b"test")
 
         assert f"<CertificateRequest({TEST_DIGEST})>" == repr(cert_req)
 
@@ -77,7 +77,7 @@ class TestPEMObjects:
 
         CRs are ignored.
         """
-        cert = pem.Certificate(pem_bytes, b"test_data")
+        cert = pem.Certificate(pem_bytes)
 
         assert (
             "a94a8fe5ccb19ba61c4c0873d391e987982fbbd3"
@@ -89,27 +89,53 @@ class TestPEMObjects:
         """
         obj.as_text() returns the contents as Unicode.
         """
-        cert_text = pem.Certificate(b"test", b"test").as_text()
+        cert_text = pem.Certificate(b"test").as_text()
 
         assert "test" == cert_text
         assert isinstance(cert_text, str)
 
     def test_payload_as_text(self):
         """
-        obj.as_text() returns the contents as Unicode.
+        obj.payload_as_text() returns the base64-encoded payload as text.
         """
-        text = pem.Certificate(b"test", b"test_data").payload_as_text()
+        text = pem.parse(KEY_PEM_PKCS5_UNENCRYPTED)[0].payload_as_text()
 
-        assert "test_data" == text
+        assert (
+            KEY_PEM_PKCS5_UNENCRYPTED_PAYLOAD.decode().replace("\n", "")
+            == text
+        )
         assert isinstance(text, str)
+
+    @pytest.mark.parametrize(
+        "bs, forbidden",
+        [
+            (KEY_PEM_SSHCOM_PRIVATE, b"Comment:"),
+            (KEY_PEM_OPENPGP_PUBLIC, b"Version:"),
+            (KEY_PEM_OPENPGP_PRIVATE, b"Comment:"),
+            (KEY_PEM_PKCS5_ENCRYPTED, (b"Proc-Type:")),
+        ],
+    )
+    def test_payload_with_headers(self, bs, forbidden):
+        """
+        Headers are removed from the payload.
+        """
+        assert forbidden in bs
+
+        (cert,) = pem.parse(bs)
+
+        assert forbidden.decode() not in cert.payload_as_text()
+        assert forbidden not in cert.payload_as_bytes()
 
     def test_payload_decoded(self):
         """
-        obj.as_text() returns the contents as Unicode.
+        obj.payload_decoded() returns the base64-decoded payload as bytes.
         """
-        payload_bytes = pem.Certificate(
-            b"test", b"cGF5bG9hZF9kYXRhMQ=="
-        ).payload_decoded()
+        cert = """\
+-----BEGIN EC PRIVATE KEY-----
+cGF5bG9hZF9kYXRhMQ==
+-----END EC PRIVATE KEY-----"""
+
+        payload_bytes = pem.Certificate(cert).payload_decoded()
 
         assert b"payload_data1" == payload_bytes
         assert isinstance(payload_bytes, bytes)
@@ -118,7 +144,7 @@ class TestPEMObjects:
         """
         Calling str on a CertificateRequest instance returns the proper string.
         """
-        cert_req = pem.CertificateRequest(b"test", b"test_data")
+        cert_req = pem.CertificateRequest(b"test")
 
         assert str(cert_req) == "test"
 
@@ -126,7 +152,7 @@ class TestPEMObjects:
         """
         Calling repr on a Key instance returns the proper string.
         """
-        key = pem.Key(b"test", b"test_data")
+        key = pem.Key(b"test")
 
         assert f"<Key({TEST_DIGEST})>" == repr(key)
 
@@ -134,7 +160,7 @@ class TestPEMObjects:
         """
         Calling str on a Key instance returns the proper string.
         """
-        key = pem.Key(b"test", b"test_data")
+        key = pem.Key(b"test")
 
         assert str(key) == "test"
 
@@ -142,7 +168,7 @@ class TestPEMObjects:
         """
         Calling repr on a RSAPrivateKey instance returns the proper string.
         """
-        key = pem.RSAPrivateKey(b"test", b"test_data")
+        key = pem.RSAPrivateKey(b"test")
 
         assert f"<RSAPrivateKey({TEST_DIGEST})>" == repr(key)
 
@@ -150,7 +176,7 @@ class TestPEMObjects:
         """
         Calling repr on a RSAPublicKey instance returns the proper string.
         """
-        key = pem.RSAPublicKey(b"test", b"test_data")
+        key = pem.RSAPublicKey(b"test")
 
         assert f"<RSAPublicKey({TEST_DIGEST})>" == repr(key)
 
@@ -158,7 +184,7 @@ class TestPEMObjects:
         """
         Calling str on a RSAPrivateKey instance returns the proper string.
         """
-        key = pem.RSAPrivateKey(b"test", b"test_data")
+        key = pem.RSAPrivateKey(b"test")
 
         assert str(key) == "test"
 
@@ -166,7 +192,7 @@ class TestPEMObjects:
         """
         Calling repr on a DHParameters instance returns the proper string.
         """
-        params = pem.DHParameters(b"test", b"test_data")
+        params = pem.DHParameters(b"test")
 
         assert f"<DHParameters({TEST_DIGEST})>" == repr(params)
 
@@ -174,7 +200,7 @@ class TestPEMObjects:
         """
         Calling str on a DHParameters instance returns the proper string.
         """
-        params = pem.DHParameters(b"test", b"test_data")
+        params = pem.DHParameters(b"test")
 
         assert str(params) == "test"
 
@@ -183,7 +209,7 @@ class TestPEMObjects:
         Calling repr on a CertificateRevocationList instance returns the proper
         string.
         """
-        crl = pem.CertificateRevocationList(b"test", b"test_data")
+        crl = pem.CertificateRevocationList(b"test")
 
         assert f"<CertificateRevocationList({TEST_DIGEST})>" == repr(crl)
 
@@ -192,58 +218,53 @@ class TestPEMObjects:
         Calling str on a CertificateRevocationList instance returns the proper
         string.
         """
-        crl = pem.CertificateRevocationList(b"test", b"test_data")
+        crl = pem.CertificateRevocationList(b"test")
 
         assert str(crl) == "test"
 
-    def test_certificate_unicode(self):
+    def test_certificate_text(self):
         """
         Passing unicode to Certificate encodes the string as ASCII.
         """
-        cert = pem.Certificate("a string", "test_data")
+        cert = pem.Certificate("a string")
 
         assert cert.as_bytes() == b"a string"
-        assert cert.payload_as_bytes() == b"test_data"
         assert str(cert) == "a string"
 
     def test_certificate_request_unicode(self):
         """
         Passing unicode to CertificateRequest encodes the string as ASCII.
         """
-        cert_req = pem.CertificateRequest("a string", "test_data")
+        cert_req = pem.CertificateRequest("a string")
 
         assert cert_req.as_bytes() == b"a string"
-        assert cert_req.payload_as_bytes() == b"test_data"
         assert str(cert_req) == "a string"
 
     def test_key_unicode(self):
         """
         Passing unicode to Key encodes the string as ASCII.
         """
-        key = pem.Key("a string", "test_data")
+        key = pem.Key("a string")
 
         assert key.as_bytes() == b"a string"
-        assert key.payload_as_bytes() == b"test_data"
         assert str(key) == "a string"
 
     def test_rsa_key_unicode(self):
         """
         Passing unicode to RSAPrivateKey encodes the string as ASCII.
         """
-        key = pem.RSAPrivateKey("a string", "test_data")
+        key = pem.RSAPrivateKey("a string")
 
         assert key.as_bytes() == b"a string"
-        assert key.payload_as_bytes() == b"test_data"
         assert str(key) == "a string"
 
     def test_dhparams_unicode_deprecated(self):
         """
         Passing unicode to DHParameters encodes the string as ASCII.
         """
-        params = pem.DHParameters("a string", "test_data")
+        params = pem.DHParameters("a string")
 
         assert params.as_bytes() == b"a string"
-        assert params.payload_as_bytes() == b"test_data"
         assert str(params) == "a string"
 
     def test_crl_unicode(self):
@@ -251,18 +272,17 @@ class TestPEMObjects:
         Passing unicode to CertificateRevocationList encodes the string as
         ASCII.
         """
-        crl = pem.CertificateRevocationList("a string", "test_data")
+        crl = pem.CertificateRevocationList("a string")
 
         assert crl.as_bytes() == b"a string"
-        assert crl.payload_as_bytes() == b"test_data"
         assert str(crl) == "a string"
 
     def test_certs_equal(self):
         """
         Two Certificate instances with equal contents are equal.
         """
-        cert1 = pem.Certificate(b"test", b"test_data")
-        cert2 = pem.Certificate(b"test", b"test_data")
+        cert1 = pem.Certificate(b"test")
+        cert2 = pem.Certificate(b"test")
 
         assert cert1 == cert2
         assert cert2 == cert1
@@ -272,8 +292,8 @@ class TestPEMObjects:
         """
         Two Certificate Request instances with equal contents are equal.
         """
-        cert_req1 = pem.CertificateRequest(b"test", b"test_data")
-        cert_req2 = pem.CertificateRequest(b"test", b"test_data")
+        cert_req1 = pem.CertificateRequest(b"test")
+        cert_req2 = pem.CertificateRequest(b"test")
 
         assert cert_req1 == cert_req2
         assert cert_req2 == cert_req1
@@ -283,8 +303,8 @@ class TestPEMObjects:
         """
         Two Key instances with equal contents are equal and have equal hashes.
         """
-        key1 = pem.Key(b"test", b"test_data")
-        key2 = pem.Key(b"test", b"test_data")
+        key1 = pem.Key(b"test")
+        key2 = pem.Key(b"test")
 
         assert key1 == key2
         assert key2 == key1
@@ -296,8 +316,8 @@ class TestPEMObjects:
         equal hashes.
         """
 
-        key1 = pem.RSAPrivateKey(b"test", b"test_data")
-        key2 = pem.RSAPrivateKey(b"test", b"test_data")
+        key1 = pem.RSAPrivateKey(b"test")
+        key2 = pem.RSAPrivateKey(b"test")
 
         assert key1 == key2
         assert key2 == key1
@@ -308,8 +328,8 @@ class TestPEMObjects:
         Two DHParameters instances with equal contents are equal and have equal
         hashes.
         """
-        params1 = pem.DHParameters(b"test", b"test_data")
-        params2 = pem.DHParameters(b"test", b"test_data")
+        params1 = pem.DHParameters(b"test")
+        params2 = pem.DHParameters(b"test")
 
         assert params1 == params2
         assert params2 == params1
@@ -320,8 +340,8 @@ class TestPEMObjects:
         Two CertificateRevocationList instances with equal contents are equal
         and have equal hashes.
         """
-        crl1 = pem.CertificateRevocationList(b"test", b"test_data")
-        crl2 = pem.CertificateRevocationList(b"test", b"test_data")
+        crl1 = pem.CertificateRevocationList(b"test")
+        crl2 = pem.CertificateRevocationList(b"test")
 
         assert crl1 == crl2
         assert crl2 == crl1
@@ -331,8 +351,8 @@ class TestPEMObjects:
         """
         Two Certificate instances with unequal contents are not equal.
         """
-        cert1 = pem.Certificate(b"test1", b"test_data")
-        cert2 = pem.Certificate(b"test2", b"test_data")
+        cert1 = pem.Certificate(b"test1")
+        cert2 = pem.Certificate(b"test2")
 
         assert cert1 != cert2
         assert cert2 != cert1
@@ -341,8 +361,8 @@ class TestPEMObjects:
         """
         Two CertificateRequest instances with unequal contents are not equal.
         """
-        cert_req1 = pem.CertificateRequest(b"test1", b"test_data")
-        cert_req2 = pem.CertificateRequest(b"test2", b"test_data")
+        cert_req1 = pem.CertificateRequest(b"test1")
+        cert_req2 = pem.CertificateRequest(b"test2")
 
         assert cert_req1 != cert_req2
         assert cert_req2 != cert_req1
@@ -352,8 +372,8 @@ class TestPEMObjects:
         Two CertificateRevocationList instances with unequal contents are not
         equal.
         """
-        crl1 = pem.CertificateRevocationList(b"test1", b"test_data")
-        crl2 = pem.CertificateRevocationList(b"test2", b"test_data")
+        crl1 = pem.CertificateRevocationList(b"test1")
+        crl2 = pem.CertificateRevocationList(b"test2")
 
         assert crl1 != crl2
         assert crl2 != crl1
@@ -364,14 +384,13 @@ class TestPEMObjects:
         equal.
         """
         c = b"test"
-        d = b"test_data"
 
         pems = [
-            pem.Certificate(c, d),
-            pem.CertificateRequest(c, d),
-            pem.Key(c, d),
-            pem.RSAPrivateKey(c, d),
-            pem.CertificateRevocationList(c, d),
+            pem.Certificate(c),
+            pem.CertificateRequest(c),
+            pem.Key(c),
+            pem.RSAPrivateKey(c),
+            pem.CertificateRevocationList(c),
         ]
 
         for pem1, pem2 in combinations(pems, 2):
@@ -382,7 +401,7 @@ class TestPEMObjects:
         """
         A PEM object is not equal to some other arbitrary object.
         """
-        cert = pem.Certificate(b"test", b"test_data")
+        cert = pem.Certificate(b"test")
 
         assert not cert == object()  # noqa[SIM201]
         assert cert != object()

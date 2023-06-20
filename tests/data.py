@@ -41,7 +41,8 @@ i3qou3qkVXNKuiAFe9dBvz0nhcpAZpXrpwc9R4Qk+rirEqkdCZI1feQKBz4J3ikm
 # This is the first certificate from CERT_PEMS on which the
 # trusted certificate extesion was applied using:
 # openssl x509 -in cert.pem -trustout -addtrust emailProtection
-CERT_PEM_OPENSSL_TRUSTED = b"""-----BEGIN TRUSTED CERTIFICATE-----
+CERT_PEM_OPENSSL_TRUSTED = b"""\
+-----BEGIN TRUSTED CERTIFICATE-----
 MIIBfDCCATagAwIBAgIJAK94OSlzVBsWMA0GCSqGSIb3DQEBBQUAMBYxFDASBgNV
 BAMTC3BlbS5pbnZhbGlkMB4XDTEzMDcxNzE0NDAyMFoXDTIzMDcxNTE0NDAyMFow
 FjEUMBIGA1UEAxMLcGVtLmludmFsaWQwTDANBgkqhkiG9w0BAQEFAAM7ADA4AjEA
@@ -54,7 +55,8 @@ MAwwCgYIKwYBBQUHAwQ=
 -----END TRUSTED CERTIFICATE-----
 """
 
-KEY_PEM = b"""-----BEGIN RSA PRIVATE KEY-----
+KEY_PEM = b"""\
+-----BEGIN RSA PRIVATE KEY-----
 MIHyAgEAAjEAvtIM2QADJDHcqxZugx7MULbenrNUFrmoMDfEaedYveWY3wBxOw64
 2L4nFWxN/fwLAgMBAAECMCwqsCCV+SQqilnrQj8FJONVwGdZOJBd/iHi6ZXI2zbD
 Q9Rv3iOsmqoCb5mqiDra0QIZAPbJRoliNA+2w7/dfttmWcQzcq8xL8qnEwIZAMXx
@@ -65,7 +67,8 @@ OzCeivo=
 """
 
 
-KEY_PEM2 = b"""-----BEGIN RSA PRIVATE KEY-----
+KEY_PEM2 = b"""\
+-----BEGIN RSA PRIVATE KEY-----
 MIH0AgEAAjEAv401YT8GeCt6oG076W/n7hxUsFO7sd74/4+2+4OcwMiLEp8BSRdW
 Tk3g/tdF1YHTAgMBAAECMCus59Hvi+sUhtZTccitMmXRYeH+hZpt61RidFRLWzwe
 nxAWvPxLtU9HC0Pc+zYBWQIZAP8ks93ruPqtoczsmiK+YSoyU+I4bKxM/wIZAMAx
@@ -81,7 +84,8 @@ kjBF/mzooA==
 # PKCS#5 RSA unencrypted.
 # Generated with:
 # openssl genrsa -out private.pem 512
-KEY_PEM_PKCS5_UNENCRYPTED = b"""-----BEGIN RSA PRIVATE KEY-----
+KEY_PEM_PKCS5_UNENCRYPTED = b"""\
+-----BEGIN RSA PRIVATE KEY-----
 MIIBOwIBAAJBAKX6cRhPHvdyoftEHGiRje3tTLRDnddg01AvgsJJcCFoIjwdgfa9
 aKFdzCcgD/htjvfRZl24M7E89sMUBMNHk8ECAwEAAQJABcBi8OO1AAAh6tIWZe09
 TNRfRxPcwVzilbG/xznCP/YMf72E8hsZazu+HGMKITg9dFeJOyjXZ4e8sD/pL/I6
@@ -105,7 +109,8 @@ KEY_PEM_PKCS5_UNENCRYPTED_PAYLOAD = (
 # PKCS#5 RSA encrypted with `test` as password.
 # Generated with:
 # openssl genrsa -des3 -out private.pem 512
-KEY_PEM_PKCS5_ENCRYPTED = b"""-----BEGIN RSA PRIVATE KEY-----
+KEY_PEM_PKCS5_ENCRYPTED = b"""\
+-----BEGIN RSA PRIVATE KEY-----
 Proc-Type: 4,ENCRYPTED
 DEK-Info: DES-EDE3-CBC,8A72BD2DC1C9092F
 
@@ -123,7 +128,8 @@ lY0oYw2xeJ9hTUly/Zg3+DI8oYYY3z7WaxPHXEoicCE=
 # Generated with pkc5 as intermediate file:
 # openssl genrsa -des3 -out private.pem 512
 # openssl pkcs8 -topk8 -in private.pem
-KEY_PEM_PKCS8_ENCRYPTED = b"""-----BEGIN ENCRYPTED PRIVATE KEY-----
+KEY_PEM_PKCS8_ENCRYPTED = b"""\
+-----BEGIN ENCRYPTED PRIVATE KEY-----
 MIIBvTBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQIyqwWErm7rlcCAggA
 MAwGCCqGSIb3DQIJBQAwHQYJYIZIAWUDBAEqBBAkVu+KRbmcfWIGKzgnjjBMBIIB
 YI3aRS0ebuzb1Tq26/HAq8pplPu+96dM1SnRNXwH0ijmP3fLBjEDH4hB/X9H8arT
@@ -141,7 +147,8 @@ EArlaXgT3MlI1jb9HoNvVNg=
 # Generated with pkc5 as intermediate file:
 # openssl genrsa -des3 -out private.pem 512
 # openssl pkcs8 -topk8 -in private.pem -nocrypt
-KEY_PEM_PKCS8_UNENCRYPTED = b"""-----BEGIN PRIVATE KEY-----
+KEY_PEM_PKCS8_UNENCRYPTED = b"""\
+-----BEGIN PRIVATE KEY-----
 MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEApfpxGE8e93Kh+0Qc
 aJGN7e1MtEOd12DTUC+CwklwIWgiPB2B9r1ooV3MJyAP+G2O99FmXbgzsTz2wxQE
 w0eTwQIDAQABAkAFwGLw47UAACHq0hZl7T1M1F9HE9zBXOKVsb/HOcI/9gx/vYTy
@@ -154,7 +161,8 @@ GE4AMCG0UPCX
 """
 
 
-DH_PEM = b"""-----BEGIN DH PARAMETERS-----
+DH_PEM = b"""\
+-----BEGIN DH PARAMETERS-----
 MIICCAKCAgEAj9/hwPNNKlQEANXqFBXViNy9nVpYlqIIHaLhoKdwAFzgYM+9hNSz
 FM/k+K5FS5dXrM63Zh9NgTI1M+ZRHJAxM2hhsG8AA333PN+c3exTRGwjQhU16XJg
 Jw/r/jYfsAyKRXqZnMuXRg+3ALEHEkvNt/vMm7Zdo6SvNIN1B2I/qEGlqFRYSgx8
@@ -169,7 +177,8 @@ vX0dAb0xNIpm5IRffJTVVpeZwNXuE7cNvBSZ0GY4MPkiO2dcPHeV28MCAQI=
 -----END DH PARAMETERS-----
 """
 
-CERT_NO_NEW_LINE = b"""-----BEGIN CERTIFICATE-----
+CERT_NO_NEW_LINE = b"""\
+-----BEGIN CERTIFICATE-----
 MIIBfDCCATagAwIBAgIJAK4oWdJCuqj2MA0GCSqGSIb3DQEBBQUAMBYxFDASBgNV
 BAMTC3BlbS5pbnZhbGlkMB4XDTEzMDcxNzE0NDAyMFoXDTIzMDcxNTE0NDAyMFow
 FjEUMBIGA1UEAxMLcGVtLmludmFsaWQwTDANBgkqhkiG9w0BAQEFAAM7ADA4AjEA

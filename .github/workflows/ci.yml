@@ -22,7 +22,6 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - "3.7"
           - "3.8"
           - "3.9"
           - "3.10"
@@ -38,6 +37,7 @@ jobs:
           cache: pip
 
       - run: python -Im pip install tox
+
       - run: tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
       - run: tox run -e mypy
 
@@ -69,6 +69,11 @@ jobs:
 
           python -Im coverage combine
           python -Im coverage html --skip-covered --skip-empty
+
+          # Report and write to summary.
+          python -Im coverage report | sed 's/^/    /' >> $GITHUB_STEP_SUMMARY
+
+          # Report again and fail if under 100%.
           python -Im coverage report --fail-under=100
 
       - name: Upload HTML report if check failed.

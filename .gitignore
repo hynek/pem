@@ -14,3 +14,4 @@ build
 dist
 tests/certs
 tmp
+Justfile
