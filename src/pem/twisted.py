@@ -42,15 +42,18 @@ def certificateOptionsFromPEMs(
     """
     keys = [key for key in pemObjects if isinstance(key, Key)]
     if not len(keys):
-        raise ValueError("Supplied PEM file(s) does *not* contain a key.")
+        msg = "Supplied PEM file(s) does *not* contain a key."
+        raise ValueError(msg)
     if len(keys) > 1:
-        raise ValueError("Supplied PEM file(s) contains *more* than one key.")
+        msg = "Supplied PEM file(s) contains *more* than one key."
+        raise ValueError(msg)
 
     privateKey = ssl.KeyPair.load(str(keys[0]), FILETYPE_PEM)  # type: ignore[no-untyped-call]
 
     certs = [cert for cert in pemObjects if isinstance(cert, Certificate)]
     if not len(certs):
-        raise ValueError("*At least one* certificate is required.")
+        msg = "*At least one* certificate is required."
+        raise ValueError(msg)
     certificates = [
         ssl.Certificate.loadPEM(str(certPEM))  # type: ignore[no-untyped-call]
         for certPEM in certs
@@ -62,26 +65,19 @@ def certificateOptionsFromPEMs(
     }
 
     if privateKey.keyHash() not in certificatesByFingerprint:
-        raise ValueError(
-            "No certificate matching {fingerprint} found.".format(
-                fingerprint=privateKey.keyHash()
-            )
-        )
+        msg = f"No certificate matching {privateKey.keyHash()} found."
+        raise ValueError(msg)
 
     primaryCertificate = certificatesByFingerprint.pop(privateKey.keyHash())
 
     if "dhParameters" in kw:
-        raise TypeError(
-            "Passing DH parameters as a keyword argument instead of a "
-            "PEM object is not supported anymore."
-        )
+        msg = "Passing DH parameters as a keyword argument instead of a PEM object is not supported anymore."
+        raise TypeError(msg)
 
     dhparams = [o for o in pemObjects if isinstance(o, DHParameters)]
     if len(dhparams) > 1:
-        raise ValueError(
-            "Supplied PEM file(s) contain(s) *more* than one set of DH "
-            "parameters."
-        )
+        msg = "Supplied PEM file(s) contain(s) *more* than one set of DH parameters."
+        raise ValueError(msg)
 
     if len(dhparams) == 1:
         kw["dhParameters"] = ssl.DiffieHellmanParameters(  # type: ignore[no-untyped-call]

@@ -70,7 +70,7 @@ class TestPEMObjects:
 
         assert f"<CertificateRequest({TEST_DIGEST})>" == repr(cert_req)
 
-    @pytest.mark.parametrize("pem_bytes", (b"test", b"test\r"))
+    @pytest.mark.parametrize("pem_bytes", [b"test", b"test\r"])
     def test_sha1_hexdigest(self, pem_bytes):
         """
         obj.sha1_digest contains the correct digest and caches it properly.
@@ -107,7 +107,7 @@ class TestPEMObjects:
         assert isinstance(payload, str)
 
     @pytest.mark.parametrize(
-        "bs, forbidden",
+        ("bs", "forbidden"),
         [
             (KEY_PEM_SSHCOM_PRIVATE, b"Comment:"),
             (KEY_PEM_OPENPGP_PUBLIC, b"Version:"),
@@ -673,7 +673,7 @@ class TestParse:
         assert KEY_PEM_OPENPGP_PRIVATE == key.as_bytes()
 
     @pytest.mark.parametrize(
-        "bs, hdrs",
+        ("bs", "hdrs"),
         [
             (KEY_PEM_SSHCOM_PRIVATE, {"Comment": "rsa-key-20210120"}),
             (

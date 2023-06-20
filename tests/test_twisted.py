@@ -20,8 +20,8 @@ from pem.twisted import certificateOptionsFromFiles
 from .data import CERT_PEMS, DH_PEM, KEY_PEM, KEY_PEM2
 
 
-@pytest.fixture
-def keyCertChainDHFile(tmpdir):
+@pytest.fixture(name="keyCertChainDHFile")
+def _keyCertChainDHFile(tmpdir):
     """
     Returns a file containing the key, three certificates, and DH parameters.
     """
@@ -31,8 +31,8 @@ def keyCertChainDHFile(tmpdir):
     return pemFile
 
 
-@pytest.fixture
-def keyCertChainFile(tmpdir):
+@pytest.fixture(name="keyCertChainFile")
+def _keyCertChainFile(tmpdir):
     """
     Returns a file containing the key and three certificates.
     """
