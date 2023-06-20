@@ -23,7 +23,6 @@ class AbstractPEMObject(metaclass=ABCMeta):
     """
 
     _pem_bytes: bytes
-    _sha1_hexdigest: str | None
 
     def __init__(self, pem_bytes: bytes | str):
         self._pem_bytes = (
@@ -45,7 +44,18 @@ class AbstractPEMObject(metaclass=ABCMeta):
             self.__class__.__name__, self.sha1_hexdigest
         )
 
-    @property
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, type(self)):
+            return NotImplemented
+
+        return (
+            type(self) == type(other) and self._pem_bytes == other._pem_bytes
+        )
+
+    def __hash__(self) -> int:
+        return hash(self._pem_bytes)
+
+    @cached_property
     def sha1_hexdigest(self) -> str:
         """
         A SHA-1 digest of the whole object for easy differentiation.
@@ -56,12 +66,9 @@ class AbstractPEMObject(metaclass=ABCMeta):
            Carriage returns are removed before hashing to give the same hashes
            on Windows and UNIX-like operating systems.
         """
-        if self._sha1_hexdigest is None:
-            self._sha1_hexdigest = hashlib.sha1(  # noqa[S324]
-                self._pem_bytes.replace(b"\r", b"")
-            ).hexdigest()
-
-        return self._sha1_hexdigest
+        return hashlib.sha1(  # noqa[S324]
+            self._pem_bytes.replace(b"\r", b"")
+        ).hexdigest()
 
     def as_bytes(self) -> bytes:
         """
@@ -147,17 +154,6 @@ class AbstractPEMObject(metaclass=ABCMeta):
             pass  # pragma: no cover
 
         return expl
-
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, type(self)):
-            return NotImplemented
-
-        return (
-            type(self) == type(other) and self._pem_bytes == other._pem_bytes
-        )
-
-    def __hash__(self) -> int:
-        return hash(self._pem_bytes)
 
 
 class Certificate(AbstractPEMObject):
