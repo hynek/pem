@@ -15,7 +15,6 @@ You can find out backwards-compatibility policy [here](https://github.com/hynek/
 ### Backwards-incompatible changes:
 
 - Support for Python 2.7, 3.5, and 3.6 has been dropped.
-- Added `data_as_text` and `data_as_bytes`
 
 ### Deprecations:
 
@@ -24,7 +23,8 @@ You can find out backwards-compatibility policy [here](https://github.com/hynek/
 ### Changes:
 
 - `pem.parse_file()` now accepts [`pathlib.Path`](https://docs.python.org/3/library/pathlib.html#pathlib.Path) objects.
-
+- Added `payload_as_text` and `payload_as_bytes`
+  [#74](https://github.com/hynek/pem/pull/74)
 
 ## 21.2.0 - 2021-04-07
 

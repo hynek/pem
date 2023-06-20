@@ -17,7 +17,7 @@ class AbstractPEMObject(metaclass=ABCMeta):
     """
 
     _pem_bytes: bytes
-    _pem_data: bytes
+    _pem_payload: bytes
     _sha1_hexdigest: str | None
 
     def __init__(self, pem_bytes: bytes | str, pem_data: bytes | str):
@@ -26,7 +26,7 @@ class AbstractPEMObject(metaclass=ABCMeta):
             if isinstance(pem_bytes, str)
             else pem_bytes
         )
-        self._pem_data = (
+        self._pem_payload = (
             pem_data.encode("ascii") if isinstance(pem_data, str) else pem_data
         )
 
@@ -69,13 +69,13 @@ class AbstractPEMObject(metaclass=ABCMeta):
         """
         return self._pem_bytes
 
-    def data_as_bytes(self) -> bytes:
+    def payload_as_bytes(self) -> bytes:
         """
         Return the data of the PEM-encoded content as :obj:`bytes`.
 
-        .. versionadded:: 22.1.0
+        .. versionadded:: 23.1.0
         """
-        return self._pem_data
+        return self._pem_payload
 
     def as_text(self) -> str:
         """
@@ -85,13 +85,13 @@ class AbstractPEMObject(metaclass=ABCMeta):
         """
         return self._pem_bytes.decode("utf-8")
 
-    def data_as_text(self) -> str:
+    def payload_as_text(self) -> str:
         """
         Return the data of the PEM-encoded content as Unicode text.
 
-        .. versionadded:: 22.1.0
+        .. versionadded:: 23.1.0
         """
-        return self._pem_data.decode("utf-8")
+        return self._pem_payload.decode("utf-8")
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, type(self)):

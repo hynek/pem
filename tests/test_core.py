@@ -21,7 +21,7 @@ from .data import (
     KEY_PEM_OPENSSH,
     KEY_PEM_PKCS5_ENCRYPTED,
     KEY_PEM_PKCS5_UNENCRYPTED,
-    KEY_PEM_PKCS5_UNENCRYPTED_DATA,
+    KEY_PEM_PKCS5_UNENCRYPTED_PAYLOAD,
     KEY_PEM_PKCS8_ENCRYPTED,
     KEY_PEM_PKCS8_UNENCRYPTED,
     KEY_PEM_PUBLIC,
@@ -92,7 +92,7 @@ class TestPEMObjects:
         """
         obj.as_text() returns the contents as Unicode.
         """
-        text = pem.Certificate(b"test", b"test_data").data_as_text()
+        text = pem.Certificate(b"test", b"test_data").payload_as_text()
 
         assert "test_data" == text
         assert isinstance(text, str)
@@ -186,7 +186,7 @@ class TestPEMObjects:
         cert = pem.Certificate("a string", "test_data")
 
         assert cert.as_bytes() == b"a string"
-        assert cert.data_as_bytes() == b"test_data"
+        assert cert.payload_as_bytes() == b"test_data"
         assert str(cert) == "a string"
 
     def test_certificate_request_unicode(self):
@@ -196,7 +196,7 @@ class TestPEMObjects:
         cert_req = pem.CertificateRequest("a string", "test_data")
 
         assert cert_req.as_bytes() == b"a string"
-        assert cert_req.data_as_bytes() == b"test_data"
+        assert cert_req.payload_as_bytes() == b"test_data"
         assert str(cert_req) == "a string"
 
     def test_key_unicode(self):
@@ -206,7 +206,7 @@ class TestPEMObjects:
         key = pem.Key("a string", "test_data")
 
         assert key.as_bytes() == b"a string"
-        assert key.data_as_bytes() == b"test_data"
+        assert key.payload_as_bytes() == b"test_data"
         assert str(key) == "a string"
 
     def test_rsa_key_unicode(self):
@@ -216,7 +216,7 @@ class TestPEMObjects:
         key = pem.RSAPrivateKey("a string", "test_data")
 
         assert key.as_bytes() == b"a string"
-        assert key.data_as_bytes() == b"test_data"
+        assert key.payload_as_bytes() == b"test_data"
         assert str(key) == "a string"
 
     def test_dhparams_unicode_deprecated(self):
@@ -226,7 +226,7 @@ class TestPEMObjects:
         params = pem.DHParameters("a string", "test_data")
 
         assert params.as_bytes() == b"a string"
-        assert params.data_as_bytes() == b"test_data"
+        assert params.payload_as_bytes() == b"test_data"
         assert str(params) == "a string"
 
     def test_crl_unicode(self):
@@ -237,7 +237,7 @@ class TestPEMObjects:
         crl = pem.CertificateRevocationList("a string", "test_data")
 
         assert crl.as_bytes() == b"a string"
-        assert crl.data_as_bytes() == b"test_data"
+        assert crl.payload_as_bytes() == b"test_data"
         assert str(crl) == "a string"
 
     def test_certs_equal(self):
@@ -393,7 +393,7 @@ class TestParse:
 
         assert isinstance(key, pem.RSAPrivateKey)
         assert KEY_PEM_PKCS5_UNENCRYPTED == key.as_bytes()
-        assert KEY_PEM_PKCS5_UNENCRYPTED_DATA == key.data_as_bytes()
+        assert KEY_PEM_PKCS5_UNENCRYPTED_PAYLOAD == key.payload_as_bytes()
 
         crypto_key = load_rsa_key(key)
 
