@@ -13,11 +13,12 @@ from typing import TYPE_CHECKING
 from OpenSSL.crypto import FILETYPE_PEM
 from twisted.internet import ssl
 
-from ._core import Certificate, DHParameters, Key, parse_file
+from ._core import parse_file
+from ._object_types import Certificate, DHParameters, Key
 
 
 if TYPE_CHECKING:
-    from ._core import AbstractPEMObject
+    from ._object_types import AbstractPEMObject
 
 
 def certificateOptionsFromPEMs(

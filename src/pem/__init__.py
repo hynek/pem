@@ -2,7 +2,8 @@
 #
 # SPDX-License-Identifier: MIT
 
-from ._core import (
+from ._core import parse, parse_file
+from ._object_types import (
     AbstractPEMObject,
     Certificate,
     CertificateRequest,
@@ -21,8 +22,6 @@ from ._core import (
     RSAPublicKey,
     SSHCOMPrivateKey,
     SSHPublicKey,
-    parse,
-    parse_file,
 )
 
 
@@ -30,16 +29,6 @@ try:
     from . import twisted
 except ImportError:
     twisted = None  # type: ignore[assignment]
-
-
-__version__ = "22.1.0.dev0"
-__author__ = "Hynek Schlawack"
-__license__ = "MIT"
-__description__ = "PEM file parsing in Python."
-__url__ = "https://pem.readthedocs.io/"
-__uri__ = __url__
-__email__ = "hs@ox.cx"
-
 
 __all__ = [
     "AbstractPEMObject",
@@ -64,3 +53,41 @@ __all__ = [
     "SSHPublicKey",
     "twisted",
 ]
+
+__author__ = "Hynek Schlawack"
+__license__ = "MIT"
+
+
+def __getattr__(name: str) -> str:
+    dunder_to_metadata = {
+        "__version__": "version",
+        "__description__": "summary",
+        "__uri__": "",
+        "__url__": "",
+        "__email__": "",
+    }
+    if name not in dunder_to_metadata.keys():
+        raise AttributeError(f"module {__name__} has no attribute {name}")
+
+    import warnings
+
+    from importlib.metadata import metadata
+
+    if name != "__version__":
+        warnings.warn(
+            f"Accessing pem.{name} is deprecated and will be "
+            "removed in a future release. Use importlib.metadata directly "
+            "to query packaging metadata.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+
+    meta = metadata("pem")
+
+    if name in ("__uri__", "__url__"):
+        return meta["Project-URL"].split(" ", 1)[-1]
+
+    if name == "__email__":
+        return meta["Author-email"].split("<", 1)[1].rstrip(">")
+
+    return meta[dunder_to_metadata[name]]
