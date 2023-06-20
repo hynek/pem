@@ -42,7 +42,6 @@ def parse(pem_str: bytes | str) -> list[AbstractPEMObject]:
     """
     Extract PEM-like objects from *pem_str*.
 
-    :param pem_str: String to parse.
     :return: list of :ref:`pem-objects`
 
     .. versionchanged:: 23.1.0
@@ -59,6 +58,8 @@ def parse(pem_str: bytes | str) -> list[AbstractPEMObject]:
 def parse_file(file_name: str | Path) -> list[AbstractPEMObject]:
     """
     Read *file_name* and parse PEM objects from it using :func:`parse`.
+
+    :return: list of :ref:`pem-objects`
 
     .. versionchanged:: 23.1.0
          *file_name* can now also be a :class:`~pathlib.Path`.
