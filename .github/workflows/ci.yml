@@ -16,7 +16,7 @@ env:
 
 jobs:
   tests:
-    name: Tests on ${{ matrix.python-version }}
+    name: Tests & API type-check on ${{ matrix.python-version }}
     runs-on: ubuntu-latest
 
     strategy:
