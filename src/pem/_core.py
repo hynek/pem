@@ -12,8 +12,8 @@ import hashlib
 import re
 
 from abc import ABCMeta
-from pathlib import Path
 from base64 import b64decode
+from pathlib import Path
 
 
 class AbstractPEMObject(metaclass=ABCMeta):
