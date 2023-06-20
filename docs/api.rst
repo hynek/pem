@@ -38,6 +38,8 @@ The following objects can be returned by the parsing functions.
 .. autoclass:: OpenSSHPrivateKey(PrivateKey)
 .. autoclass:: SSHPublicKey(Key)
 .. autoclass:: SSHCOMPrivateKey(PrivateKey)
+.. autoclass:: OpenPGPPublicKey(PublicKey)
+.. autoclass:: OpenPGPPrivateKey(PrivateKey)
 .. autoclass:: DHParameters(AbstractPEMObject)
 .. autoclass:: CertificateRequest(AbstractPEMObject)
 .. autoclass:: CertificateRevocationList(AbstractPEMObject)
