@@ -17,13 +17,19 @@ class AbstractPEMObject(metaclass=ABCMeta):
     """
 
     _pem_bytes: bytes
+    _pem_data: bytes
     _sha1_hexdigest: str | None
 
-    def __init__(self, pem_bytes: bytes | str):
-        if isinstance(pem_bytes, str):
-            self._pem_bytes = pem_bytes.encode("ascii")
-        else:
-            self._pem_bytes = pem_bytes
+    def __init__(self, pem_bytes: bytes | str, pem_data: bytes | str):
+        self._pem_bytes = (
+            pem_bytes.encode("ascii")
+            if isinstance(pem_bytes, str)
+            else pem_bytes
+        )
+        self._pem_data = (
+            pem_data.encode("ascii") if isinstance(pem_data, str) else pem_data
+        )
+
         self._sha1_hexdigest = None
 
     def __str__(self) -> str:
@@ -63,6 +69,14 @@ class AbstractPEMObject(metaclass=ABCMeta):
         """
         return self._pem_bytes
 
+    def data_as_bytes(self) -> bytes:
+        """
+        Return the data of the PEM-encoded content as :obj:`bytes`.
+
+        .. versionadded:: 22.1.0
+        """
+        return self._pem_data
+
     def as_text(self) -> str:
         """
         Return the PEM-encoded content as Unicode text.
@@ -70,6 +84,14 @@ class AbstractPEMObject(metaclass=ABCMeta):
         .. versionadded:: 18.1.0
         """
         return self._pem_bytes.decode("utf-8")
+
+    def data_as_text(self) -> str:
+        """
+        Return the data of the PEM-encoded content as Unicode text.
+
+        .. versionadded:: 22.1.0
+        """
+        return self._pem_data.decode("utf-8")
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, type(self)):
@@ -231,7 +253,7 @@ _PEM_RE = re.compile(
     b"----[- ]BEGIN ("
     + b"|".join(_PEM_TO_CLASS.keys())
     + b""")[- ]----\r?
-.+?\r?
+(?P<data>.+?)\r?
 ----[- ]END \\1[- ]----\r?\n?""",
     re.DOTALL,
 )
@@ -245,7 +267,9 @@ def parse(pem_str: bytes) -> list[AbstractPEMObject]:
     :return: list of :ref:`pem-objects`
     """
     return [
-        _PEM_TO_CLASS[match.group(1)](match.group(0))
+        _PEM_TO_CLASS[match.group(1)](
+            match.group(0), b"".join(match.group("data").splitlines())
+        )
         for match in _PEM_RE.finditer(pem_str)
     ]
 

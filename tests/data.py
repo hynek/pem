@@ -88,6 +88,16 @@ a4FDqkr+bDwV4SwaGdG/AC40fR3P8hhOADAhtFDwlw==
 -----END RSA PRIVATE KEY-----
 """
 
+KEY_PEM_PKCS5_UNENCRYPTED_DATA = (
+    b"MIIBOwIBAAJBAKX6cRhPHvdyoftEHGiRje3tTLRDnddg01AvgsJJcCFoIjwdgfa9"
+    b"aKFdzCcgD/htjvfRZl24M7E89sMUBMNHk8ECAwEAAQJABcBi8OO1AAAh6tIWZe09"
+    b"TNRfRxPcwVzilbG/xznCP/YMf72E8hsZazu+HGMKITg9dFeJOyjXZ4e8sD/pL/I6"
+    b"0QIhANzULu4JjJxpoTK8NnF/CemF7neLROA18NDB/mao5ZZtAiEAwGnYobinxuHS"
+    b"UQh8cT3w7aLsVlarZmCtoapxjW+ObiUCIQCcAltVV/G63vU/PrDH5hQ+opwiYIW8"
+    b"UN9c3HC6XkA00QIhAJ8YpfwKgAfNfyZrmuHTspv7Q+mb3jtXoxnyodOtsxpVAiBC"
+    b"a4FDqkr+bDwV4SwaGdG/AC40fR3P8hhOADAhtFDwlw=="
+)
+
 # PKCS#5 RSA encrypted with `test` as password.
 # Generated with:
 # openssl genrsa -des3 -out private.pem 512
