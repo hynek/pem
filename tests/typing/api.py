@@ -7,6 +7,8 @@ This file is used to test the type annotations of the public API. It is NOT
 meant to be executed.
 """
 
+from __future__ import annotations
+
 import pem
 
 
