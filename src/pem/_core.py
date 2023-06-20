@@ -139,6 +139,8 @@ class AbstractPEMObject(metaclass=ABCMeta):
                 val = val[1:-1]
 
             expl[key] = val
+        else:
+            pass  # pragma: no cover -- XXX: necessary for Coverage.py!?
 
         return expl
 
