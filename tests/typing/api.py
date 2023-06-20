@@ -17,3 +17,14 @@ objs: list[pem.AbstractPEMObject]
 objs = pem.parse_file("foo.pem")
 objs = pem.parse("PEM")
 objs = pem.parse(b"PEM")
+
+if objs:
+    s: str = objs[0].as_text()
+    b: bytes = objs[0].as_bytes()
+    s = objs[0].sha1_hexdigest
+
+    b = objs[0].bytes_payload
+    b = objs[0].decoded_payload
+    s = objs[0].text_payload
+
+    d: dict[str, str] = objs[0].meta_headers
