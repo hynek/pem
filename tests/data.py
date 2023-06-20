@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2013 Hynek Schlawack <hs@ox.cx>
+#
+# SPDX-License-Identifier: MIT
+
 CERT_PEMS = [
     b"""-----BEGIN CERTIFICATE-----
 MIIBfDCCATagAwIBAgIJAK94OSlzVBsWMA0GCSqGSIb3DQEBBQUAMBYxFDASBgNV

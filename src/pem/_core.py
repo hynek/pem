@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2013 Hynek Schlawack <hs@ox.cx>
+#
+# SPDX-License-Identifier: MIT
+
 """
 Framework agnostic PEM file parsing functions.
 """
