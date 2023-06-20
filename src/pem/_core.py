@@ -125,6 +125,8 @@ class AbstractPEMObject(metaclass=ABCMeta):
         """
         Return a dictionary of payload headers.
 
+        If the value of a header is quoted, the quotes are removed.
+
         .. versionadded:: 23.1.0
         """
         expl = {}
