@@ -103,7 +103,11 @@ ignore_errors = false
 content-type = "text/markdown"
 
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
+text = "# pem: PEM file parsing for Python\n"
+
+[[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
 path = "README.md"
+start-after = "<!-- teaser-begin -->"
 
 [[tool.hatch.metadata.hooks.fancy-pypi-readme.fragments]]
 text = """
