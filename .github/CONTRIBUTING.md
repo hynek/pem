@@ -33,7 +33,8 @@ But don't be afraid to open half-finished PRs and ask questions if something is 
       """
       Do something.
 
-      :param x: A very important parameter.
+      Args:
+        x: A very important parameter.
       """
   ```
 
