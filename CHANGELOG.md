@@ -12,7 +12,7 @@ You can find our backwards-compatibility policy [here](https://github.com/hynek/
 
 <!-- changelog follows -->
 
-## [UNRELEASED](https://github.com/hynek/pem/compare/21.2.0...HEAD)
+## [Unreleased](https://github.com/hynek/pem/compare/21.2.0...HEAD)
 
 ### Removed
 
