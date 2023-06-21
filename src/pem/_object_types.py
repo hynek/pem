@@ -16,12 +16,15 @@ from functools import cached_property
 from typing import ClassVar
 
 
+_PEM_TO_CLASS: dict[bytes, type[AbstractPEMObject]] = {}
+
+
 class AbstractPEMObject(metaclass=ABCMeta):
     """
     Base class for parsed objects.
     """
 
-    _pattern: ClassVar[tuple[bytes, ...]] = NotImplemented
+    _patterns: ClassVar[tuple[bytes, ...]] = NotImplemented
 
     _pem_bytes: bytes
 
@@ -55,6 +58,13 @@ class AbstractPEMObject(metaclass=ABCMeta):
 
     def __hash__(self) -> int:
         return hash(self._pem_bytes)
+
+    def __init_subclass__(cls) -> None:
+        if cls._patterns is NotImplemented:
+            return
+
+        for pattern in cls._patterns:
+            _PEM_TO_CLASS[pattern] = cls
 
     @cached_property
     def sha1_hexdigest(self) -> str:
@@ -158,7 +168,7 @@ class Certificate(AbstractPEMObject):
     A certificate.
     """
 
-    _pattern = (b"CERTIFICATE",)
+    _patterns = (b"CERTIFICATE",)
 
 
 class OpenSSLTrustedCertificate(Certificate):
@@ -168,7 +178,7 @@ class OpenSSLTrustedCertificate(Certificate):
     .. versionadded:: 21.2.0
     """
 
-    _pattern = (b"TRUSTED CERTIFICATE",)
+    _patterns = (b"TRUSTED CERTIFICATE",)
 
 
 class CertificateRequest(AbstractPEMObject):
@@ -178,7 +188,7 @@ class CertificateRequest(AbstractPEMObject):
     .. versionadded:: 17.1.0
     """
 
-    _pattern = (b"NEW CERTIFICATE REQUEST", b"CERTIFICATE REQUEST")
+    _patterns = (b"NEW CERTIFICATE REQUEST", b"CERTIFICATE REQUEST")
 
 
 class CertificateRevocationList(AbstractPEMObject):
@@ -188,7 +198,7 @@ class CertificateRevocationList(AbstractPEMObject):
     .. versionadded:: 18.2.0
     """
 
-    _pattern = (b"X509 CRL",)
+    _patterns = (b"X509 CRL",)
 
 
 class Key(AbstractPEMObject):
@@ -206,7 +216,7 @@ class PrivateKey(Key):
     .. versionadded:: 19.1.0
     """
 
-    _pattern: ClassVar[tuple[bytes, ...]] = (
+    _patterns: ClassVar[tuple[bytes, ...]] = (
         b"PRIVATE KEY",
         b"ENCRYPTED PRIVATE KEY",
     )
@@ -219,7 +229,7 @@ class PublicKey(Key):
     .. versionadded:: 19.1.0
     """
 
-    _pattern = (b"PUBLIC KEY",)
+    _patterns = (b"PUBLIC KEY",)
 
 
 class RSAPrivateKey(PrivateKey):
@@ -227,7 +237,7 @@ class RSAPrivateKey(PrivateKey):
     A private RSA key.
     """
 
-    _pattern = (b"RSA PRIVATE KEY",)
+    _patterns = (b"RSA PRIVATE KEY",)
 
 
 class RSAPublicKey(PublicKey):
@@ -237,7 +247,7 @@ class RSAPublicKey(PublicKey):
     .. versionadded:: 19.1.0
     """
 
-    _pattern = (b"RSA PUBLIC KEY",)
+    _patterns = (b"RSA PUBLIC KEY",)
 
 
 class ECPrivateKey(PrivateKey):
@@ -247,7 +257,7 @@ class ECPrivateKey(PrivateKey):
     .. versionadded:: 19.2.0
     """
 
-    _pattern = (b"EC PRIVATE KEY",)
+    _patterns = (b"EC PRIVATE KEY",)
 
 
 class DSAPrivateKey(PrivateKey):
@@ -259,7 +269,7 @@ class DSAPrivateKey(PrivateKey):
     .. versionadded:: 21.1.0
     """
 
-    _pattern = (b"DSA PRIVATE KEY",)
+    _patterns = (b"DSA PRIVATE KEY",)
 
 
 class DHParameters(AbstractPEMObject):
@@ -267,7 +277,7 @@ class DHParameters(AbstractPEMObject):
     Diffie-Hellman parameters for DHE.
     """
 
-    _pattern = (b"DH PARAMETERS",)
+    _patterns = (b"DH PARAMETERS",)
 
 
 class OpenSSHPrivateKey(PrivateKey):
@@ -277,7 +287,7 @@ class OpenSSHPrivateKey(PrivateKey):
     .. versionadded:: 19.3.0
     """
 
-    _pattern = (b"OPENSSH PRIVATE KEY",)
+    _patterns = (b"OPENSSH PRIVATE KEY",)
 
 
 class SSHPublicKey(PublicKey):
@@ -289,7 +299,7 @@ class SSHPublicKey(PublicKey):
     .. versionadded:: 21.1.0
     """
 
-    _pattern = (b"SSH2 PUBLIC KEY",)
+    _patterns = (b"SSH2 PUBLIC KEY",)
 
 
 class SSHCOMPrivateKey(PrivateKey):
@@ -299,7 +309,7 @@ class SSHCOMPrivateKey(PrivateKey):
     .. versionadded:: 21.1.0
     """
 
-    _pattern = (b"SSH2 ENCRYPTED PRIVATE KEY",)
+    _patterns = (b"SSH2 ENCRYPTED PRIVATE KEY",)
 
 
 class OpenPGPPublicKey(PublicKey):
@@ -309,7 +319,7 @@ class OpenPGPPublicKey(PublicKey):
     .. versionadded:: 23.1.0
     """
 
-    _pattern = (b"PGP PUBLIC KEY BLOCK",)
+    _patterns = (b"PGP PUBLIC KEY BLOCK",)
 
 
 class OpenPGPPrivateKey(PrivateKey):
@@ -319,4 +329,4 @@ class OpenPGPPrivateKey(PrivateKey):
     .. versionadded:: 23.1.0
     """
 
-    _pattern = (b"PGP PRIVATE KEY BLOCK",)
+    _patterns = (b"PGP PRIVATE KEY BLOCK",)

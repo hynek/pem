@@ -12,19 +12,8 @@ import re
 
 from pathlib import Path
 
-from . import _object_types
-from ._object_types import AbstractPEMObject
+from ._object_types import _PEM_TO_CLASS, AbstractPEMObject
 
-
-_PEM_TO_CLASS: dict[bytes, type[AbstractPEMObject]] = {}
-for obj in vars(_object_types).values():
-    if (
-        isinstance(obj, type)
-        and issubclass(obj, AbstractPEMObject)
-        and obj not in (AbstractPEMObject, _object_types.Key)
-    ):
-        for pattern in obj._pattern:
-            _PEM_TO_CLASS[pattern] = obj
 
 # See https://tools.ietf.org/html/rfc1421
 # and https://datatracker.ietf.org/doc/html/rfc4716 for space instead of fifth dash.
