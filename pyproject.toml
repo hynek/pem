@@ -30,7 +30,6 @@ Changelog = "https://pem.readthedocs.io/en/stable/changelog.html"
 "Source Code" = "https://github.com/hynek/pem"
 Funding = "https://github.com/sponsors/hynek"
 Tidelift = "https://tidelift.com/?utm_source=lifter&utm_medium=referral&utm_campaign=hynek"
-Ko-fi = "https://ko-fi.com/the_hynek"
 
 
 [project.optional-dependencies]
