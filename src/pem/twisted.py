@@ -33,12 +33,12 @@ def certificateOptionsFromPEMs(
     certificates found as chain certificates.  Raise a ValueError if no
     certificate matching a private key is found.
 
+    :param list[AbstractPEMObject] pemObjects: A list of PEM objects to load.
+
     :return: A TLS context factory using *pemObjects*
     :rtype: `twisted.internet.ssl.CertificateOptions`_
 
-    .. _`twisted.internet.ssl.CertificateOptions`: \
-        https://twistedmatrix.com/documents/current/api/\
-        twisted.internet.ssl.CertificateOptions.html
+    .. _`twisted.internet.ssl.CertificateOptions`: https://docs.twistedmatrix.com/en/stable/api/twisted.internet.ssl.CertificateOptions.html
     """
     keys = [key for key in pemObjects if isinstance(key, Key)]
     if not len(keys):
@@ -100,6 +100,12 @@ def certificateOptionsFromFiles(
     """
     Read all files named by *pemFiles*, and parse them using
     :func:`certificateOptionsFromPEMs`.
+
+    :param str pemFiles: All positional arguments are used as filenames to
+        read.
+
+    :return: A TLS context factory using PEM objects from *pemFiles*.
+    :rtype: `twisted.internet.ssl.CertificateOptions`_
     """
     pems: list[AbstractPEMObject] = []
     for pemFile in pemFiles:
