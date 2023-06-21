@@ -27,7 +27,7 @@ With *pem*, your Python application can cope with all of those scenarios:
 '-----BEGIN CERTIFICATE-----\n...'
 ```
 
-Additionally to the vanilla parsing code, *pem* also contains helpers for [Twisted](https://twistedmatrix.com/documents/current/api/twisted.internet.ssl.Certificate.html#loadPEM) that save a lot of boilerplate code.
+Additionally to the vanilla parsing code, *pem* also contains helpers for [Twisted](https://docs.twistedmatrix.com/en/stable/api/twisted.internet.ssl.Certificate.html#loadPEM) that save a lot of boilerplate code.
 
 
 ## Project Information

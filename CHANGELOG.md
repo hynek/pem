@@ -111,7 +111,7 @@ You can find our backwards-compatibility policy [here](https://github.com/hynek/
 
 ### Added
 
-- *pem* now ships with typing information that can be used by type checkers like [Mypy](http://mypy-lang.org).
+- *pem* now ships with typing information that can be used by type checkers like [Mypy](https://mypy-lang.org).
 - PEM objects now have an `obj.sha1_hexdigest` property with the SHA-1 digest of the stored bytes  as a native string.
   This is the same digest as the one that is used by the PEM objects' `__repr__`s.
 - PEM objects now have an `obj.as_text()` method that returns the PEM-encoded content as unicode, always.

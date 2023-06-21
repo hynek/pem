@@ -56,4 +56,4 @@ pems = pem.parse("""\
 ctxFactory = pem.twisted.certificateOptionsFromPEMs(pems)
 ```
 
-[certificateoptions]: https://twistedmatrix.com/documents/current/api/twisted.internet.ssl.CertificateOptions.html
+[certificateoptions]: https://docs.twistedmatrix.com/en/stable/api/twisted.internet.ssl.CertificateOptions.html
