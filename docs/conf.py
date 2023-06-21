@@ -6,7 +6,7 @@ from importlib import metadata
 
 
 linkcheck_ignore = [
-    r"https://github.com/.*/(issues|pull)/\d+",
+    r"https://github.com/.*/(issues|pull|compare)/\d+",
 ]
 
 # Add any Sphinx extension module names here, as strings. They can be
