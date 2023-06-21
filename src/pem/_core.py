@@ -62,6 +62,6 @@ def parse_file(file_name: str | Path) -> list[AbstractPEMObject]:
     :return: list of :ref:`pem-objects`
 
     .. versionchanged:: 23.1.0
-         *file_name* can now also be a :class:`~pathlib.Path`.
+       *file_name* can now also be a :class:`~pathlib.Path`.
     """
     return parse(Path(file_name).read_bytes())

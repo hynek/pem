@@ -53,9 +53,10 @@ language = "en"
 
 exclude_patterns = ["_build"]
 
-# If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = False
-
+nitpick_ignore = [
+    ("py:class", "twisted.internet._sslverify.OpenSSLCertificateOptions"),
+    ("py:class", "ssl.CertificateOptions"),
+]
 
 # -- Options for HTML output ----------------------------------------------
 
