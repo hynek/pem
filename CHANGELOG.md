@@ -6,9 +6,9 @@ The format is based on [*Keep a Changelog*](https://keepachangelog.com/en/1.0.0/
 
 The **first number** of the version is the year.
 The **second number** is incremented with each release, starting at 1 for each year.
-The **third number** is when we need to start branches for older releases (only for emergencies).
+The **third number** is for emergencies when we need to start branches for older releases.
 
-You can find out backwards-compatibility policy [here](https://github.com/hynek/pem/blob/main/.github/SECURITY.md).
+You can find our backwards-compatibility policy [here](https://github.com/hynek/pem/blob/main/.github/SECURITY.md).
 
 <!-- changelog follows -->
 
