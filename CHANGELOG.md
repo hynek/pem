@@ -46,7 +46,7 @@ You can find our backwards-compatibility policy [here](https://github.com/hynek/
 - Added support for DSA private keys (`BEGIN DSA PRIVATE`).
   This is also the OpenSSH legacy PEM format.
   [#49](https://github.com/hynek/pem/issues/49)
-- Added support for `pem.SSHPublicKey` (`---- BEGIN SSH2 PUBLIC KEY ----`), as defined in [RFC 4716](https://tools.ietf.org/html/rfc4716).
+- Added support for `pem.SSHPublicKey` (`---- BEGIN SSH2 PUBLIC KEY ----`), as defined in [RFC 4716](https://datatracker.ietf.org/doc/html/rfc4716).
   [#46](https://github.com/hynek/pem/pull/46)
 - Added support for `pem.SSHCOMPrivateKey` (`---- BEGIN SSH2 ENCRYPTED PRIVATE KEY ----`), the SSH.com / Tectia private key format (plain or encrypted).
   [#46](https://github.com/hynek/pem/pull/46)

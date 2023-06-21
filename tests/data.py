@@ -305,7 +305,7 @@ NRrjPxY+c3X65vSaThscOQ0SHm5bRhX2YNRhgnZPznUnMXfE8yRLdgIUUS6kFIid
 HhSy7IHLTHWGoNdmwLo=
 -----END DSA PRIVATE KEY-----"""
 
-# Taken from https://tools.ietf.org/html/rfc4716#section-3.6.
+# Taken from https://datatracker.ietf.org/doc/html/rfc4716#section-3.6.
 KEY_PEM_RFC4716_PUBLIC = rb"""---- BEGIN SSH2 PUBLIC KEY ----
 Subject: me
 Comment: 1024-bit rsa, created by me@example.com Mon Jan 15 08:31:24 2001

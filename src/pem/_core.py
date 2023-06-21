@@ -27,7 +27,7 @@ for obj in vars(_object_types).values():
             _PEM_TO_CLASS[pattern] = obj
 
 # See https://tools.ietf.org/html/rfc1421
-# and https://tools.ietf.org/html/rfc4716 for space instead of fifth dash.
+# and https://datatracker.ietf.org/doc/html/rfc4716 for space instead of fifth dash.
 _PEM_RE = re.compile(
     b"----[- ]BEGIN ("
     + b"|".join(_PEM_TO_CLASS)
