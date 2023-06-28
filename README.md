@@ -32,7 +32,6 @@ Additionally to the vanilla parsing code, *pem* also contains helpers for [Twist
 
 ## Project Information
 
-- **License**: [MIT](https://github.com/hynek/pem/blob/main/LICENSE)
 - [**PyPI**](https://pypi.org/project/pem/)
 - [**Source Code**](https://github.com/hynek/pem)
 - [**Documentation**](https://pem.readthedocs.io/)
