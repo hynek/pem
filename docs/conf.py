@@ -61,10 +61,7 @@ nitpick_ignore = [
 # -- Options for HTML output ----------------------------------------------
 
 html_theme = "furo"
-html_theme_options = {
-    "source_branch": "main",
-    "source_directory": "docs/",
-}
+html_theme_options = {"top_of_page_button": None}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
