@@ -77,7 +77,7 @@ class AbstractPEMObject(metaclass=ABCMeta):
            Carriage returns are removed before hashing to give the same hashes
            on Windows and UNIX-like operating systems.
         """
-        return hashlib.sha1(  # noqa[S324]
+        return hashlib.sha1(  # noqa: S324
             self._pem_bytes.replace(b"\r", b"")
         ).hexdigest()
 

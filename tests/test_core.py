@@ -394,7 +394,7 @@ cGF5bG9hZF9kYXRhMQ==
         ]
 
         for pem1, pem2 in combinations(pems, 2):
-            assert not pem1 == pem2  # noqa[SIM201]
+            assert not pem1 == pem2  # noqa: SIM201
             assert pem1 != pem2
 
     def test_incompatible_types(self):
@@ -403,7 +403,7 @@ cGF5bG9hZF9kYXRhMQ==
         """
         cert = pem.Certificate(b"test")
 
-        assert not cert == object()  # noqa[SIM201]
+        assert not cert == object()  # noqa: SIM201
         assert cert != object()
         assert object() != cert
 
