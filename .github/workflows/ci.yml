@@ -6,13 +6,15 @@ on:
     branches: [main]
     tags: ["*"]
   pull_request:
-    branches: [main]
+  workflow_dispatch:
 
 env:
   FORCE_COLOR: "1" # Make tools pretty.
   PIP_DISABLE_PIP_VERSION_CHECK: "1"
   PIP_NO_PYTHON_VERSION_WARNING: "1"
   SETUPTOOLS_SCM_PRETEND_VERSION: "1.0" # avoid warnings about shallow checkout
+
+permissions: {}
 
 jobs:
   tests:
@@ -42,9 +44,9 @@ jobs:
       - run: tox run -e mypy-api
 
       - name: Upload coverage data
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: coverage-data
+          name: coverage-data-${{ matrix.python-version }}
           path: .coverage.*
           if-no-files-found: ignore
 
@@ -59,9 +61,10 @@ jobs:
           cache: pip
 
       - name: Download coverage data
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
-          name: coverage-data
+          pattern: coverage-data-*
+          merge-multiple: true
 
       - name: Combine coverage and fail if it's <100%.
         run: |
@@ -71,13 +74,13 @@ jobs:
           python -Im coverage html --skip-covered --skip-empty
 
           # Report and write to summary.
-          python -Im coverage report | sed 's/^/    /' >> $GITHUB_STEP_SUMMARY
+          python -Im coverage report --format=markdown >> $GITHUB_STEP_SUMMARY
 
           # Report again and fail if under 100%.
           python -Im coverage report --fail-under=100
 
       - name: Upload HTML report if check failed.
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: html-report
           path: htmlcov
