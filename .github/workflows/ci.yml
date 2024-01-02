@@ -59,6 +59,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           cache: pip
+          python-version-file: .python-version-default
 
       - name: Download coverage data
         uses: actions/download-artifact@v4
@@ -97,6 +98,7 @@ jobs:
         with:
           allow-prereleases: true
           cache: pip
+          python-version-file: .python-version-default
 
       - name: Prepare & run tox
         run: |
@@ -131,6 +133,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           cache: pip
+          python-version-file: .python-version-default
 
       - run: python -Im pip install -e .[dev]
       - run: python -Ic 'import pem; print(pem.__version__)'
