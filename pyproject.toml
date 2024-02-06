@@ -135,12 +135,14 @@ pattern = "\n(###.+?\n)## "
 text = """
 ---
 
-[→ Full Changelog](https://pem.readthedocs.io/en/stable/changelog.html)
+[Full Changelog →](https://pem.readthedocs.io/en/stable/changelog.html)
 """
 
 
 [tool.ruff]
 src = ["src", "tests", "docs/conf.py"]
+
+[tool.ruff.lint]
 select = ["ALL"]
 ignore = [
     "A001",    # shadowing is fine
@@ -157,7 +159,7 @@ ignore = [
     "TD",      # we don't follow other people's todo style
 ]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "*/*twisted.py" = ["N"] # lol Twisted & PEP 8 names
 "tests/*" = [
     "ARG005", # we need stub lambdas
@@ -167,6 +169,6 @@ ignore = [
     "PT011",  # broad is fine
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 lines-between-types = 1
 lines-after-imports = 2
