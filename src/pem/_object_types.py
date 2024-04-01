@@ -44,9 +44,7 @@ class AbstractPEMObject(metaclass=ABCMeta):
         return self._pem_bytes.decode("ascii")
 
     def __repr__(self) -> str:
-        return "<{}(PEM string with SHA-1 digest {!r})>".format(
-            self.__class__.__name__, self.sha1_hexdigest
-        )
+        return f"<{self.__class__.__name__}(PEM string with SHA-1 digest {self.sha1_hexdigest!r})>"
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, type(self)):
