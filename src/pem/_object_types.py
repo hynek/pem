@@ -51,7 +51,7 @@ class AbstractPEMObject(metaclass=ABCMeta):
             return NotImplemented
 
         return (
-            type(self) == type(other) and self._pem_bytes == other._pem_bytes
+            type(self) is type(other) and self._pem_bytes == other._pem_bytes
         )
 
     def __hash__(self) -> int:
