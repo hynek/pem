@@ -120,8 +120,8 @@ jobs:
 
   mypy:
     name: Mypy Codebase
-
     runs-on: ubuntu-latest
+    needs: build-package
 
     steps:
       - name: Download pre-built packages
@@ -142,6 +142,8 @@ jobs:
   docs:
     name: Build docs & run doctests
     runs-on: ubuntu-latest
+    needs: build-package
+
     steps:
       - name: Download pre-built packages
         uses: actions/download-artifact@v4
