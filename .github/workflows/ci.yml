@@ -57,14 +57,16 @@ jobs:
           allow-prereleases: true
       - uses: hynek/setup-cached-uv@v2
 
-      - run: uv pip install --system tox-uv
-
-      - run: tox run -e mypy-api
+      - run: >
+          uvx --with=tox-uv
+          tox run
+          -e mypy-api
 
       - name: Remove src to ensure tests run against wheel
         run: rm -rf src
 
       - run: >
+          uvx --with=tox-uv
           tox run
           --installpkg dist/*.whl
           -f py$(echo ${{ matrix.python-version }} | tr -d .)
@@ -101,16 +103,16 @@ jobs:
 
       - name: Combine coverage and fail if it's <100%.
         run: |
-          uv pip install --system coverage[toml]
+          uv tool install coverage[toml]
 
-          python -Im coverage combine
-          python -Im coverage html --skip-covered --skip-empty
+          coverage combine
+          coverage html --skip-covered --skip-empty
 
           # Report and write to summary.
-          python -Im coverage report --format=markdown >> $GITHUB_STEP_SUMMARY
+          coverage report --format=markdown >> $GITHUB_STEP_SUMMARY
 
           # Report again and fail if under 100%.
-          python -Im coverage report --fail-under=100
+          coverage report --fail-under=100
 
       - name: Upload HTML report if check failed.
         uses: actions/upload-artifact@v4
@@ -136,9 +138,11 @@ jobs:
           python-version-file: .python-version-default
           allow-prereleases: true
       - uses: hynek/setup-cached-uv@v2
-      - run: uv pip install --system tox-uv
 
-      - run: python -Im tox run -e mypy-pkg
+      - run: >
+          uvx --with=tox-uv
+          tox run
+          -e mypy-pkg
 
   docs:
     name: Build docs & run doctests
@@ -157,9 +161,11 @@ jobs:
           # Keep in sync with tox.ini/docs & .readthedocs.yaml
           python-version: "3.12"
       - uses: hynek/setup-cached-uv@v2
-      - run: uv pip install --system tox-uv
 
-      - run: python -Im tox run -e docs
+      - run: >
+          uvx --with=tox-uv
+          tox run
+          -e docs
 
   install-dev:
     strategy:
