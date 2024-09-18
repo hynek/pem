@@ -41,7 +41,7 @@ But don't be afraid to open half-finished PRs and ask questions if something is 
 - If you add or change public APIs, tag the docstring using `..  versionadded:: 16.1.0 WHAT` or `..  versionchanged:: 17.1.0 WHAT`.
   We follow CalVer, so the next version will be the current with with the middle number incremented (e.g. `23.1.0` -> `23.2.0`).
 
-- We use [Ruff] to sort our imports, and we follow the [Black] code style with a line length of 79 characters.
+- We use [Ruff] to sort our imports and format our code with a line length of 79 characters.
   As long as you run our full [*tox*] suite before committing, or install our [*pre-commit*] hooks, you won't have to spend any time on formatting your code at all.
   If you don't, CI will catch it for you -- but that seems like a waste of your time!
 
@@ -186,7 +186,6 @@ Please report any harm to [Hynek Schlawack] in any way you find appropriate.
 Thank you for considering contributing to *pem*!
 
 [backwards-compatibility]: https://github.com/hynek/pem/blob/main/.github/SECURITY.md
-[Black]: https://github.com/psf/black
 [changelog]: https://github.com/hynek/pem/blob/main/CHANGELOG.md
 [ci]: https://github.com/hynek/pem/actions
 [code of conduct]: https://github.com/hynek/pem/blob/main/.github/CODE_OF_CONDUCT.md
