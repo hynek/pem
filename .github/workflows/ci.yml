@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  FORCE_COLOR:
+  FORCE_COLOR: "1"
   PIP_DISABLE_PIP_VERSION_CHECK: "1"
   PIP_NO_PYTHON_VERSION_WARNING: "1"
 
@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
+          persist-credentials: false
       - uses: hynek/build-and-inspect-python-package@v2
         id: baipp
 
@@ -50,7 +50,9 @@ jobs:
         with:
           name: Packages
           path: dist
-      - run: tar xf dist/*.tar.gz --strip-components=1
+      - run: |
+          tar xf dist/*.tar.gz --strip-components=1
+          rm -rf src
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
@@ -60,10 +62,8 @@ jobs:
       - run: >
           uvx --with=tox-uv
           tox run
+          --installpkg dist/*.whl
           -e mypy-api
-
-      - name: Remove src to ensure tests run against wheel
-        run: rm -rf src
 
       - run: >
           uvx --with=tox-uv
@@ -103,7 +103,7 @@ jobs:
 
       - name: Combine coverage and fail if it's <100%.
         run: |
-          uv tool install coverage[toml]
+          uv tool install coverage
 
           coverage combine
           coverage html --skip-covered --skip-empty
@@ -177,6 +177,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           cache: pip
