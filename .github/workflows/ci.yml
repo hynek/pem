@@ -43,6 +43,8 @@ jobs:
       matrix:
         # Created by the build-and-inspect-python-package action above.
         python-version: ${{ fromJson(needs.build-package.outputs.supported-python-versions) }}
+    env:
+      PYTHON: ${{ matrix.python-version }}
 
     steps:
       - name: Download pre-built packages
@@ -69,7 +71,7 @@ jobs:
           uvx --with=tox-uv
           tox run
           --installpkg dist/*.whl
-          -f py$(echo ${{ matrix.python-version }} | tr -d .)
+          -f py$(echo $PYTHON | tr -d .)
 
       - name: Upload coverage data
         uses: actions/upload-artifact@v4
