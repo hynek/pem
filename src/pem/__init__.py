@@ -43,14 +43,14 @@ __all__ = [
     "OpenPGPPublicKey",
     "OpenSSHPrivateKey",
     "OpenSSLTrustedCertificate",
-    "parse_file",
-    "parse",
     "PrivateKey",
     "PublicKey",
     "RSAPrivateKey",
     "RSAPublicKey",
     "SSHCOMPrivateKey",
     "SSHPublicKey",
+    "parse",
+    "parse_file",
     "twisted",
 ]
 
