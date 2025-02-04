@@ -39,8 +39,7 @@ from .data import (
 
 # SHA-1 of "test"
 TEST_DIGEST = (
-    "PEM string with SHA-1 digest "
-    "'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3'"
+    "PEM string with SHA-1 digest 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3'"
 )
 
 
