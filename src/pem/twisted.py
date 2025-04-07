@@ -42,7 +42,7 @@ def certificateOptionsFromPEMs(
     .. _`twisted.internet.ssl.CertificateOptions`: https://docs.twistedmatrix.com/en/stable/api/twisted.internet.ssl.CertificateOptions.html
     """
     keys = [key for key in pemObjects if isinstance(key, Key)]
-    if not len(keys):
+    if not keys:
         msg = "Supplied PEM file(s) does *not* contain a key."
         raise ValueError(msg)
     if len(keys) > 1:
@@ -52,7 +52,7 @@ def certificateOptionsFromPEMs(
     privateKey = ssl.KeyPair.load(str(keys[0]), FILETYPE_PEM)  # type: ignore[no-untyped-call]
 
     certs = [cert for cert in pemObjects if isinstance(cert, Certificate)]
-    if not len(certs):
+    if not certs:
         msg = "*At least one* certificate is required."
         raise ValueError(msg)
     certificates = [
