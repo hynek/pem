@@ -10,18 +10,16 @@ description = "PEM file parsing in Python."
 authors = [{ name = "Hynek Schlawack", email = "hs@ox.cx" }]
 requires-python = ">=3.8"
 license = "MIT"
+license-files = ["LICENSE"]
 keywords = ["pyopenssl", "ssl", "tls", "pem", "cryptography", "twisted"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
-    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = []
 
