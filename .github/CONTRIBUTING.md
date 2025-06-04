@@ -134,13 +134,14 @@ Change into the newly created directory and after activating a virtual environme
 
 ```bash
 cd pem
-pip install -e .[dev]
+python -Im pip install --upgrade pip  # dependency groups require Pip 25.1+
+python -Im pip install -e . --group dev
 ```
 
 At this point,
 
 ```bash
-$ python -m pytest
+$ python -Im pytest
 ```
 
 should work.

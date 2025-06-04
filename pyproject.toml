@@ -32,11 +32,11 @@ Funding = "https://github.com/sponsors/hynek"
 Tidelift = "https://tidelift.com/?utm_source=lifter&utm_medium=referral&utm_campaign=hynek"
 
 
-[project.optional-dependencies]
+[dependency-groups]
 tests = ["coverage[toml]>=5.0.2", "pytest", "certifi", "pretend", "pyopenssl"]
 docs = ["sphinx", "furo", "myst-parser", "sphinx-notfound-page", "twisted[tls]"]
 types = ["mypy", "twisted", "types-pyOpenSSL"]
-dev = ["pem[tests,types]", "twisted[tls]"]
+dev = [{ include-group = "tests" }, { include-group = "types" }, "twisted[tls]"]
 
 
 [tool.hatch.version]
