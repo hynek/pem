@@ -185,7 +185,7 @@ jobs:
         with:
           python-version-file: .python-version-default
 
-      - run: python -Im pip install -e .[dev]
+      - run: python -Im pip install -e . --group dev
       - run: python -Ic 'import pem; print(pem.__version__)'
 
   required-checks-pass:
