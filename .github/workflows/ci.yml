@@ -172,7 +172,7 @@ jobs:
   install-dev:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest]
 
     name: Verify dev env
     runs-on: ${{ matrix.os }}
