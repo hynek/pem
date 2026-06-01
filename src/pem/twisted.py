@@ -49,27 +49,27 @@ def certificateOptionsFromPEMs(
         msg = "Supplied PEM file(s) contains *more* than one key."
         raise ValueError(msg)
 
-    privateKey = ssl.KeyPair.load(str(keys[0]), FILETYPE_PEM)  # type: ignore[no-untyped-call]
+    privateKey = ssl.KeyPair.load(keys[0].as_bytes(), FILETYPE_PEM)
 
     certs = [cert for cert in pemObjects if isinstance(cert, Certificate)]
     if not certs:
         msg = "*At least one* certificate is required."
         raise ValueError(msg)
     certificates = [
-        ssl.Certificate.loadPEM(str(certPEM))  # type: ignore[no-untyped-call]
-        for certPEM in certs
+        ssl.Certificate.loadPEM(certPEM.as_bytes()) for certPEM in certs
     ]
 
     certificatesByFingerprint = {
-        certificate.getPublicKey().keyHash(): certificate
+        certificate.getPublicKey().keyHash(): certificate  # type: ignore[no-untyped-call]
         for certificate in certificates
     }
 
-    if privateKey.keyHash() not in certificatesByFingerprint:
-        msg = f"No certificate matching {privateKey.keyHash()} found."
+    keyHash = privateKey.keyHash()  # type: ignore[no-untyped-call]
+    if keyHash not in certificatesByFingerprint:
+        msg = f"No certificate matching {keyHash} found."
         raise ValueError(msg)
 
-    primaryCertificate = certificatesByFingerprint.pop(privateKey.keyHash())
+    primaryCertificate = certificatesByFingerprint.pop(keyHash)
 
     if "dhParameters" in kw:
         msg = "Passing DH parameters as a keyword argument instead of a PEM object is not supported anymore."
@@ -85,13 +85,13 @@ def certificateOptionsFromPEMs(
             str(dhparams[0])
         )
 
-    return ssl.CertificateOptions(  # type: ignore[no-any-return]
+    return ssl.CertificateOptions(
         privateKey=privateKey.original,
         certificate=primaryCertificate.original,
         extraCertChain=[
             chain.original for chain in certificatesByFingerprint.values()
         ],
-        **kw,
+        **kw,  # type: ignore[arg-type]
     )
 
 
