@@ -2,8 +2,8 @@
 
 [![Docs](https://img.shields.io/badge/Docs-Read%20The%20Docs-black)](https://pem.readthedocs.io/en/stable/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-C06524)](https://github.com/hynek/pem/blob/main/LICENSE)
+[![No AI slop inside.](https://img.shields.io/badge/no-slop-purple)](https://github.com/hynek/pem/blob/main/.github/AI_POLICY.md)
 [![PyPI - Version](https://img.shields.io/pypi/v/pem.svg)](https://pypi.org/project/pem)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pem.svg)](https://pypi.org/project/pem)
 [![Downloads / Month](https://static.pepy.tech/personalized-badge/pem?period=month&units=international_system&left_color=grey&right_color=blue&left_text=Downloads%20/%20Month)](https://pepy.tech/project/pem)
 [![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/7485/badge)](https://bestpractices.coreinfrastructure.org/projects/7485)
 
