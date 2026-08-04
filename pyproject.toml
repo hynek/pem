@@ -146,6 +146,7 @@ ignore = [
     "A001",    # shadowing is fine
     "ANN",     # Mypy is better at this
     "COM",     # Formatter takes care of our commas
+    "CPY",     # they expect a very specific shape of a copyright notice
     "D",       # We prefer our own docstring style.
     "E501",    # leave line-length enforcement to formatter
     "FIX",     # Yes, we want XXX as a marker.
