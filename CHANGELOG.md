@@ -18,11 +18,15 @@ You can find our backwards-compatibility policy [here](https://github.com/hynek/
 ### Removed
 
 - Support for Python 3.8 and 3.9 has been dropped.
+  [#140](https://github.com/hynek/pem/issues/140)
 
 
 ### Added
 
 - Support for Python 3.15.
+  Use in default, too.
+  [#140](https://github.com/hynek/pem/issues/140)
+  [#141](https://github.com/hynek/pem/issues/141)
 
 
 ## [23.1.0](https://github.com/hynek/pem/compare/21.2.0...23.1.0) - 2023-06-21
