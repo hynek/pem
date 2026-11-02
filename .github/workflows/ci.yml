@@ -71,7 +71,7 @@ jobs:
           uvx --with=tox-uv
           tox run
           --installpkg dist/*.whl
-          -f py$(echo $PYTHON | tr -d .)
+          -f ${PYTHON}
 
       - name: Upload coverage data
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -160,8 +160,7 @@ jobs:
       - run: tar xf dist/*.tar.gz --strip-components=1
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
-          # Keep in sync with tox.ini/docs & .readthedocs.yaml
-          python-version: "3.14"
+          python-version-file: .python-version-default
       - uses: hynek/setup-cached-uv@34e35d30f1ebc7421a5cc733bca38dcc62603960 # v2.6.0
 
       - run: >
