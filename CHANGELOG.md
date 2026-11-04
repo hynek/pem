@@ -29,6 +29,12 @@ You can find our backwards-compatibility policy [here](https://github.com/hynek/
   [#141](https://github.com/hynek/pem/issues/141)
 
 
+### Fixed
+
+- `pem.parse()` doesn't take quadratic time anymore on input with many BEGIN lines that have no matching END line.
+  Such a BEGIN line also doesn't swallow the PEM object that follows it anymore.
+
+
 ## [23.1.0](https://github.com/hynek/pem/compare/21.2.0...23.1.0) - 2023-06-21
 
 ### Removed

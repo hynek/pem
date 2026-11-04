@@ -513,6 +513,18 @@ class TestParse:
         assert all(isinstance(c, pem.Certificate) for c in certs)
         assert CERT_PEMS_NO_NEW_LINE == [cert.as_bytes() for cert in certs]
 
+    def test_unterminated_begin(self):
+        """
+        A BEGIN line without a matching END line doesn't swallow the PEM
+        object that follows it.
+
+        Payloads used to be allowed to span other BEGIN lines, which made
+        parsing many unterminated BEGIN lines take quadratic time.
+        """
+        (cert,) = pem.parse(b"-----BEGIN CERTIFICATE-----\n" + CERT_PEMS[0])
+
+        assert CERT_PEMS[0] == cert.as_bytes()
+
     def test_certificate_openssl_trusted(self):
         """
         Parses a PEM string with with an OpenSSL trusted certificate.
