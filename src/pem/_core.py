@@ -17,11 +17,15 @@ from ._object_types import _PEM_TO_CLASS, AbstractPEMObject
 
 # See https://tools.ietf.org/html/rfc1421
 # and https://datatracker.ietf.org/doc/html/rfc4716 for space instead of fifth dash.
+#
+# The payload must not run across another BEGIN line. Otherwise, every BEGIN
+# without a matching END scans to the end of the input, which makes parsing
+# quadratic.
 _PEM_RE = re.compile(
     b"----[- ]BEGIN ("
     + b"|".join(_PEM_TO_CLASS)
     + b""")[- ]----\r?
-(?P<payload>.+?)\r?
+(?P<payload>(?:(?!----[- ]BEGIN ).)+?)\r?
 ----[- ]END \\1[- ]----\r?\n?""",
     re.DOTALL,
 )
